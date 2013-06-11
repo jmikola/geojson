@@ -2,6 +2,7 @@
 
 namespace GeoJson\Tests\Geometry;
 
+use GeoJson\GeoJson;
 use GeoJson\Geometry\MultiPolygon;
 use GeoJson\Geometry\Polygon;
 use GeoJson\Tests\BaseGeoJsonTest;
@@ -58,5 +59,42 @@ class MultiPolygonTest extends BaseGeoJsonTest
         $this->assertSame('MultiPolygon', $multiPolygon->getType());
         $this->assertSame($coordinates, $multiPolygon->getCoordinates());
         $this->assertSame($expected, $multiPolygon->jsonSerialize());
+    }
+
+    /**
+     * @dataProvider provideJsonDecodeAssocOptions
+     * @group functional
+     */
+    public function testUnserialization($assoc)
+    {
+        $json = <<<'JSON'
+{
+    "type": "MultiPolygon",
+    "coordinates": [
+        [ [ [0, 0], [0, 4], [4, 4], [4, 0], [0, 0] ] ],
+        [ [ [1, 1], [1, 3], [3, 3], [3, 1], [1, 1] ] ]
+    ]
+}
+JSON;
+
+        $json = json_decode($json, $assoc);
+        $multiPolygon = GeoJson::jsonUnserialize($json);
+
+        $expectedCoordinates = array(
+            array(array(array(0, 0), array(0, 4), array(4, 4), array(4, 0), array(0, 0))),
+            array(array(array(1, 1), array(1, 3), array(3, 3), array(3, 1), array(1, 1))),
+        );
+
+        $this->assertInstanceOf('GeoJson\Geometry\MultiPolygon', $multiPolygon);
+        $this->assertSame('MultiPolygon', $multiPolygon->getType());
+        $this->assertSame($expectedCoordinates, $multiPolygon->getCoordinates());
+    }
+
+    public function provideJsonDecodeAssocOptions()
+    {
+        return array(
+            'assoc=true' => array(true),
+            'assoc=false' => array(false),
+        );
     }
 }

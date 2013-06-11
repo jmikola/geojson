@@ -11,6 +11,11 @@ class BoundingBoxTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_subclass_of('GeoJson\BoundingBox', 'JsonSerializable'));
     }
 
+    public function testIsJsonUnserializable()
+    {
+        $this->assertTrue(is_subclass_of('GeoJson\BoundingBox', 'GeoJson\JsonUnserializable'));
+    }
+
     /**
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage BoundingBox requires at least four values
@@ -64,5 +69,28 @@ class BoundingBoxTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($bounds, $boundingBox->getBounds());
         $this->assertSame($bounds, $boundingBox->jsonSerialize());
+    }
+
+    /**
+     * @dataProvider provideJsonDecodeAssocOptions
+     * @group functional
+     */
+    public function testUnserialization($assoc)
+    {
+        $json = '[-180.0, -90.0, 180.0, 90.0]';
+
+        $json = json_decode($json, $assoc);
+        $boundingBox = BoundingBox::jsonUnserialize($json);
+
+        $this->assertInstanceOf('GeoJson\BoundingBox', $boundingBox);
+        $this->assertSame(array(-180.0, -90.0, 180.0, 90.0), $boundingBox->getBounds());
+    }
+
+    public function provideJsonDecodeAssocOptions()
+    {
+        return array(
+            'assoc=true' => array(true),
+            'assoc=false' => array(false),
+        );
     }
 }

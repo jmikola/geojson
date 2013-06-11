@@ -3,6 +3,7 @@
 namespace GeoJson\Tests\Feature;
 
 use GeoJson\Feature\FeatureCollection;
+use GeoJson\GeoJson;
 use GeoJson\Tests\BaseGeoJsonTest;
 
 class FeatureCollectionTest extends BaseGeoJsonTest
@@ -94,5 +95,57 @@ class FeatureCollectionTest extends BaseGeoJsonTest
         $this->assertSame('FeatureCollection', $collection->getType());
         $this->assertSame($features, $collection->getFeatures());
         $this->assertSame($expected, $collection->jsonSerialize());
+    }
+
+    /**
+     * @dataProvider provideJsonDecodeAssocOptions
+     * @group functional
+     */
+    public function testUnserialization($assoc)
+    {
+        $json = <<<'JSON'
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "id": "test.feature.1",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [1, 1]
+            }
+        }
+    ]
+}
+JSON;
+
+        $json = json_decode($json, $assoc);
+        $collection = GeoJson::jsonUnserialize($json);
+
+        $this->assertInstanceOf('GeoJson\Feature\FeatureCollection', $collection);
+        $this->assertSame('FeatureCollection', $collection->getType());
+        $this->assertCount(1, $collection);
+
+        $features = iterator_to_array($collection);
+        $feature = $features[0];
+
+        $this->assertInstanceOf('GeoJson\Feature\Feature', $feature);
+        $this->assertSame('Feature', $feature->getType());
+        $this->assertSame('test.feature.1', $feature->getId());
+        $this->assertNull($feature->getProperties());
+
+        $geometry = $feature->getGeometry();
+
+        $this->assertInstanceOf('GeoJson\Geometry\Point', $geometry);
+        $this->assertSame('Point', $geometry->getType());
+        $this->assertSame(array(1, 1), $geometry->getCoordinates());
+    }
+
+    public function provideJsonDecodeAssocOptions()
+    {
+        return array(
+            'assoc=true' => array(true),
+            'assoc=false' => array(false),
+        );
     }
 }

@@ -2,6 +2,7 @@
 
 namespace GeoJson\Tests\Geometry;
 
+use GeoJson\GeoJson;
 use GeoJson\Geometry\GeometryCollection;
 use GeoJson\Tests\BaseGeoJsonTest;
 
@@ -93,5 +94,46 @@ class GeometryCollectionTest extends BaseGeoJsonTest
         $this->assertSame('GeometryCollection', $collection->getType());
         $this->assertSame($geometries, $collection->getGeometries());
         $this->assertSame($expected, $collection->jsonSerialize());
+    }
+
+    /**
+     * @dataProvider provideJsonDecodeAssocOptions
+     * @group functional
+     */
+    public function testUnserialization($assoc)
+    {
+        $json = <<<'JSON'
+{
+    "type": "GeometryCollection",
+    "geometries": [
+        {
+            "type": "Point",
+            "coordinates": [1, 1]
+        }
+    ]
+}
+JSON;
+
+        $json = json_decode($json, $assoc);
+        $collection = GeoJson::jsonUnserialize($json);
+
+        $this->assertInstanceOf('GeoJson\Geometry\GeometryCollection', $collection);
+        $this->assertSame('GeometryCollection', $collection->getType());
+        $this->assertCount(1, $collection);
+
+        $geometries = iterator_to_array($collection);
+        $geometry = $geometries[0];
+
+        $this->assertInstanceOf('GeoJson\Geometry\Point', $geometry);
+        $this->assertSame('Point', $geometry->getType());
+        $this->assertSame(array(1, 1), $geometry->getCoordinates());
+    }
+
+    public function provideJsonDecodeAssocOptions()
+    {
+        return array(
+            'assoc=true' => array(true),
+            'assoc=false' => array(false),
+        );
     }
 }

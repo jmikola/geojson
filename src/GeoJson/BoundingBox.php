@@ -8,7 +8,7 @@ namespace GeoJson;
  * @see http://www.geojson.org/geojson-spec.html#bounding-boxes
  * @since 1.0
  */
-class BoundingBox implements \JsonSerializable
+class BoundingBox implements \JsonSerializable, JsonUnserializable
 {
     /**
      * @var array
@@ -63,5 +63,17 @@ class BoundingBox implements \JsonSerializable
     public function jsonSerialize()
     {
         return $this->bounds;
+    }
+
+    /**
+     * @see JsonUnserializable::jsonUnserialize()
+     */
+    final public static function jsonUnserialize($json)
+    {
+        if ( ! is_array($json)) {
+            throw UnserializationException::invalidValue('BoundingBox', $json, 'array');
+        }
+
+        return new self($json);
     }
 }

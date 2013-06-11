@@ -2,6 +2,7 @@
 
 namespace GeoJson\Tests\Geometry;
 
+use GeoJson\GeoJson;
 use GeoJson\Geometry\MultiPoint;
 use GeoJson\Geometry\Point;
 use GeoJson\Tests\BaseGeoJsonTest;
@@ -54,5 +55,39 @@ class MultiPointTest extends BaseGeoJsonTest
         $this->assertSame('MultiPoint', $multiPoint->getType());
         $this->assertSame($coordinates, $multiPoint->getCoordinates());
         $this->assertSame($expected, $multiPoint->jsonSerialize());
+    }
+
+    /**
+     * @dataProvider provideJsonDecodeAssocOptions
+     * @group functional
+     */
+    public function testUnserialization($assoc)
+    {
+        $json = <<<'JSON'
+{
+    "type": "MultiPoint",
+    "coordinates": [
+        [1, 1],
+        [2, 2]
+    ]
+}
+JSON;
+
+        $json = json_decode($json, $assoc);
+        $multiPoint = GeoJson::jsonUnserialize($json);
+
+        $expectedCoordinates = array(array(1, 1), array(2, 2));
+
+        $this->assertInstanceOf('GeoJson\Geometry\MultiPoint', $multiPoint);
+        $this->assertSame('MultiPoint', $multiPoint->getType());
+        $this->assertSame($expectedCoordinates, $multiPoint->getCoordinates());
+    }
+
+    public function provideJsonDecodeAssocOptions()
+    {
+        return array(
+            'assoc=true' => array(true),
+            'assoc=false' => array(false),
+        );
     }
 }

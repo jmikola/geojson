@@ -13,4 +13,12 @@ class CoordinateReferenceSystemTest extends \PHPUnit_Framework_TestCase
             'JsonSerializable'
         ));
     }
+
+    public function testIsJsonUnserializable()
+    {
+        $this->assertTrue(is_subclass_of(
+            'GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem',
+            'GeoJson\JsonUnserializable'
+        ));
+    }
 }

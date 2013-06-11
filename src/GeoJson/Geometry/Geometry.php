@@ -2,6 +2,7 @@
 
 namespace GeoJson\Geometry;
 
+use GeoJson\Exception\UnserializationException;
 use GeoJson\GeoJson;
 
 /**

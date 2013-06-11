@@ -2,6 +2,7 @@
 
 namespace GeoJson\Tests\Geometry;
 
+use GeoJson\GeoJson;
 use GeoJson\Geometry\Point;
 use GeoJson\Tests\BaseGeoJsonTest;
 
@@ -67,5 +68,34 @@ class PointTest extends BaseGeoJsonTest
         $this->assertSame('Point', $point->getType());
         $this->assertSame($coordinates, $point->getCoordinates());
         $this->assertSame($expected, $point->jsonSerialize());
+    }
+
+    /**
+     * @dataProvider provideJsonDecodeAssocOptions
+     * @group functional
+     */
+    public function testUnserialization($assoc)
+    {
+        $json = <<<'JSON'
+{
+    "type": "Point",
+    "coordinates": [1, 1]
+}
+JSON;
+
+        $json = json_decode($json, $assoc);
+        $point = GeoJson::jsonUnserialize($json);
+
+        $this->assertInstanceOf('GeoJson\Geometry\Point', $point);
+        $this->assertSame('Point', $point->getType());
+        $this->assertSame(array(1, 1), $point->getCoordinates());
+    }
+
+    public function provideJsonDecodeAssocOptions()
+    {
+        return array(
+            'assoc=true' => array(true),
+            'assoc=false' => array(false),
+        );
     }
 }

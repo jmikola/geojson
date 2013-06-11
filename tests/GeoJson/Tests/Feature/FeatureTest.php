@@ -3,6 +3,7 @@
 namespace GeoJson\Tests\Feature;
 
 use GeoJson\Feature\Feature;
+use GeoJson\GeoJson;
 use GeoJson\Tests\BaseGeoJsonTest;
 
 class FeatureTest extends BaseGeoJsonTest
@@ -70,5 +71,48 @@ class FeatureTest extends BaseGeoJsonTest
         );
 
         $this->assertEquals($expected, $feature->jsonSerialize());
+    }
+
+    /**
+     * @dataProvider provideJsonDecodeAssocOptions
+     * @group functional
+     */
+    public function testUnserialization($assoc)
+    {
+        $json = <<<'JSON'
+{
+    "type": "Feature",
+    "id": "test.feature.1",
+    "properties": {
+        "key": "value"
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [1, 1]
+    }
+}
+JSON;
+
+        $json = json_decode($json, $assoc);
+        $feature = GeoJson::jsonUnserialize($json);
+
+        $this->assertInstanceOf('GeoJson\Feature\Feature', $feature);
+        $this->assertSame('Feature', $feature->getType());
+        $this->assertSame('test.feature.1', $feature->getId());
+        $this->assertSame(array('key' => 'value'), $feature->getProperties());
+
+        $geometry = $feature->getGeometry();
+
+        $this->assertInstanceOf('GeoJson\Geometry\Point', $geometry);
+        $this->assertSame('Point', $geometry->getType());
+        $this->assertSame(array(1, 1), $geometry->getCoordinates());
+    }
+
+    public function provideJsonDecodeAssocOptions()
+    {
+        return array(
+            'assoc=true' => array(true),
+            'assoc=false' => array(false),
+        );
     }
 }
