@@ -3,9 +3,17 @@
 namespace GeoJson\Tests\Geometry;
 
 use GeoJson\Geometry\GeometryCollection;
+use GeoJson\Tests\BaseGeoJsonTest;
 
-class GeometryCollectionTest extends \PHPUnit_Framework_TestCase
+class GeometryCollectionTest extends BaseGeoJsonTest
 {
+    public function createSubjectWithExtraArguments(array $extraArgs)
+    {
+        $class = new \ReflectionClass('GeoJson\Geometry\GeometryCollection');
+
+        return $class->newInstanceArgs(array_merge(array(array()), $extraArgs));
+    }
+
     public function testIsSubclassOfGeometry()
     {
         $this->assertTrue(is_subclass_of('GeoJson\Geometry\GeometryCollection', 'GeoJson\Geometry\Geometry'));
@@ -85,12 +93,5 @@ class GeometryCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('GeometryCollection', $collection->getType());
         $this->assertSame($geometries, $collection->getGeometries());
         $this->assertSame($expected, $collection->jsonSerialize());
-    }
-
-    private function getMockGeometry()
-    {
-        return $this->getMockBuilder('GeoJson\Geometry\Geometry')
-            ->disableOriginalConstructor()
-            ->getMock();
     }
 }

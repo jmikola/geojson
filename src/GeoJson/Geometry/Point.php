@@ -18,6 +18,7 @@ class Point extends Geometry
      * Constructor.
      *
      * @param float[] $position
+     * @param CoordinateResolutionSystem|BoundingBox $arg,...
      */
     public function __construct(array $position)
     {
@@ -32,5 +33,9 @@ class Point extends Geometry
         }
 
         $this->coordinates = $position;
+
+        if (func_num_args() > 1) {
+            $this->setOptionalConstructorArgs(array_slice(func_get_args(), 1));
+        }
     }
 }

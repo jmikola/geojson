@@ -3,9 +3,17 @@
 namespace GeoJson\Tests\Feature;
 
 use GeoJson\Feature\Feature;
+use GeoJson\Tests\BaseGeoJsonTest;
 
-class FeatureTest extends \PHPUnit_Framework_TestCase
+class FeatureTest extends BaseGeoJsonTest
 {
+    public function createSubjectWithExtraArguments(array $extraArgs)
+    {
+        $class = new \ReflectionClass('GeoJson\Feature\Feature');
+
+        return $class->newInstanceArgs(array_merge(array(null, null, null), $extraArgs));
+    }
+
     public function testIsSubclassOfGeoJson()
     {
         $this->assertTrue(is_subclass_of('GeoJson\Feature\Feature', 'GeoJson\GeoJson'));
@@ -62,12 +70,5 @@ class FeatureTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals($expected, $feature->jsonSerialize());
-    }
-
-    private function getMockGeometry()
-    {
-        return $this->getMockBuilder('GeoJson\Geometry\Geometry')
-            ->disableOriginalConstructor()
-            ->getMock();
     }
 }

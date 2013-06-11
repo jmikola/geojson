@@ -33,6 +33,10 @@ class FeatureCollection extends GeoJson implements \Countable, \IteratorAggregat
         }
 
         $this->features = array_values($features);
+
+        if (func_num_args() > 1) {
+            $this->setOptionalConstructorArgs(array_slice(func_get_args(), 1));
+        }
     }
 
     /**

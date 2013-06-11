@@ -3,9 +3,17 @@
 namespace GeoJson\Tests\Geometry;
 
 use GeoJson\Geometry\Point;
+use GeoJson\Tests\BaseGeoJsonTest;
 
-class PointTest extends \PHPUnit_Framework_TestCase
+class PointTest extends BaseGeoJsonTest
 {
+    public function createSubjectWithExtraArguments(array $extraArgs)
+    {
+        $class = new \ReflectionClass('GeoJson\Geometry\Point');
+
+        return $class->newInstanceArgs(array_merge(array(array(1, 1)), $extraArgs));
+    }
+
     public function testIsSubclassOfGeometry()
     {
         $this->assertTrue(is_subclass_of('GeoJson\Geometry\Point', 'GeoJson\Geometry\Geometry'));

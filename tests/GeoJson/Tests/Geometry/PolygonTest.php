@@ -4,9 +4,23 @@ namespace GeoJson\Tests\Geometry;
 
 use GeoJson\Geometry\LinearRing;
 use GeoJson\Geometry\Polygon;
+use GeoJson\Tests\BaseGeoJsonTest;
 
-class PolygonTest extends \PHPUnit_Framework_TestCase
+class PolygonTest extends BaseGeoJsonTest
 {
+    public function createSubjectWithExtraArguments(array $extraArgs)
+    {
+        $class = new \ReflectionClass('GeoJson\Geometry\Polygon');
+
+        return $class->newInstanceArgs(array_merge(
+            array(array(
+                array(array(0, 0), array(0, 4), array(4, 4), array(4, 0), array(0, 0)),
+                array(array(1, 1), array(1, 3), array(3, 3), array(3, 1), array(1, 1)),
+            )),
+            $extraArgs
+        ));
+    }
+
     public function testIsSubclassOfGeometry()
     {
         $this->assertTrue(is_subclass_of('GeoJson\Geometry\Polygon', 'GeoJson\Geometry\Geometry'));

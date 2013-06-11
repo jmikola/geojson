@@ -4,9 +4,23 @@ namespace GeoJson\Tests\Geometry;
 
 use GeoJson\Geometry\MultiPoint;
 use GeoJson\Geometry\Point;
+use GeoJson\Tests\BaseGeoJsonTest;
 
-class MultiPointTest extends \PHPUnit_Framework_TestCase
+class MultiPointTest extends BaseGeoJsonTest
 {
+    public function createSubjectWithExtraArguments(array $extraArgs)
+    {
+        $class = new \ReflectionClass('GeoJson\Geometry\MultiPoint');
+
+        return $class->newInstanceArgs(array_merge(
+            array(array(
+                array(1, 1),
+                array(2, 2),
+            )),
+            $extraArgs
+        ));
+    }
+
     public function testIsSubclassOfGeometry()
     {
         $this->assertTrue(is_subclass_of('GeoJson\Geometry\MultiPoint', 'GeoJson\Geometry\Geometry'));

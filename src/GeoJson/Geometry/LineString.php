@@ -25,6 +25,6 @@ class LineString extends MultiPoint
             throw new \InvalidArgumentException('LineString requires at least two positions');
         }
 
-        parent::__construct($positions);
+        call_user_func_array(array('parent', '__construct'), func_get_args());
     }
 }

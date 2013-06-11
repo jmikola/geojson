@@ -4,9 +4,23 @@ namespace GeoJson\Tests\Geometry;
 
 use GeoJson\Geometry\LineString;
 use GeoJson\Geometry\MultiLineString;
+use GeoJson\Tests\BaseGeoJsonTest;
 
-class MultiLineStringTest extends \PHPUnit_Framework_TestCase
+class MultiLineStringTest extends BaseGeoJsonTest
 {
+    public function createSubjectWithExtraArguments(array $extraArgs)
+    {
+        $class = new \ReflectionClass('GeoJson\Geometry\MultiLineString');
+
+        return $class->newInstanceArgs(array_merge(
+            array(array(
+                array(array(1, 1), array(2, 2)),
+                array(array(3, 3), array(4, 4)),
+            )),
+            $extraArgs
+        ));
+    }
+
     public function testIsSubclassOfGeometry()
     {
         $this->assertTrue(is_subclass_of('GeoJson\Geometry\MultiLineString', 'GeoJson\Geometry\Geometry'));

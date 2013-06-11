@@ -2,6 +2,8 @@
 
 namespace GeoJson;
 
+use GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem;
+
 /**
  * Base GeoJson object.
  *
@@ -11,9 +13,39 @@ namespace GeoJson;
 abstract class GeoJson implements \JsonSerializable
 {
     /**
+     * @var BoundingBox
+     */
+    protected $boundingBox;
+
+    /**
+     * @var CoordinateReferenceSystem
+     */
+    protected $crs;
+
+    /**
      * @var string
      */
     protected $type;
+
+    /**
+     * Return the BoundingBox for this GeoJson object.
+     *
+     * @return BoundingBox
+     */
+    public function getBoundingBox()
+    {
+        return $this->boundingBox;
+    }
+
+    /**
+     * Return the CoordinateReferenceSystem for this GeoJson object.
+     *
+     * @return CoordinateReferenceSystem
+     */
+    public function getCrs()
+    {
+        return $this->crs;
+    }
 
     /**
      * Return the type for this GeoJson object.
@@ -30,6 +62,35 @@ abstract class GeoJson implements \JsonSerializable
      */
     public function jsonSerialize()
     {
-        return array('type' => $this->type);
+        $json = array('type' => $this->type);
+
+        if (isset($this->crs)) {
+            $json['crs'] = $this->crs->jsonSerialize();
+        }
+
+        if (isset($this->boundingBox)) {
+            $json['bbox'] = $this->boundingBox->jsonSerialize();
+        }
+
+        return $json;
+    }
+
+    /**
+     * Set optional CRS and BoundingBox arguments passed to a constructor.
+     *
+     * @todo Decide if multiple CRS or BoundingBox instances should override a
+     *       previous value or be ignored
+     */
+    protected function setOptionalConstructorArgs(array $args)
+    {
+        foreach ($args as $arg) {
+            if ($arg instanceof CoordinateReferenceSystem) {
+                $this->crs = $arg;
+            }
+
+            if ($arg instanceof BoundingBox) {
+                $this->boundingBox = $arg;
+            }
+        }
     }
 }

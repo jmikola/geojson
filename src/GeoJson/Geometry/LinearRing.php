@@ -34,6 +34,6 @@ class LinearRing extends LineString
             throw new \InvalidArgumentException('LinearRing requires the first and last positions to be equivalent');
         }
 
-        parent::__construct($positions);
+        call_user_func_array(array('parent', '__construct'), func_get_args());
     }
 }

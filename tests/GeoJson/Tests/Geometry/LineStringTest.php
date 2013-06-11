@@ -3,9 +3,20 @@
 namespace GeoJson\Tests\Geometry;
 
 use GeoJson\Geometry\LineString;
+use GeoJson\Tests\BaseGeoJsonTest;
 
-class LineStringTest extends \PHPUnit_Framework_TestCase
+class LineStringTest extends BaseGeoJsonTest
 {
+    public function createSubjectWithExtraArguments(array $extraArgs)
+    {
+        $class = new \ReflectionClass('GeoJson\Geometry\LineString');
+
+        return $class->newInstanceArgs(array_merge(
+            array(array(array(1, 1), array(2, 2))),
+            $extraArgs
+        ));
+    }
+
     public function testIsSubclassOfMultiPoint()
     {
         $this->assertTrue(is_subclass_of('GeoJson\Geometry\LineString', 'GeoJson\Geometry\MultiPoint'));

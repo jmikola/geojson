@@ -44,6 +44,10 @@ class Feature extends GeoJson
         $this->geometry = $geometry;
         $this->properties = $properties;
         $this->id = $id;
+
+        if (func_num_args() > 3) {
+            $this->setOptionalConstructorArgs(array_slice(func_get_args(), 3));
+        }
     }
 
     /**

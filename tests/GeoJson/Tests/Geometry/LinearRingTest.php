@@ -4,9 +4,20 @@ namespace GeoJson\Tests\Geometry;
 
 use GeoJson\Geometry\LinearRing;
 use GeoJson\Geometry\Point;
+use GeoJson\Tests\BaseGeoJsonTest;
 
-class LinearRingTest extends \PHPUnit_Framework_TestCase
+class LinearRingTest extends BaseGeoJsonTest
 {
+    public function createSubjectWithExtraArguments(array $extraArgs)
+    {
+        $class = new \ReflectionClass('GeoJson\Geometry\LinearRing');
+
+        return $class->newInstanceArgs(array_merge(
+            array(array(array(1, 1), array(2, 2), array(3, 3), array(1, 1))),
+            $extraArgs
+        ));
+    }
+
     public function testIsSubclassOfLineString()
     {
         $this->assertTrue(is_subclass_of('GeoJson\Geometry\LinearRing', 'GeoJson\Geometry\LineString'));

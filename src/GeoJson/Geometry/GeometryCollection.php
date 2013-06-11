@@ -31,6 +31,10 @@ class GeometryCollection extends Geometry implements \Countable, \IteratorAggreg
         }
 
         $this->geometries = array_values($geometries);
+
+        if (func_num_args() > 1) {
+            $this->setOptionalConstructorArgs(array_slice(func_get_args(), 1));
+        }
     }
 
     /**

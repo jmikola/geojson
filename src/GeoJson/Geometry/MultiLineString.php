@@ -31,5 +31,9 @@ class MultiLineString extends Geometry
             },
             $lineStrings
         );
+
+        if (func_num_args() > 1) {
+            $this->setOptionalConstructorArgs(array_slice(func_get_args(), 1));
+        }
     }
 }

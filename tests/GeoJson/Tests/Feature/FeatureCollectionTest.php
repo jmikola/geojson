@@ -3,9 +3,17 @@
 namespace GeoJson\Tests\Feature;
 
 use GeoJson\Feature\FeatureCollection;
+use GeoJson\Tests\BaseGeoJsonTest;
 
-class FeatureCollectionTest extends \PHPUnit_Framework_TestCase
+class FeatureCollectionTest extends BaseGeoJsonTest
 {
+    public function createSubjectWithExtraArguments(array $extraArgs)
+    {
+        $class = new \ReflectionClass('GeoJson\Feature\FeatureCollection');
+
+        return $class->newInstanceArgs(array_merge(array(array()), $extraArgs));
+    }
+
     public function testIsSubclassOfGeoJson()
     {
         $this->assertTrue(is_subclass_of('GeoJson\Feature\FeatureCollection', 'GeoJson\GeoJson'));
@@ -86,12 +94,5 @@ class FeatureCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('FeatureCollection', $collection->getType());
         $this->assertSame($features, $collection->getFeatures());
         $this->assertSame($expected, $collection->jsonSerialize());
-    }
-
-    private function getMockFeature()
-    {
-        return $this->getMockBuilder('GeoJson\Feature\Feature')
-            ->disableOriginalConstructor()
-            ->getMock();
     }
 }

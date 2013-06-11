@@ -4,9 +4,23 @@ namespace GeoJson\Tests\Geometry;
 
 use GeoJson\Geometry\MultiPolygon;
 use GeoJson\Geometry\Polygon;
+use GeoJson\Tests\BaseGeoJsonTest;
 
-class MultiPolygonTest extends \PHPUnit_Framework_TestCase
+class MultiPolygonTest extends BaseGeoJsonTest
 {
+    public function createSubjectWithExtraArguments(array $extraArgs)
+    {
+        $class = new \ReflectionClass('GeoJson\Geometry\MultiPolygon');
+
+        return $class->newInstanceArgs(array_merge(
+            array(array(
+                array(array(array(0, 0), array(0, 4), array(4, 4), array(4, 0), array(0, 0))),
+                array(array(array(1, 1), array(1, 3), array(3, 3), array(3, 1), array(1, 1))),
+            )),
+            $extraArgs
+        ));
+    }
+
     public function testIsSubclassOfGeometry()
     {
         $this->assertTrue(is_subclass_of('GeoJson\Geometry\MultiPolygon', 'GeoJson\Geometry\Geometry'));
