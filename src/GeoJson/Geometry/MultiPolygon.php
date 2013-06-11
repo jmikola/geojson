@@ -18,6 +18,7 @@ class MultiPolygon extends Geometry
      * Constructor.
      *
      * @param float[][][][]|Polygon[] $polygons
+     * @param CoordinateResolutionSystem|BoundingBox $arg,...
      */
     public function __construct(array $polygons)
     {

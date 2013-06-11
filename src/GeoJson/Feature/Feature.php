@@ -38,6 +38,7 @@ class Feature extends GeoJson
      * @param Geometry $geometry
      * @param array $properties
      * @param mixed $id
+     * @param CoordinateResolutionSystem|BoundingBox $arg,...
      */
     public function __construct(Geometry $geometry = null, array $properties = null, $id = null)
     {

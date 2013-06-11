@@ -23,6 +23,7 @@ class FeatureCollection extends GeoJson implements \Countable, \IteratorAggregat
      * Constructor.
      *
      * @param Feature[] $features
+     * @param CoordinateResolutionSystem|BoundingBox $arg,...
      */
     public function __construct(array $features)
     {

@@ -18,6 +18,7 @@ class Polygon extends Geometry
      * Constructor.
      *
      * @param float[][][]|LinearRing[] $linearRings
+     * @param CoordinateResolutionSystem|BoundingBox $arg,...
      */
     public function __construct(array $linearRings)
     {

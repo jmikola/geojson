@@ -18,6 +18,7 @@ class MultiLineString extends Geometry
      * Constructor.
      *
      * @param float[][][]|LineString[] $lineStrings
+     * @param CoordinateResolutionSystem|BoundingBox $arg,...
      */
     public function __construct(array $lineStrings)
     {

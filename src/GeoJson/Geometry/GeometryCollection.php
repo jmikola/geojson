@@ -21,6 +21,7 @@ class GeometryCollection extends Geometry implements \Countable, \IteratorAggreg
      * Constructor.
      *
      * @param Geometry[] $geometries
+     * @param CoordinateResolutionSystem|BoundingBox $arg,...
      */
     public function __construct(array $geometries)
     {

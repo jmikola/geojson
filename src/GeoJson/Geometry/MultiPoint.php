@@ -18,6 +18,7 @@ class MultiPoint extends Geometry
      * Constructor.
      *
      * @param float[][]|Point[] $positions
+     * @param CoordinateResolutionSystem|BoundingBox $arg,...
      */
     public function __construct(array $positions)
     {
