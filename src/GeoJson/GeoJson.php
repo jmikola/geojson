@@ -127,6 +127,7 @@ abstract class GeoJson implements \JsonSerializable, JsonUnserializable
                 $args[] = isset($geometry) ? self::jsonUnserialize($geometry) : null;
                 $args[] = isset($properties) ? (array) $properties : null;
                 $args[] = isset($json['id']) ? $json['id'] : null;
+                break;
 
             case 'FeatureCollection':
                 $features = isset($json['features']) ? $json['features'] : array();
