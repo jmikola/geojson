@@ -17,7 +17,7 @@ The library is published as a
 [Composer](http://getcomposer.org/):
 
 ```
-$ composer require jmikola/geojson=1.0.*@dev
+$ composer require "jmikola/geojson=1.0.*@dev"
 ```
 
 ## Usage
