@@ -8,17 +8,17 @@ class CoordinateReferenceSystemTest extends \PHPUnit_Framework_TestCase
 {
     public function testIsJsonSerializable()
     {
-        $this->assertTrue(is_subclass_of(
-            'GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem',
-            'JsonSerializable'
-        ));
+        $this->assertInstanceOf(
+            'JsonSerializable',
+            $this->getMock('GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem')
+        );
     }
 
     public function testIsJsonUnserializable()
     {
-        $this->assertTrue(is_subclass_of(
-            'GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem',
-            'GeoJson\JsonUnserializable'
-        ));
+        $this->assertInstanceOf(
+            'GeoJson\JsonUnserializable',
+            $this->getMock('GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem')
+        );
     }
 }
