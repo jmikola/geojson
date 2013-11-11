@@ -8,12 +8,12 @@ class GeoJsonTest extends \PHPUnit_Framework_TestCase
 {
     public function testIsJsonSerializable()
     {
-        $this->assertTrue(is_subclass_of('GeoJson\GeoJson', 'JsonSerializable'));
+        $this->assertInstanceOf('JsonSerializable', $this->getMock('GeoJson\GeoJson'));
     }
 
     public function testIsJsonUnserializable()
     {
-        $this->assertTrue(is_subclass_of('GeoJson\GeoJson', 'GeoJson\JsonUnserializable'));
+        $this->assertInstanceOf('GeoJson\JsonUnserializable', $this->getMock('GeoJson\GeoJson'));
     }
 
     /**

@@ -8,12 +8,12 @@ class BoundingBoxTest extends \PHPUnit_Framework_TestCase
 {
     public function testIsJsonSerializable()
     {
-        $this->assertTrue(is_subclass_of('GeoJson\BoundingBox', 'JsonSerializable'));
+        $this->assertInstanceOf('JsonSerializable', new BoundingBox(array(0, 0, 1, 1)));
     }
 
     public function testIsJsonUnserializable()
     {
-        $this->assertTrue(is_subclass_of('GeoJson\BoundingBox', 'GeoJson\JsonUnserializable'));
+        $this->assertInstanceOf('GeoJson\JsonUnserializable', new BoundingBox(array(0, 0, 1, 1)));
     }
 
     /**
