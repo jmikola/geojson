@@ -136,4 +136,22 @@ JSON;
             'assoc=false' => array(false),
         );
     }
+
+    /**
+     * @expectedException GeoJson\Exception\UnserializationException
+     * @expectedExceptionMessage GeometryCollection expected "geometries" property of type array, none given
+     */
+    public function testUnserializationShouldRequireGeometriesProperty()
+    {
+        GeoJson::jsonUnserialize(array('type' => 'GeometryCollection'));
+    }
+
+    /**
+     * @expectedException GeoJson\Exception\UnserializationException
+     * @expectedExceptionMessage GeometryCollection expected "geometries" property of type array
+     */
+    public function testUnserializationShouldRequireGeometriesArray()
+    {
+        GeoJson::jsonUnserialize(array('type' => 'GeometryCollection', 'geometries' => null));
+    }
 }

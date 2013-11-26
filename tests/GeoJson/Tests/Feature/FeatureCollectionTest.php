@@ -148,4 +148,22 @@ JSON;
             'assoc=false' => array(false),
         );
     }
+
+    /**
+     * @expectedException GeoJson\Exception\UnserializationException
+     * @expectedExceptionMessage FeatureCollection expected "features" property of type array, none given
+     */
+    public function testUnserializationShouldRequireFeaturesProperty()
+    {
+        GeoJson::jsonUnserialize(array('type' => 'FeatureCollection'));
+    }
+
+    /**
+     * @expectedException GeoJson\Exception\UnserializationException
+     * @expectedExceptionMessage FeatureCollection expected "features" property of type array
+     */
+    public function testUnserializationShouldRequireFeaturesArray()
+    {
+        GeoJson::jsonUnserialize(array('type' => 'FeatureCollection', 'features' => null));
+    }
 }
