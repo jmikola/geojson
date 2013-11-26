@@ -107,4 +107,22 @@ JSON;
             'assoc=false' => array(false),
         );
     }
+
+    /**
+     * @expectedException GeoJson\Exception\UnserializationException
+     * @expectedExceptionMessage Linked CRS expected "properties" property of type array or object
+     */
+    public function testUnserializationShouldRequirePropertiesArrayOrObject()
+    {
+        CoordinateReferenceSystem::jsonUnserialize(array('type' => 'link', 'properties' => null));
+    }
+
+    /**
+     * @expectedException GeoJson\Exception\UnserializationException
+     * @expectedExceptionMessage Linked CRS expected "properties.href" property of type string
+     */
+    public function testUnserializationShouldRequireHrefProperty()
+    {
+        CoordinateReferenceSystem::jsonUnserialize(array('type' => 'link', 'properties' => array()));
+    }
 }

@@ -93,4 +93,24 @@ class BoundingBoxTest extends \PHPUnit_Framework_TestCase
             'assoc=false' => array(false),
         );
     }
+
+    /**
+     * @dataProvider provideInvalidUnserializationValues
+     * @expectedException GeoJson\Exception\UnserializationException
+     * @expectedExceptionMessage BoundingBox expected value of type array
+     */
+    public function testUnserializationShouldRequireArray($value)
+    {
+        BoundingBox::jsonUnserialize($value);
+    }
+
+    public function provideInvalidUnserializationValues()
+    {
+        return array(
+            array(null),
+            array(1),
+            array('foo'),
+            array(new \stdClass()),
+        );
+    }
 }

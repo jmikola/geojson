@@ -63,4 +63,22 @@ JSON;
             'assoc=false' => array(false),
         );
     }
+
+    /**
+     * @expectedException GeoJson\Exception\UnserializationException
+     * @expectedExceptionMessage Named CRS expected "properties" property of type array or object
+     */
+    public function testUnserializationShouldRequirePropertiesArrayOrObject()
+    {
+        CoordinateReferenceSystem::jsonUnserialize(array('type' => 'name', 'properties' => null));
+    }
+
+    /**
+     * @expectedException GeoJson\Exception\UnserializationException
+     * @expectedExceptionMessage Named CRS expected "properties.name" property of type string
+     */
+    public function testUnserializationShouldRequireNameProperty()
+    {
+        CoordinateReferenceSystem::jsonUnserialize(array('type' => 'name', 'properties' => array()));
+    }
 }

@@ -2,6 +2,8 @@
 
 namespace GeoJson\CoordinateReferenceSystem;
 
+use GeoJson\Exception\UnserializationException;
+
 /**
  * Named coordinate reference system object.
  *

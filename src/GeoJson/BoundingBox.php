@@ -2,6 +2,8 @@
 
 namespace GeoJson;
 
+use GeoJson\Exception\UnserializationException;
+
 /**
  * BoundingBox object.
  *
