@@ -41,7 +41,7 @@ class BoundingBox implements \JsonSerializable, JsonUnserializable
         }
 
         for ($i = 0; $i < ($count / 2); $i++) {
-            if ($bounds[$i] > $bounds[$i * 2]) {
+            if ($bounds[$i] > $bounds[$i + $count / 2]) {
                 throw new \InvalidArgumentException('BoundingBox min values must precede max values');
             }
         }
