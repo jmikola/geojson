@@ -59,7 +59,7 @@ class BoundingBoxTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructorShouldRequireMinBeforeMaxValues()
     {
-        new BoundingBox(array(1, 1, 0, 0));
+        new BoundingBox(array(-90.0, -95.0, -92.5, 90.0));
     }
 
     public function testSerialization()
