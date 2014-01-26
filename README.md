@@ -102,5 +102,5 @@ If errors are encountered during unserialization, an `UnserializationException`
 will be thrown by `jsonUnserialize()`. Possible errors include:
 
  * Missing properties (e.g. `type` is not present)
- * Unexpected valus (e.g. `coordinates` property is not an array)
+ * Unexpected values (e.g. `coordinates` property is not an array)
  * Unsupported `type` string when parsing a GeoJson object or CRS
