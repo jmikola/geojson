@@ -50,7 +50,7 @@ These objects may appear in any order *after* the explicit arguments.
 ```php
 $crs = new \GeoJson\CoordinateReferenceSystem\Named('urn:ogc:def:crs:OGC:1.3:CRS84');
 $box = new \GeoJson\BoundingBox([-180, -90, 180, 90]);
-$point = new \GeoJson\Point([0, 0], $crs, $box);
+$point = new \GeoJson\Geometry\Point([0, 0], $crs, $box);
 ```
 
 Note that the `Feature` class is unique in that it has three arguments, all with
