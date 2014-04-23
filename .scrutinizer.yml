@@ -1,0 +1,30 @@
+filter:
+    excluded_paths: [ "vendor/*", "tests/*" ]
+
+tools:
+    # https://scrutinizer-ci.com/docs/tools/external-code-coverage/
+    external_code_coverage: true
+
+    # https://scrutinizer-ci.com/docs/tools/php/php-analyzer/
+    php_analyzer: true
+
+    # https://scrutinizer-ci.com/docs/tools/php/change-tracking-analyzer/
+    php_changetracking: true
+
+    # https://scrutinizer-ci.com/docs/tools/php/code-sniffer/
+    php_code_sniffer:
+        config:
+            standard: "PSR1"
+        filter:
+            excluded_paths: [ "stubs/*" ]
+
+    # https://scrutinizer-ci.com/docs/tools/php/mess-detector/
+    php_mess_detector: true
+
+    # https://scrutinizer-ci.com/docs/tools/php/pdepend/
+    php_pdepend: true
+
+    # https://scrutinizer-ci.com/docs/tools/php/code-similarity-analyzer/
+    php_sim: true
+
+    sensiolabs_security_checker: true
