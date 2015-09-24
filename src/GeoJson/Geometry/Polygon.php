@@ -22,16 +22,12 @@ class Polygon extends Geometry
      */
     public function __construct(array $linearRings)
     {
-        $this->coordinates = array_map(
-            function($linearRing) {
-                if ( ! $linearRing instanceof LinearRing) {
-                    $linearRing = new LinearRing($linearRing);
-                }
-
-                return $linearRing->getCoordinates();
-            },
-            $linearRings
-        );
+        foreach ($linearRings as $linearRing) {
+            if ( ! $linearRing instanceof LinearRing) {
+                $linearRing = new LinearRing($linearRing);
+            }
+            $this->coordinates[] = $linearRing->getCoordinates();
+        }
 
         if (func_num_args() > 1) {
             $this->setOptionalConstructorArgs(array_slice(func_get_args(), 1));
