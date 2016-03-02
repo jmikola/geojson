@@ -57,4 +57,21 @@ class CoordinateReferenceSystemTest extends \PHPUnit_Framework_TestCase
     {
         CoordinateReferenceSystem::jsonUnserialize(array('type' => 'foo', 'properties' => array()));
     }
+
+    public function testjsonUnserializeFromPropertiesShouldThrowExceptionWhenCalled()
+    {
+        $this->setExpectedException(
+            'BadMethodCallException',
+            'GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem::jsonUnserializeFromProperties '
+            . 'must be overridden in a child class'
+        );
+
+        $class = $this->getMockBuilder('\GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem')
+                      ->getMockForAbstractClass();
+
+        $method = new \ReflectionMethod($class, 'jsonUnserializeFromProperties');
+        $method->setAccessible(true);
+
+        $method->invoke($class, null);
+    }
 }

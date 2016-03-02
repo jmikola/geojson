@@ -78,6 +78,179 @@ JSON;
         $this->assertSame($expectedProperties, $crs->getProperties());
     }
 
+    /**
+     * @dataProvider provideInvalidJsonTypes
+     */
+    public function testJsonUnserializeShouldThrowExceptionWhenJsonIsNotArrayOrOject($invalidType)
+    {
+        $this->setExpectedException(
+            '\GeoJson\Exception\UnserializationException',
+            sprintf('GeoJson expected value of type array or object, %s given', gettype($invalidType))
+        );
+
+        GeoJson::jsonUnserialize($invalidType);
+    }
+
+    /**
+     * @expectedException GeoJson\Exception\UnserializationException
+     * @expectedExceptionMessage GeoJson expected "type" property of type string, none given
+     */
+    public function testJsonUnserializeShouldThrowExceptionWhenTypePropertyIsMissing()
+    {
+        $json = <<<'JSON'
+{
+}
+JSON;
+
+        $json = json_decode($json);
+        GeoJson::jsonUnserialize($json);
+    }
+
+    /**
+     * @expectedException GeoJson\Exception\UnserializationException
+     * @expectedExceptionMessage Polygon expected "coordinates" property of type array, none given
+     */
+    public function testJsonUnserializeShouldThrowExceptionWhenTypeIsPolygonAndCoordinatesPropertyIsMissing()
+    {
+        $json = <<<'JSON'
+{
+    "type": "Polygon"
+}
+JSON;
+
+        $json = json_decode($json);
+        GeoJson::jsonUnserialize($json);
+    }
+////
+    /**
+     * @dataProvider provideInvalidCoordinates
+     */
+    public function testJsonUnserializeShouldThrowExceptionWhenTypeIsPolygonAndCoordinatesIsNotArray($invalidType)
+    {
+        $this->setExpectedException(
+            'GeoJson\Exception\UnserializationException',
+            sprintf('Polygon expected "coordinates" property of type array, %s given', gettype($invalidType))
+        );
+
+        $jsonInvalidType = json_encode($invalidType);
+
+        $json = <<<JSON
+{
+    "type": "Polygon",
+    "coordinates": {$jsonInvalidType}
+}
+JSON;
+
+        $json = json_decode($json);
+        GeoJson::jsonUnserialize($json);
+    }
+
+    /**
+     * @dataProvider provideInvalidGeometry
+     */
+    public function testJsonUnserializeShouldThrowExceptionWhenTypeIsFeatureAndGeometryIsSetAndIsNotArrayOrOject(
+        $invalidType
+    ) {
+        $this->setExpectedException(
+            'GeoJson\Exception\UnserializationException',
+            sprintf('Feature expected "geometry" property of type array or object, %s given', gettype($invalidType))
+        );
+
+        $jsonInvalidType = json_encode($invalidType);
+
+        $json = <<<JSON
+{
+    "type": "Feature",
+    "geometry": {$jsonInvalidType}
+}
+JSON;
+
+        $json = json_decode($json);
+        GeoJson::jsonUnserialize($json);
+    }
+
+    /**
+     * @dataProvider provideInvalidProperties
+     */
+    public function testJsonUnserializeShouldThrowExceptionWhenTypeIsFeatureAndPropertiesIsSetAndIsNotArrayOrOject(
+        $invalidType
+    ) {
+        $this->setExpectedException(
+            'GeoJson\Exception\UnserializationException',
+            sprintf('Feature expected "properties" property of type array or object, %s given', gettype($invalidType))
+        );
+
+        $jsonInvalidType = json_encode($invalidType);
+
+        $json = <<<JSON
+{
+    "type": "Feature",
+    "properties": {$jsonInvalidType}
+}
+JSON;
+
+        $json = json_decode($json);
+        GeoJson::jsonUnserialize($json);
+    }
+
+    /**
+     * @expectedException GeoJson\Exception\UnserializationException
+     * @expectedExceptionMessage Invalid GeoJson type "UnsupportedType"
+     */
+    public function testJsonUnserializeShouldThrowExceptionWhenTypeIsUnsupported()
+    {
+        $json = <<<'JSON'
+{
+    "type": "UnsupportedType"
+}
+JSON;
+
+        $json = json_decode($json);
+        GeoJson::jsonUnserialize($json);
+    }
+
+    public function provideInvalidCoordinates()
+    {
+        return array(
+            array(null),
+            array(1),
+            array('a'),
+            array(1.1),
+            array(true),
+        );
+    }
+
+    public function provideInvalidGeometry()
+    {
+        return array(
+            array(1),
+            array('a'),
+            array(1.1),
+            array(true),
+        );
+    }
+
+    public function provideInvalidProperties()
+    {
+        return array(
+            array(1),
+            array('a'),
+            array(1.1),
+            array(true),
+        );
+    }
+
+    public function provideInvalidJsonTypes()
+    {
+        return array(
+            array(null),
+            array(1),
+            array('a'),
+            array(1.1),
+            array(true)
+        );
+    }
+
     public function provideJsonDecodeAssocOptions()
     {
         return array(
