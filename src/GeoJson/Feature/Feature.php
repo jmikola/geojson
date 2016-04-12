@@ -35,10 +35,10 @@ class Feature extends GeoJson
     /**
      * Constructor.
      *
-     * @param Geometry $geometry
-     * @param array $properties
-     * @param mixed $id
-     * @param CoordinateResolutionSystem|BoundingBox $arg,...
+     * @param Geometry                                                                          $geometry
+     * @param array                                                                             $properties
+     * @param mixed                                                                             $id
+     * @param \GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem|\GeoJson\BoundingBox $arg,...
      */
     public function __construct(Geometry $geometry = null, array $properties = null, $id = null)
     {
@@ -54,7 +54,7 @@ class Feature extends GeoJson
     /**
      * Return the Geometry object for this Feature object.
      *
-     * @return string
+     * @return Geometry
      */
     public function getGeometry()
     {

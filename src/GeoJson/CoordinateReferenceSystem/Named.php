@@ -28,8 +28,11 @@ class Named extends CoordinateReferenceSystem
      * Factory method for creating a Named CRS object from properties.
      *
      * @see CoordinateReferenceSystem::jsonUnserialize()
+     *
      * @param array|object $properties
+     *
      * @return Named
+     *
      * @throws UnserializationException
      */
     protected static function jsonUnserializeFromProperties($properties)

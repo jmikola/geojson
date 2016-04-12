@@ -17,8 +17,8 @@ class Polygon extends Geometry
     /**
      * Constructor.
      *
-     * @param float[][][]|LinearRing[] $linearRings
-     * @param CoordinateResolutionSystem|BoundingBox $arg,...
+     * @param float[][][]|LinearRing[]                                                          $linearRings
+     * @param \GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem|\GeoJson\BoundingBox $arg,...
      */
     public function __construct(array $linearRings)
     {

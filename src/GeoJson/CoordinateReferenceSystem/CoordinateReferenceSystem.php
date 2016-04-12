@@ -93,8 +93,11 @@ abstract class CoordinateReferenceSystem implements \JsonSerializable, JsonUnser
      * This method must be overridden in a child class.
      *
      * @see CoordinateReferenceSystem::jsonUnserialize()
+     *
      * @param array|object $properties
+     *
      * @return CoordinateReferenceSystem
+     *
      * @throws \BadMethodCallException
      */
     protected static function jsonUnserializeFromProperties($properties)

@@ -15,15 +15,15 @@ class FeatureCollection extends GeoJson implements \Countable, \IteratorAggregat
     protected $type = 'FeatureCollection';
 
     /**
-     * @var array
+     * @var Feature[]
      */
     protected $features;
 
     /**
      * Constructor.
      *
-     * @param Feature[] $features
-     * @param CoordinateResolutionSystem|BoundingBox $arg,...
+     * @param Feature[]                                                                         $features
+     * @param \GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem|\GeoJson\BoundingBox $arg,...
      */
     public function __construct(array $features)
     {

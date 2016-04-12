@@ -16,8 +16,8 @@ class LinearRing extends LineString
     /**
      * Constructor.
      *
-     * @param float[][]|Point[] $positions
-     * @param CoordinateResolutionSystem|BoundingBox $arg,...
+     * @param float[][]|Point[]                                                                 $positions
+     * @param \GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem|\GeoJson\BoundingBox $arg,...
      */
     public function __construct(array $positions)
     {
