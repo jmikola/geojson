@@ -54,7 +54,7 @@ class Feature extends GeoJson
     /**
      * Return the Geometry object for this Feature object.
      *
-     * @return string
+     * @return Geometry
      */
     public function getGeometry()
     {
