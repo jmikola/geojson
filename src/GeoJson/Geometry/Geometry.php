@@ -13,14 +13,14 @@ use GeoJson\GeoJson;
 abstract class Geometry extends GeoJson
 {
     /**
-     * @var array
+     * @var float[]|int[] array
      */
     protected $coordinates;
 
     /**
      * Return the coordinates for this Geometry object.
      *
-     * @return array
+     * @return float[]|int[]
      */
     public function getCoordinates()
     {

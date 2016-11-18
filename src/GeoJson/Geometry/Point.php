@@ -17,8 +17,8 @@ class Point extends Geometry
     /**
      * Constructor.
      *
-     * @param float[] $position
-     * @param CoordinateResolutionSystem|BoundingBox $arg,...
+     * @param float[]                                                                           $position
+     * @param \GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem|\GeoJson\BoundingBox $arg,...
      */
     public function __construct(array $position)
     {

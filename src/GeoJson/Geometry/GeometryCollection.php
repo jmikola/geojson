@@ -13,15 +13,15 @@ class GeometryCollection extends Geometry implements \Countable, \IteratorAggreg
     protected $type = 'GeometryCollection';
 
     /**
-     * @var array
+     * @var Geometry[]
      */
     protected $geometries;
 
     /**
      * Constructor.
      *
-     * @param Geometry[] $geometries
-     * @param CoordinateResolutionSystem|BoundingBox $arg,...
+     * @param Geometry[]                                                                        $geometries
+     * @param \GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem|\GeoJson\BoundingBox $arg,...
      */
     public function __construct(array $geometries)
     {
