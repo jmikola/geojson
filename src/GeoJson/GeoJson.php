@@ -59,6 +59,16 @@ abstract class GeoJson implements \JsonSerializable, JsonUnserializable
     }
 
     /**
+     * Return a string representation as JSON for this GeoJson object.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return json_encode($this->jsonSerialize());
+    }
+
+    /**
      * @see http://php.net/manual/en/jsonserializable.jsonserialize.php
      */
     public function jsonSerialize()

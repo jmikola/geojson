@@ -86,6 +86,13 @@ class BoundingBoxTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(array(-180.0, -90.0, 180.0, 90.0), $boundingBox->getBounds());
     }
 
+    public function testStringRepresentation()
+    {
+        $boundingBox = new BoundingBox(array(0, 0, 0, 0));
+
+        $this->assertEquals((string) $boundingBox, json_encode($boundingBox->jsonSerialize()));
+    }
+
     public function provideJsonDecodeAssocOptions()
     {
         return array(

@@ -60,6 +60,24 @@ abstract class BaseGeoJsonTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('coordinateReferenceSystem', $json['crs']);
     }
 
+    public function testStringRepresentation()
+    {
+        $box = $this->getMockBoundingBox();
+        $crs = $this->getMockCoordinateReferenceSystem();
+
+        $box->expects($this->any())
+            ->method('jsonSerialize')
+            ->will($this->returnValue('boundingBox'));
+
+        $crs->expects($this->any())
+            ->method('jsonSerialize')
+            ->will($this->returnValue('coordinateReferenceSystem'));
+
+        $sut = $this->createSubjectWithExtraArguments(array($box, $crs));
+
+        $this->assertEquals((string) $sut, json_encode($sut->jsonSerialize()));
+    }
+
     protected function getMockBoundingBox()
     {
         return $this->getMockBuilder('GeoJson\BoundingBox')
