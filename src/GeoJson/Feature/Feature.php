@@ -74,7 +74,7 @@ class Feature extends GeoJson
     /**
      * Return the properties for this Feature object.
      *
-     * @return array
+     * @return array|null
      */
     public function getProperties()
     {
