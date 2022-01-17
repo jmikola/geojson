@@ -21,9 +21,11 @@ class Feature extends GeoJson
     protected $geometry;
 
     /**
-     * Properties are a JSON object, which corresponds to an associative array.
+     * Properties are a JSON object, which corresponds to an associative array, or null.
      *
-     * @var array
+     * @see https://www.rfc-editor.org/rfc/rfc7946#section-3.2
+     *
+     * @var array|null
      */
     protected $properties;
 
@@ -40,7 +42,7 @@ class Feature extends GeoJson
      * @param mixed $id
      * @param CoordinateResolutionSystem|BoundingBox $arg,...
      */
-    public function __construct(Geometry $geometry = null, array $properties = array(), $id = null)
+    public function __construct(Geometry $geometry = null, array $properties = null, $id = null)
     {
         $this->geometry = $geometry;
         $this->properties = $properties;
@@ -74,7 +76,7 @@ class Feature extends GeoJson
     /**
      * Return the properties for this Feature object.
      *
-     * @return array
+     * @return array|null
      */
     public function getProperties()
     {
