@@ -18,10 +18,6 @@ The library is published as a
 $ composer require "jmikola/geojson=^1.0"
 ```
 
-## API Documentation
-
-API documentation may be found [here](./api).
-
 ## Usage
 
 Classes in this library are immutable.

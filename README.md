@@ -25,4 +25,3 @@ $ composer require "jmikola/geojson=~1.0"
 ## More Resources
 
  * [Documentation](http://jmikola.github.io/geojson)
- * [API reference](http://jmikola.github.io/geojson/api)
