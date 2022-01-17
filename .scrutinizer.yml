@@ -15,8 +15,6 @@ tools:
     php_code_sniffer:
         config:
             standard: "PSR1"
-        filter:
-            excluded_paths: [ "stubs/*" ]
 
     # https://scrutinizer-ci.com/docs/tools/php/mess-detector/
     php_mess_detector: true
