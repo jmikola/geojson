@@ -3,17 +3,18 @@
 namespace GeoJson\Tests;
 
 use GeoJson\GeoJson;
+use PHPUnit\Framework\TestCase;
 
-class GeoJsonTest extends \PHPUnit_Framework_TestCase
+class GeoJsonTest extends TestCase
 {
     public function testIsJsonSerializable()
     {
-        $this->assertInstanceOf('JsonSerializable', $this->getMock('GeoJson\GeoJson'));
+        $this->assertInstanceOf('JsonSerializable', $this->createMock('GeoJson\GeoJson'));
     }
 
     public function testIsJsonUnserializable()
     {
-        $this->assertInstanceOf('GeoJson\JsonUnserializable', $this->getMock('GeoJson\GeoJson'));
+        $this->assertInstanceOf('GeoJson\JsonUnserializable', $this->createMock('GeoJson\GeoJson'));
     }
 
     /**

@@ -5,6 +5,7 @@ namespace GeoJson\Tests\Geometry;
 use GeoJson\Geometry\LinearRing;
 use GeoJson\Geometry\Point;
 use GeoJson\Tests\BaseGeoJsonTest;
+use InvalidArgumentException;
 
 class LinearRingTest extends BaseGeoJsonTest
 {
@@ -23,12 +24,11 @@ class LinearRingTest extends BaseGeoJsonTest
         $this->assertTrue(is_subclass_of('GeoJson\Geometry\LinearRing', 'GeoJson\Geometry\LineString'));
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage LinearRing requires at least four positions
-     */
     public function testConstructorShouldRequireAtLeastFourPositions()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('LinearRing requires at least four positions');
+
         new LinearRing(array(
             array(1, 1),
             array(2, 2),
@@ -36,12 +36,11 @@ class LinearRingTest extends BaseGeoJsonTest
         ));
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage LinearRing requires the first and last positions to be equivalent
-     */
     public function testConstructorShouldRequireEquivalentFirstAndLastPositions()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('LinearRing requires the first and last positions to be equivalent');
+
         new LinearRing(array(
             array(1, 1),
             array(2, 2),
@@ -50,6 +49,9 @@ class LinearRingTest extends BaseGeoJsonTest
         ));
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testConstructorShouldAcceptEquivalentPointObjectsAndPositionArrays()
     {
         new LinearRing(array(

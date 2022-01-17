@@ -3,8 +3,11 @@
 namespace GeoJson\Tests;
 
 use GeoJson\BoundingBox;
+use GeoJson\Exception\UnserializationException;
+use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 
-class BoundingBoxTest extends \PHPUnit_Framework_TestCase
+class BoundingBoxTest extends TestCase
 {
     public function testIsJsonSerializable()
     {
@@ -16,31 +19,29 @@ class BoundingBoxTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('GeoJson\JsonUnserializable', new BoundingBox(array(0, 0, 1, 1)));
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage BoundingBox requires at least four values
-     */
     public function testConstructorShouldRequireAtLeastFourValues()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('BoundingBox requires at least four values');
+
         new BoundingBox(array(0, 0));
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage BoundingBox requires an even number of values
-     */
     public function testConstructorShouldRequireAnEvenNumberOfValues()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('BoundingBox requires an even number of values');
+
         new BoundingBox(array(0, 0, 1, 1, 2));
     }
 
     /**
      * @dataProvider provideBoundsWithInvalidTypes
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage BoundingBox values must be integers or floats
      */
     public function testConstructorShouldRequireIntegerOrFloatValues()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('BoundingBox values must be integers or floats');
         new BoundingBox(func_get_args());
     }
 
@@ -53,12 +54,11 @@ class BoundingBoxTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage BoundingBox min values must precede max values
-     */
     public function testConstructorShouldRequireMinBeforeMaxValues()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('BoundingBox min values must precede max values');
+
         new BoundingBox(array(-90.0, -95.0, -92.5, 90.0));
     }
 
@@ -96,11 +96,12 @@ class BoundingBoxTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider provideInvalidUnserializationValues
-     * @expectedException GeoJson\Exception\UnserializationException
-     * @expectedExceptionMessage BoundingBox expected value of type array
      */
     public function testUnserializationShouldRequireArray($value)
     {
+        $this->expectException(UnserializationException::class);
+        $this->expectExceptionMessage('BoundingBox expected value of type array');
+
         BoundingBox::jsonUnserialize($value);
     }
 

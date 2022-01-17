@@ -4,8 +4,10 @@ namespace GeoJson\Tests\CoordinateReferenceSystem;
 
 use GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem;
 use GeoJson\CoordinateReferenceSystem\Named;
+use GeoJson\Exception\UnserializationException;
+use PHPUnit\Framework\TestCase;
 
-class NamedTest extends \PHPUnit_Framework_TestCase
+class NamedTest extends TestCase
 {
     public function testIsSubclassOfCoordinateReferenceSystem()
     {
@@ -64,21 +66,19 @@ JSON;
         );
     }
 
-    /**
-     * @expectedException GeoJson\Exception\UnserializationException
-     * @expectedExceptionMessage Named CRS expected "properties" property of type array or object
-     */
     public function testUnserializationShouldRequirePropertiesArrayOrObject()
     {
+        $this->expectException(UnserializationException::class);
+        $this->expectExceptionMessage('Named CRS expected "properties" property of type array or object');
+
         CoordinateReferenceSystem::jsonUnserialize(array('type' => 'name', 'properties' => null));
     }
 
-    /**
-     * @expectedException GeoJson\Exception\UnserializationException
-     * @expectedExceptionMessage Named CRS expected "properties.name" property of type string
-     */
     public function testUnserializationShouldRequireNameProperty()
     {
+        $this->expectException(UnserializationException::class);
+        $this->expectExceptionMessage('Named CRS expected "properties.name" property of type string');
+
         CoordinateReferenceSystem::jsonUnserialize(array('type' => 'name', 'properties' => array()));
     }
 }

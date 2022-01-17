@@ -2,9 +2,11 @@
 
 namespace GeoJson\Tests\Feature;
 
+use GeoJson\Exception\UnserializationException;
 use GeoJson\Feature\FeatureCollection;
 use GeoJson\GeoJson;
 use GeoJson\Tests\BaseGeoJsonTest;
+use InvalidArgumentException;
 
 class FeatureCollectionTest extends BaseGeoJsonTest
 {
@@ -20,12 +22,12 @@ class FeatureCollectionTest extends BaseGeoJsonTest
         $this->assertTrue(is_subclass_of('GeoJson\Feature\FeatureCollection', 'GeoJson\GeoJson'));
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage FeatureCollection may only contain Feature objects
-     */
+
     public function testConstructorShouldRequireArrayOfFeatureObjects()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('FeatureCollection may only contain Feature objects');
+
         new FeatureCollection(array(new \stdClass()));
     }
 
@@ -149,21 +151,19 @@ JSON;
         );
     }
 
-    /**
-     * @expectedException GeoJson\Exception\UnserializationException
-     * @expectedExceptionMessage FeatureCollection expected "features" property of type array, none given
-     */
     public function testUnserializationShouldRequireFeaturesProperty()
     {
+        $this->expectException(UnserializationException::class);
+        $this->expectExceptionMessage('FeatureCollection expected "features" property of type array, none given');
+
         GeoJson::jsonUnserialize(array('type' => 'FeatureCollection'));
     }
 
-    /**
-     * @expectedException GeoJson\Exception\UnserializationException
-     * @expectedExceptionMessage FeatureCollection expected "features" property of type array
-     */
     public function testUnserializationShouldRequireFeaturesArray()
     {
+        $this->expectException(UnserializationException::class);
+        $this->expectExceptionMessage('FeatureCollection expected "features" property of type array');
+
         GeoJson::jsonUnserialize(array('type' => 'FeatureCollection', 'features' => null));
     }
 }

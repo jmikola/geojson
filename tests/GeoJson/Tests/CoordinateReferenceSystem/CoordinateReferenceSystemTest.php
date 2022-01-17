@@ -3,14 +3,16 @@
 namespace GeoJson\Tests\CoordinateReferenceSystem;
 
 use GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem;
+use GeoJson\Exception\UnserializationException;
+use PHPUnit\Framework\TestCase;
 
-class CoordinateReferenceSystemTest extends \PHPUnit_Framework_TestCase
+class CoordinateReferenceSystemTest extends TestCase
 {
     public function testIsJsonSerializable()
     {
         $this->assertInstanceOf(
             'JsonSerializable',
-            $this->getMock('GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem')
+            $this->createMock('GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem')
         );
     }
 
@@ -18,43 +20,39 @@ class CoordinateReferenceSystemTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(
             'GeoJson\JsonUnserializable',
-            $this->getMock('GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem')
+            $this->createMock('GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem')
         );
     }
 
-    /**
-     * @expectedException GeoJson\Exception\UnserializationException
-     * @expectedExceptionMessage CRS expected value of type array or object
-     */
     public function testUnserializationShouldRequireArrayOrObject()
     {
+        $this->expectException(UnserializationException::class);
+        $this->expectExceptionMessage('CRS expected value of type array or object');
+
         CoordinateReferenceSystem::jsonUnserialize(null);
     }
 
-    /**
-     * @expectedException GeoJson\Exception\UnserializationException
-     * @expectedExceptionMessage CRS expected "type" property of type string, none given
-     */
     public function testUnserializationShouldRequireTypeField()
     {
+        $this->expectException(UnserializationException::class);
+        $this->expectExceptionMessage('CRS expected "type" property of type string, none given');
+
         CoordinateReferenceSystem::jsonUnserialize(array('properties' => array()));
     }
 
-    /**
-     * @expectedException GeoJson\Exception\UnserializationException
-     * @expectedExceptionMessage CRS expected "properties" property of type array or object, none given
-     */
     public function testUnserializationShouldRequirePropertiesField()
     {
+        $this->expectException(UnserializationException::class);
+        $this->expectExceptionMessage('CRS expected "properties" property of type array or object, none given');
+
         CoordinateReferenceSystem::jsonUnserialize(array('type' => 'foo'));
     }
 
-    /**
-     * @expectedException GeoJson\Exception\UnserializationException
-     * @expectedExceptionMessage Invalid CRS type "foo"
-     */
     public function testUnserializationShouldRequireValidType()
     {
+        $this->expectException(UnserializationException::class);
+        $this->expectExceptionMessage('Invalid CRS type "foo"');
+
         CoordinateReferenceSystem::jsonUnserialize(array('type' => 'foo', 'properties' => array()));
     }
 }

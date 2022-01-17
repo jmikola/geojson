@@ -5,6 +5,7 @@ namespace GeoJson\Tests\Geometry;
 use GeoJson\GeoJson;
 use GeoJson\Geometry\LineString;
 use GeoJson\Tests\BaseGeoJsonTest;
+use InvalidArgumentException;
 
 class LineStringTest extends BaseGeoJsonTest
 {
@@ -23,12 +24,11 @@ class LineStringTest extends BaseGeoJsonTest
         $this->assertTrue(is_subclass_of('GeoJson\Geometry\LineString', 'GeoJson\Geometry\MultiPoint'));
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage LineString requires at least two positions
-     */
     public function testConstructorShouldRequireAtLeastTwoPositions()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('LineString requires at least two positions');
+
         new LineString(array(array(1, 1)));
     }
 
