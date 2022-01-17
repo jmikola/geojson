@@ -1,3 +1,4 @@
+.phpunit.result.cache
 apigen.phar
 composer.lock
 phpunit.xml

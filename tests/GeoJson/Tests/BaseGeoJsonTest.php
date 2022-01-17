@@ -2,7 +2,9 @@
 
 namespace GeoJson\Tests;
 
-abstract class BaseGeoJsonTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+abstract class BaseGeoJsonTest extends TestCase
 {
     abstract public function createSubjectWithExtraArguments(array $extraArgs);
 

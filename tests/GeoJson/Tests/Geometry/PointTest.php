@@ -5,6 +5,7 @@ namespace GeoJson\Tests\Geometry;
 use GeoJson\GeoJson;
 use GeoJson\Geometry\Point;
 use GeoJson\Tests\BaseGeoJsonTest;
+use InvalidArgumentException;
 
 class PointTest extends BaseGeoJsonTest
 {
@@ -20,22 +21,22 @@ class PointTest extends BaseGeoJsonTest
         $this->assertTrue(is_subclass_of('GeoJson\Geometry\Point', 'GeoJson\Geometry\Geometry'));
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Position requires at least two elements
-     */
     public function testConstructorShouldRequireAtLeastTwoElementsInPosition()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Position requires at least two elements');
+
         new Point(array(1));
     }
 
     /**
      * @dataProvider providePositionsWithInvalidTypes
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Position elements must be integers or floats
      */
     public function testConstructorShouldRequireIntegerOrFloatElementsInPosition()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Position elements must be integers or floats');
+
         new Point(func_get_args());
     }
 

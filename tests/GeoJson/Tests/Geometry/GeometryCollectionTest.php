@@ -2,9 +2,11 @@
 
 namespace GeoJson\Tests\Geometry;
 
+use GeoJson\Exception\UnserializationException;
 use GeoJson\GeoJson;
 use GeoJson\Geometry\GeometryCollection;
 use GeoJson\Tests\BaseGeoJsonTest;
+use InvalidArgumentException;
 
 class GeometryCollectionTest extends BaseGeoJsonTest
 {
@@ -20,12 +22,11 @@ class GeometryCollectionTest extends BaseGeoJsonTest
         $this->assertTrue(is_subclass_of('GeoJson\Geometry\GeometryCollection', 'GeoJson\Geometry\Geometry'));
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage GeometryCollection may only contain Geometry objects
-     */
     public function testConstructorShouldRequireArrayOfGeometryObjects()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('GeometryCollection may only contain Geometry objects');
+
         new GeometryCollection(array(new \stdClass()));
     }
 
@@ -137,21 +138,19 @@ JSON;
         );
     }
 
-    /**
-     * @expectedException GeoJson\Exception\UnserializationException
-     * @expectedExceptionMessage GeometryCollection expected "geometries" property of type array, none given
-     */
     public function testUnserializationShouldRequireGeometriesProperty()
     {
+        $this->expectException(UnserializationException::class);
+        $this->expectExceptionMessage('GeometryCollection expected "geometries" property of type array, none given');
+
         GeoJson::jsonUnserialize(array('type' => 'GeometryCollection'));
     }
 
-    /**
-     * @expectedException GeoJson\Exception\UnserializationException
-     * @expectedExceptionMessage GeometryCollection expected "geometries" property of type array
-     */
     public function testUnserializationShouldRequireGeometriesArray()
     {
+        $this->expectException(UnserializationException::class);
+        $this->expectExceptionMessage('GeometryCollection expected "geometries" property of type array');
+
         GeoJson::jsonUnserialize(array('type' => 'GeometryCollection', 'geometries' => null));
     }
 }

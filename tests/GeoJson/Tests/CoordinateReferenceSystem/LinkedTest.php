@@ -4,8 +4,10 @@ namespace GeoJson\Tests\CoordinateReferenceSystem;
 
 use GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem;
 use GeoJson\CoordinateReferenceSystem\Linked;
+use GeoJson\Exception\UnserializationException;
+use PHPUnit\Framework\TestCase;
 
-class LinkedTest extends \PHPUnit_Framework_TestCase
+class LinkedTest extends TestCase
 {
     public function testIsSubclassOfCoordinateReferenceSystem()
     {
@@ -108,21 +110,19 @@ JSON;
         );
     }
 
-    /**
-     * @expectedException GeoJson\Exception\UnserializationException
-     * @expectedExceptionMessage Linked CRS expected "properties" property of type array or object
-     */
     public function testUnserializationShouldRequirePropertiesArrayOrObject()
     {
+        $this->expectException(UnserializationException::class);
+        $this->expectExceptionMessage('Linked CRS expected "properties" property of type array or object');
+
         CoordinateReferenceSystem::jsonUnserialize(array('type' => 'link', 'properties' => null));
     }
 
-    /**
-     * @expectedException GeoJson\Exception\UnserializationException
-     * @expectedExceptionMessage Linked CRS expected "properties.href" property of type string
-     */
     public function testUnserializationShouldRequireHrefProperty()
     {
+        $this->expectException(UnserializationException::class);
+        $this->expectExceptionMessage('Linked CRS expected "properties.href" property of type string');
+
         CoordinateReferenceSystem::jsonUnserialize(array('type' => 'link', 'properties' => array()));
     }
 }
