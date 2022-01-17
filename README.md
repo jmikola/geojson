@@ -1,6 +1,6 @@
 # GeoJson PHP Library
 
-[![Build Status](https://travis-ci.org/jmikola/geojson.png?branch=master)](https://travis-ci.org/jmikola/geojson)
+[![Build Status](https://github.com/jmikola/geojson/workflows/Continuous%20Integration/badge.svg)](https://github.com/jmikola/geojson/actions)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jmikola/geojson/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/jmikola/geojson/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/jmikola/geojson/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/jmikola/geojson/?branch=master)
 
