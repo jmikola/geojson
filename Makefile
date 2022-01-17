@@ -1,4 +1,4 @@
-.PHONY: apigen composer test docs mkdocs
+.PHONY: composer test docs mkdocs
 
 COMPOSER_ARGS=update --no-interaction --prefer-source
 PHPUNIT_ARGS=--process-isolation
@@ -25,17 +25,6 @@ test: composer
 		false; \
 	fi
 
-apigen:
-	@command -v apigen >/dev/null 2>&1; \
-	if test $$? -eq 0; then \
-		apigen generate; \
-	elif test -r apigen.phar; then \
-		php apigen.phar generate; \
-	else \
-		echo >&2 "Cannot find apigen; aborting."; \
-		false; \
-	fi
-
 mkdocs:
 	@command -v mkdocs >/dev/null 2>&1; \
 	if test $$? -eq 0; then \
@@ -45,7 +34,7 @@ mkdocs:
 		false; \
 	fi
 
-docs: mkdocs apigen
+docs: mkdocs
 
 publish-docs: docs
 	mkdocs gh-deploy
