@@ -1,0 +1,47 @@
+name: "Continuous Integration"
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  phpunit:
+    name: PHPUnit
+    runs-on: ubuntu-20.04
+
+    strategy:
+      matrix:
+        php:
+          - "7.4"
+          - "8.0"
+          - "8.1"
+        dependencies:
+          - "lowest"
+          - "highest"
+        include:
+          - php: "8.2"
+            composer-options: "--ignore-platform-reqs"
+
+    steps:
+        - uses: actions/checkout@v2
+
+        - name: Setup PHP
+          uses: shivammathur/setup-php@v2
+          with:
+            php-version: ${{ matrix.php }}
+            tools: composer:v2
+            coverage: xdebug
+          env:
+            COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+        - uses: "ramsey/composer-install@v2"
+          with:
+            dependency-versions: "${{ matrix.dependencies }}"
+            composer-options: "${{ matrix.composer-options }}"
+
+        - run: "vendor/bin/phpunit --coverage-clover=coverage.clover"
+
+        - name: Upload Coverage report
+          run: |
+            wget https://scrutinizer-ci.com/ocular.phar
+            php ocular.phar code-coverage:upload --format=php-clover coverage.clover
