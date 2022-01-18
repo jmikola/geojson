@@ -46,11 +46,11 @@ abstract class BaseGeoJsonTest extends TestCase
 
         $box->expects($this->any())
             ->method('jsonSerialize')
-            ->will($this->returnValue('boundingBox'));
+            ->will($this->returnValue(['boundingBox']));
 
         $crs->expects($this->any())
             ->method('jsonSerialize')
-            ->will($this->returnValue('coordinateReferenceSystem'));
+            ->will($this->returnValue(['coordinateReferenceSystem']));
 
         $sut = $this->createSubjectWithExtraArguments(array($box, $crs));
 
@@ -58,8 +58,8 @@ abstract class BaseGeoJsonTest extends TestCase
 
         $this->assertArrayHasKey('bbox', $json);
         $this->assertArrayHasKey('crs', $json);
-        $this->assertSame('boundingBox', $json['bbox']);
-        $this->assertSame('coordinateReferenceSystem', $json['crs']);
+        $this->assertSame(['boundingBox'], $json['bbox']);
+        $this->assertSame(['coordinateReferenceSystem'], $json['crs']);
     }
 
     protected function getMockBoundingBox()

@@ -41,7 +41,7 @@ class GeometryCollection extends Geometry implements \Countable, \IteratorAggreg
     /**
      * @see http://php.net/manual/en/countable.count.php
      */
-    public function count()
+    public function count(): int
     {
         return count($this->geometries);
     }
@@ -59,7 +59,7 @@ class GeometryCollection extends Geometry implements \Countable, \IteratorAggreg
     /**
      * @see http://php.net/manual/en/iteratoraggregate.getiterator.php
      */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->geometries);
     }
@@ -67,7 +67,7 @@ class GeometryCollection extends Geometry implements \Countable, \IteratorAggreg
     /**
      * @see http://php.net/manual/en/jsonserializable.jsonserialize.php
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return array_merge(
             parent::jsonSerialize(),
