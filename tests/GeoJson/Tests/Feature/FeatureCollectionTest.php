@@ -81,17 +81,17 @@ class FeatureCollectionTest extends BaseGeoJsonTest
 
         $features[0]->expects($this->any())
             ->method('jsonSerialize')
-            ->will($this->returnValue('feature1'));
+            ->will($this->returnValue(['feature1']));
 
         $features[1]->expects($this->any())
             ->method('jsonSerialize')
-            ->will($this->returnValue('feature2'));
+            ->will($this->returnValue(['feature2']));
 
         $collection = new FeatureCollection($features);
 
         $expected = array(
             'type' => 'FeatureCollection',
-            'features' => array('feature1', 'feature2'),
+            'features' => array(['feature1'], ['feature2']),
         );
 
         $this->assertSame('FeatureCollection', $collection->getType());

@@ -26,7 +26,7 @@ class FeatureTest extends BaseGeoJsonTest
 
         $geometry->expects($this->any())
             ->method('jsonSerialize')
-            ->will($this->returnValue('geometry'));
+            ->will($this->returnValue(['geometry']));
 
         $properties = array('key' => 'value');
         $id = 'identifier';
@@ -35,7 +35,7 @@ class FeatureTest extends BaseGeoJsonTest
 
         $expected = array(
             'type' => 'Feature',
-            'geometry' => 'geometry',
+            'geometry' => ['geometry'],
             'properties' => $properties,
             'id' => 'identifier',
         );
