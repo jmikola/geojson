@@ -42,6 +42,7 @@ jobs:
         - run: "vendor/bin/phpunit --coverage-clover=coverage.clover"
 
         - name: Upload Coverage report
+          if: github.repository_owner == 'jmikola'
           run: |
             wget https://scrutinizer-ci.com/ocular.phar
             php ocular.phar code-coverage:upload --format=php-clover coverage.clover
