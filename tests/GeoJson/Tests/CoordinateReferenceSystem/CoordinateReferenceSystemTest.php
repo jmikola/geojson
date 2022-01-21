@@ -4,6 +4,8 @@ namespace GeoJson\Tests\CoordinateReferenceSystem;
 
 use GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem;
 use GeoJson\Exception\UnserializationException;
+use GeoJson\JsonUnserializable;
+use JsonSerializable;
 use PHPUnit\Framework\TestCase;
 
 class CoordinateReferenceSystemTest extends TestCase
@@ -11,16 +13,16 @@ class CoordinateReferenceSystemTest extends TestCase
     public function testIsJsonSerializable()
     {
         $this->assertInstanceOf(
-            'JsonSerializable',
-            $this->createMock('GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem')
+            JsonSerializable::class,
+            $this->createMock(CoordinateReferenceSystem::class)
         );
     }
 
     public function testIsJsonUnserializable()
     {
         $this->assertInstanceOf(
-            'GeoJson\JsonUnserializable',
-            $this->createMock('GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem')
+            JsonUnserializable::class,
+            $this->createMock(CoordinateReferenceSystem::class)
         );
     }
 

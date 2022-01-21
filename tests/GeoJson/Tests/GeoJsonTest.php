@@ -3,18 +3,23 @@
 namespace GeoJson\Tests;
 
 use GeoJson\GeoJson;
+use GeoJson\JsonUnserializable;
+use JsonSerializable;
 use PHPUnit\Framework\TestCase;
+use GeoJson\Geometry\Point;
+use GeoJson\BoundingBox;
+use GeoJson\CoordinateReferenceSystem\Named;
 
 class GeoJsonTest extends TestCase
 {
     public function testIsJsonSerializable()
     {
-        $this->assertInstanceOf('JsonSerializable', $this->createMock('GeoJson\GeoJson'));
+        $this->assertInstanceOf(JsonSerializable::class, $this->createMock(GeoJson::class));
     }
 
     public function testIsJsonUnserializable()
     {
-        $this->assertInstanceOf('GeoJson\JsonUnserializable', $this->createMock('GeoJson\GeoJson'));
+        $this->assertInstanceOf(JsonUnserializable::class, $this->createMock(GeoJson::class));
     }
 
     /**
@@ -34,13 +39,13 @@ JSON;
         $json = json_decode($json, $assoc);
         $point = GeoJson::jsonUnserialize($json);
 
-        $this->assertInstanceOf('GeoJson\Geometry\Point', $point);
+        $this->assertInstanceOf(Point::class, $point);
         $this->assertSame('Point', $point->getType());
         $this->assertSame(array(1, 1), $point->getCoordinates());
 
         $boundingBox = $point->getBoundingBox();
 
-        $this->assertInstanceOf('GeoJson\BoundingBox', $boundingBox);
+        $this->assertInstanceOf(BoundingBox::class, $boundingBox);
         $this->assertSame(array(-180.0, -90.0, 180.0, 90.0), $boundingBox->getBounds());
     }
 
@@ -66,7 +71,7 @@ JSON;
         $json = json_decode($json, $assoc);
         $point = GeoJson::jsonUnserialize($json);
 
-        $this->assertInstanceOf('GeoJson\Geometry\Point', $point);
+        $this->assertInstanceOf(Point::class, $point);
         $this->assertSame('Point', $point->getType());
         $this->assertSame(array(1, 1), $point->getCoordinates());
 
@@ -74,7 +79,7 @@ JSON;
 
         $expectedProperties = array('name' => 'urn:ogc:def:crs:OGC:1.3:CRS84');
 
-        $this->assertInstanceOf('GeoJson\CoordinateReferenceSystem\Named', $crs);
+        $this->assertInstanceOf(Named::class, $crs);
         $this->assertSame('name', $crs->getType());
         $this->assertSame($expectedProperties, $crs->getProperties());
     }

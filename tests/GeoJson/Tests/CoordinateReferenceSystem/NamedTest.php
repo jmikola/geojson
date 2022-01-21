@@ -11,10 +11,7 @@ class NamedTest extends TestCase
 {
     public function testIsSubclassOfCoordinateReferenceSystem()
     {
-        $this->assertTrue(is_subclass_of(
-            'GeoJson\CoordinateReferenceSystem\Named',
-            'GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem'
-        ));
+        $this->assertTrue(is_subclass_of(Named::class, CoordinateReferenceSystem::class));
     }
 
     public function testSerialization()
@@ -53,7 +50,7 @@ JSON;
 
         $expectedProperties = array('name' => 'urn:ogc:def:crs:OGC:1.3:CRS84');
 
-        $this->assertInstanceOf('GeoJson\CoordinateReferenceSystem\Named', $crs);
+        $this->assertInstanceOf(Named::class, $crs);
         $this->assertSame('name', $crs->getType());
         $this->assertSame($expectedProperties, $crs->getProperties());
     }

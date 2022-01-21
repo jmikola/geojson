@@ -6,12 +6,13 @@ use GeoJson\Geometry\LinearRing;
 use GeoJson\Geometry\Point;
 use GeoJson\Tests\BaseGeoJsonTest;
 use InvalidArgumentException;
+use GeoJson\Geometry\LineString;
 
 class LinearRingTest extends BaseGeoJsonTest
 {
     public function createSubjectWithExtraArguments(array $extraArgs)
     {
-        $class = new \ReflectionClass('GeoJson\Geometry\LinearRing');
+        $class = new \ReflectionClass(LinearRing::class);
 
         return $class->newInstanceArgs(array_merge(
             array(array(array(1, 1), array(2, 2), array(3, 3), array(1, 1))),
@@ -21,7 +22,7 @@ class LinearRingTest extends BaseGeoJsonTest
 
     public function testIsSubclassOfLineString()
     {
-        $this->assertTrue(is_subclass_of('GeoJson\Geometry\LinearRing', 'GeoJson\Geometry\LineString'));
+        $this->assertTrue(is_subclass_of(LinearRing::class, LineString::class));
     }
 
     public function testConstructorShouldRequireAtLeastFourPositions()

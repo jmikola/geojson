@@ -7,19 +7,21 @@ use GeoJson\GeoJson;
 use GeoJson\Geometry\GeometryCollection;
 use GeoJson\Tests\BaseGeoJsonTest;
 use InvalidArgumentException;
+use GeoJson\Geometry\Geometry;
+use GeoJson\Geometry\Point;
 
 class GeometryCollectionTest extends BaseGeoJsonTest
 {
     public function createSubjectWithExtraArguments(array $extraArgs)
     {
-        $class = new \ReflectionClass('GeoJson\Geometry\GeometryCollection');
+        $class = new \ReflectionClass(GeometryCollection::class);
 
         return $class->newInstanceArgs(array_merge(array(array()), $extraArgs));
     }
 
     public function testIsSubclassOfGeometry()
     {
-        $this->assertTrue(is_subclass_of('GeoJson\Geometry\GeometryCollection', 'GeoJson\Geometry\Geometry'));
+        $this->assertTrue(is_subclass_of(GeometryCollection::class, Geometry::class));
     }
 
     public function testConstructorShouldRequireArrayOfGeometryObjects()
@@ -118,14 +120,14 @@ JSON;
         $json = json_decode($json, $assoc);
         $collection = GeoJson::jsonUnserialize($json);
 
-        $this->assertInstanceOf('GeoJson\Geometry\GeometryCollection', $collection);
+        $this->assertInstanceOf(GeometryCollection::class, $collection);
         $this->assertSame('GeometryCollection', $collection->getType());
         $this->assertCount(1, $collection);
 
         $geometries = iterator_to_array($collection);
         $geometry = $geometries[0];
 
-        $this->assertInstanceOf('GeoJson\Geometry\Point', $geometry);
+        $this->assertInstanceOf(Point::class, $geometry);
         $this->assertSame('Point', $geometry->getType());
         $this->assertSame(array(1, 1), $geometry->getCoordinates());
     }

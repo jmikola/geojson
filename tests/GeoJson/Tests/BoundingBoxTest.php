@@ -6,6 +6,7 @@ use GeoJson\BoundingBox;
 use GeoJson\Exception\UnserializationException;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use GeoJson\JsonUnserializable;
 
 class BoundingBoxTest extends TestCase
 {
@@ -16,7 +17,7 @@ class BoundingBoxTest extends TestCase
 
     public function testIsJsonUnserializable()
     {
-        $this->assertInstanceOf('GeoJson\JsonUnserializable', new BoundingBox(array(0, 0, 1, 1)));
+        $this->assertInstanceOf(JsonUnserializable::class, new BoundingBox(array(0, 0, 1, 1)));
     }
 
     public function testConstructorShouldRequireAtLeastFourValues()
@@ -82,7 +83,7 @@ class BoundingBoxTest extends TestCase
         $json = json_decode($json, $assoc);
         $boundingBox = BoundingBox::jsonUnserialize($json);
 
-        $this->assertInstanceOf('GeoJson\BoundingBox', $boundingBox);
+        $this->assertInstanceOf(BoundingBox::class, $boundingBox);
         $this->assertSame(array(-180.0, -90.0, 180.0, 90.0), $boundingBox->getBounds());
     }
 
