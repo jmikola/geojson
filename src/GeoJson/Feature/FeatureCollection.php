@@ -45,9 +45,6 @@ class FeatureCollection extends GeoJson implements Countable, IteratorAggregate
         }
     }
 
-    /**
-     * @see http://php.net/manual/en/countable.count.php
-     */
     public function count(): int
     {
         return count($this->features);
@@ -63,17 +60,11 @@ class FeatureCollection extends GeoJson implements Countable, IteratorAggregate
         return $this->features;
     }
 
-    /**
-     * @see http://php.net/manual/en/iteratoraggregate.getiterator.php
-     */
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->features);
     }
 
-    /**
-     * @see http://php.net/manual/en/jsonserializable.jsonserialize.php
-     */
     public function jsonSerialize(): array
     {
         return array_merge(

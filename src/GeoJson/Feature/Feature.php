@@ -84,9 +84,6 @@ class Feature extends GeoJson
         return $this->properties;
     }
 
-    /**
-     * @see http://php.net/manual/en/jsonserializable.jsonserialize.php
-     */
     public function jsonSerialize(): array
     {
         $json = parent::jsonSerialize();
