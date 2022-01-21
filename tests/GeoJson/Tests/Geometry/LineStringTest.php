@@ -6,12 +6,13 @@ use GeoJson\GeoJson;
 use GeoJson\Geometry\LineString;
 use GeoJson\Tests\BaseGeoJsonTest;
 use InvalidArgumentException;
+use GeoJson\Geometry\MultiPoint;
 
 class LineStringTest extends BaseGeoJsonTest
 {
     public function createSubjectWithExtraArguments(array $extraArgs)
     {
-        $class = new \ReflectionClass('GeoJson\Geometry\LineString');
+        $class = new \ReflectionClass(LineString::class);
 
         return $class->newInstanceArgs(array_merge(
             array(array(array(1, 1), array(2, 2))),
@@ -21,7 +22,7 @@ class LineStringTest extends BaseGeoJsonTest
 
     public function testIsSubclassOfMultiPoint()
     {
-        $this->assertTrue(is_subclass_of('GeoJson\Geometry\LineString', 'GeoJson\Geometry\MultiPoint'));
+        $this->assertTrue(is_subclass_of(LineString::class, MultiPoint::class));
     }
 
     public function testConstructorShouldRequireAtLeastTwoPositions()
@@ -68,7 +69,7 @@ JSON;
 
         $expectedCoordinates = array(array(1, 1), array(2, 2));
 
-        $this->assertInstanceOf('GeoJson\Geometry\LineString', $lineString);
+        $this->assertInstanceOf(LineString::class, $lineString);
         $this->assertSame('LineString', $lineString->getType());
         $this->assertSame($expectedCoordinates, $lineString->getCoordinates());
     }

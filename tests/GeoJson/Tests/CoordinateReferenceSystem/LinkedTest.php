@@ -11,10 +11,7 @@ class LinkedTest extends TestCase
 {
     public function testIsSubclassOfCoordinateReferenceSystem()
     {
-        $this->assertTrue(is_subclass_of(
-            'GeoJson\CoordinateReferenceSystem\Linked',
-            'GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem'
-        ));
+        $this->assertTrue(is_subclass_of(Linked::class, CoordinateReferenceSystem::class));
     }
 
     public function testSerialization()
@@ -72,7 +69,7 @@ JSON;
             'type' => 'proj4',
         );
 
-        $this->assertInstanceOf('GeoJson\CoordinateReferenceSystem\Linked', $crs);
+        $this->assertInstanceOf(Linked::class, $crs);
         $this->assertSame('link', $crs->getType());
         $this->assertSame($expectedProperties, $crs->getProperties());
     }
@@ -97,7 +94,7 @@ JSON;
 
         $expectedProperties = array('href' => 'http://example.com/crs/42');
 
-        $this->assertInstanceOf('GeoJson\CoordinateReferenceSystem\Linked', $crs);
+        $this->assertInstanceOf(Linked::class, $crs);
         $this->assertSame('link', $crs->getType());
         $this->assertSame($expectedProperties, $crs->getProperties());
     }

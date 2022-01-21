@@ -6,12 +6,13 @@ use GeoJson\GeoJson;
 use GeoJson\Geometry\MultiPoint;
 use GeoJson\Geometry\Point;
 use GeoJson\Tests\BaseGeoJsonTest;
+use GeoJson\Geometry\Geometry;
 
 class MultiPointTest extends BaseGeoJsonTest
 {
     public function createSubjectWithExtraArguments(array $extraArgs)
     {
-        $class = new \ReflectionClass('GeoJson\Geometry\MultiPoint');
+        $class = new \ReflectionClass(MultiPoint::class);
 
         return $class->newInstanceArgs(array_merge(
             array(array(
@@ -24,7 +25,7 @@ class MultiPointTest extends BaseGeoJsonTest
 
     public function testIsSubclassOfGeometry()
     {
-        $this->assertTrue(is_subclass_of('GeoJson\Geometry\MultiPoint', 'GeoJson\Geometry\Geometry'));
+        $this->assertTrue(is_subclass_of(MultiPoint::class, Geometry::class));
     }
 
     public function testConstructionFromPointObjects()
@@ -78,7 +79,7 @@ JSON;
 
         $expectedCoordinates = array(array(1, 1), array(2, 2));
 
-        $this->assertInstanceOf('GeoJson\Geometry\MultiPoint', $multiPoint);
+        $this->assertInstanceOf(MultiPoint::class, $multiPoint);
         $this->assertSame('MultiPoint', $multiPoint->getType());
         $this->assertSame($expectedCoordinates, $multiPoint->getCoordinates());
     }

@@ -3,6 +3,10 @@
 namespace GeoJson\Tests;
 
 use PHPUnit\Framework\TestCase;
+use GeoJson\BoundingBox;
+use GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem;
+use GeoJson\Feature\Feature;
+use GeoJson\Geometry\Geometry;
 
 abstract class BaseGeoJsonTest extends TestCase
 {
@@ -64,28 +68,28 @@ abstract class BaseGeoJsonTest extends TestCase
 
     protected function getMockBoundingBox()
     {
-        return $this->getMockBuilder('GeoJson\BoundingBox')
+        return $this->getMockBuilder(BoundingBox::class)
             ->disableOriginalConstructor()
             ->getMock();
     }
 
     protected function getMockCoordinateReferenceSystem()
     {
-        return $this->getMockBuilder('GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem')
+        return $this->getMockBuilder(CoordinateReferenceSystem::class)
             ->disableOriginalConstructor()
             ->getMock();
     }
 
     protected function getMockFeature()
     {
-        return $this->getMockBuilder('GeoJson\Feature\Feature')
+        return $this->getMockBuilder(Feature::class)
             ->disableOriginalConstructor()
             ->getMock();
     }
 
     protected function getMockGeometry()
     {
-        return $this->getMockBuilder('GeoJson\Geometry\Geometry')
+        return $this->getMockBuilder(Geometry::class)
             ->disableOriginalConstructor()
             ->getMock();
     }

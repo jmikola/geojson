@@ -6,19 +6,20 @@ use GeoJson\GeoJson;
 use GeoJson\Geometry\Point;
 use GeoJson\Tests\BaseGeoJsonTest;
 use InvalidArgumentException;
+use GeoJson\Geometry\Geometry;
 
 class PointTest extends BaseGeoJsonTest
 {
     public function createSubjectWithExtraArguments(array $extraArgs)
     {
-        $class = new \ReflectionClass('GeoJson\Geometry\Point');
+        $class = new \ReflectionClass(Point::class);
 
         return $class->newInstanceArgs(array_merge(array(array(1, 1)), $extraArgs));
     }
 
     public function testIsSubclassOfGeometry()
     {
-        $this->assertTrue(is_subclass_of('GeoJson\Geometry\Point', 'GeoJson\Geometry\Geometry'));
+        $this->assertTrue(is_subclass_of(Point::class, Geometry::class));
     }
 
     public function testConstructorShouldRequireAtLeastTwoElementsInPosition()
@@ -87,7 +88,7 @@ JSON;
         $json = json_decode($json, $assoc);
         $point = GeoJson::jsonUnserialize($json);
 
-        $this->assertInstanceOf('GeoJson\Geometry\Point', $point);
+        $this->assertInstanceOf(Point::class, $point);
         $this->assertSame('Point', $point->getType());
         $this->assertSame(array(1, 1), $point->getCoordinates());
     }
