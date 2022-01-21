@@ -1,7 +1,0 @@
-site_name: "GeoJSON PHP library"
-repo_url: https://github.com/jmikola/geojson
-theme: readthedocs
-nav:
-    - Home: index.md
-extra_javascript:
-    - pretty.js
