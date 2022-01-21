@@ -16,12 +16,12 @@ class LinkedTest extends TestCase
 
     public function testSerialization()
     {
-        $crs = new Linked('http://example.com/crs/42', 'proj4');
+        $crs = new Linked('https://example.com/crs/42', 'proj4');
 
         $expected = array(
             'type' => 'link',
             'properties' => array(
-                'href' => 'http://example.com/crs/42',
+                'href' => 'https://example.com/crs/42',
                 'type' => 'proj4',
             ),
         );
@@ -33,12 +33,12 @@ class LinkedTest extends TestCase
 
     public function testSerializationWithoutHrefType()
     {
-        $crs = new Linked('http://example.com/crs/42');
+        $crs = new Linked('https://example.com/crs/42');
 
         $expected = array(
             'type' => 'link',
             'properties' => array(
-                'href' => 'http://example.com/crs/42',
+                'href' => 'https://example.com/crs/42',
             ),
         );
 
@@ -55,7 +55,7 @@ class LinkedTest extends TestCase
 {
     "type": "link",
     "properties": {
-        "href": "http://example.com/crs/42",
+        "href": "https://example.com/crs/42",
         "type": "proj4"
     }
 }
@@ -65,7 +65,7 @@ JSON;
         $crs = CoordinateReferenceSystem::jsonUnserialize($json);
 
         $expectedProperties = array(
-            'href' => 'http://example.com/crs/42',
+            'href' => 'https://example.com/crs/42',
             'type' => 'proj4',
         );
 
@@ -84,7 +84,7 @@ JSON;
 {
     "type": "link",
     "properties": {
-        "href": "http://example.com/crs/42"
+        "href": "https://example.com/crs/42"
     }
 }
 JSON;
@@ -92,7 +92,7 @@ JSON;
         $json = json_decode($json, $assoc);
         $crs = CoordinateReferenceSystem::jsonUnserialize($json);
 
-        $expectedProperties = array('href' => 'http://example.com/crs/42');
+        $expectedProperties = array('href' => 'https://example.com/crs/42');
 
         $this->assertInstanceOf(Linked::class, $crs);
         $this->assertSame('link', $crs->getType());

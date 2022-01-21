@@ -81,13 +81,8 @@ class GeometryCollectionTest extends BaseGeoJsonTest
             $this->getMockGeometry(),
         );
 
-        $geometries[0]->expects($this->any())
-            ->method('jsonSerialize')
-            ->will($this->returnValue(['geometry1']));
-
-        $geometries[1]->expects($this->any())
-            ->method('jsonSerialize')
-            ->will($this->returnValue(['geometry2']));
+        $geometries[0]->method('jsonSerialize')->willReturn(['geometry1']);
+        $geometries[1]->method('jsonSerialize')->willReturn(['geometry2']);
 
         $collection = new GeometryCollection($geometries);
 
