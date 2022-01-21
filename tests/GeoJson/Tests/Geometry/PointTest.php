@@ -7,12 +7,14 @@ use GeoJson\Geometry\Point;
 use GeoJson\Tests\BaseGeoJsonTest;
 use InvalidArgumentException;
 use GeoJson\Geometry\Geometry;
+use ReflectionClass;
+use stdClass;
 
 class PointTest extends BaseGeoJsonTest
 {
     public function createSubjectWithExtraArguments(array $extraArgs)
     {
-        $class = new \ReflectionClass(Point::class);
+        $class = new ReflectionClass(Point::class);
 
         return $class->newInstanceArgs(array_merge(array(array(1, 1)), $extraArgs));
     }
@@ -45,7 +47,7 @@ class PointTest extends BaseGeoJsonTest
     {
         return array(
             'strings' => array('1.0', '2'),
-            'objects' => array(new \stdClass(), new \stdClass()),
+            'objects' => array(new stdClass(), new stdClass()),
             'arrays' => array(array(), array()),
         );
     }

@@ -7,12 +7,13 @@ use GeoJson\Geometry\LineString;
 use GeoJson\Geometry\MultiLineString;
 use GeoJson\Tests\BaseGeoJsonTest;
 use GeoJson\Geometry\Geometry;
+use ReflectionClass;
 
 class MultiLineStringTest extends BaseGeoJsonTest
 {
     public function createSubjectWithExtraArguments(array $extraArgs)
     {
-        $class = new \ReflectionClass(MultiLineString::class);
+        $class = new ReflectionClass(MultiLineString::class);
 
         return $class->newInstanceArgs(array_merge(
             array(array(

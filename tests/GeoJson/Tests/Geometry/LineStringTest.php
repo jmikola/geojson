@@ -7,12 +7,13 @@ use GeoJson\Geometry\LineString;
 use GeoJson\Tests\BaseGeoJsonTest;
 use InvalidArgumentException;
 use GeoJson\Geometry\MultiPoint;
+use ReflectionClass;
 
 class LineStringTest extends BaseGeoJsonTest
 {
     public function createSubjectWithExtraArguments(array $extraArgs)
     {
-        $class = new \ReflectionClass(LineString::class);
+        $class = new ReflectionClass(LineString::class);
 
         return $class->newInstanceArgs(array_merge(
             array(array(array(1, 1), array(2, 2))),

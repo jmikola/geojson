@@ -7,12 +7,13 @@ use GeoJson\Geometry\MultiPoint;
 use GeoJson\Geometry\Point;
 use GeoJson\Tests\BaseGeoJsonTest;
 use GeoJson\Geometry\Geometry;
+use ReflectionClass;
 
 class MultiPointTest extends BaseGeoJsonTest
 {
     public function createSubjectWithExtraArguments(array $extraArgs)
     {
-        $class = new \ReflectionClass(MultiPoint::class);
+        $class = new ReflectionClass(MultiPoint::class);
 
         return $class->newInstanceArgs(array_merge(
             array(array(

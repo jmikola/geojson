@@ -4,6 +4,7 @@ namespace GeoJson\Feature;
 
 use GeoJson\GeoJson;
 use GeoJson\Geometry\Geometry;
+use stdClass;
 
 /**
  * Feature object.
@@ -95,7 +96,7 @@ class Feature extends GeoJson
 
         // Ensure empty associative arrays are encoded as JSON objects
         if ($json['properties'] === array()) {
-            $json['properties'] = new \stdClass();
+            $json['properties'] = new stdClass();
         }
 
         if (isset($this->id)) {

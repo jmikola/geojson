@@ -7,12 +7,13 @@ use GeoJson\Geometry\MultiPolygon;
 use GeoJson\Geometry\Polygon;
 use GeoJson\Tests\BaseGeoJsonTest;
 use GeoJson\Geometry\Geometry;
+use ReflectionClass;
 
 class MultiPolygonTest extends BaseGeoJsonTest
 {
     public function createSubjectWithExtraArguments(array $extraArgs)
     {
-        $class = new \ReflectionClass(MultiPolygon::class);
+        $class = new ReflectionClass(MultiPolygon::class);
 
         return $class->newInstanceArgs(array_merge(
             array(array(

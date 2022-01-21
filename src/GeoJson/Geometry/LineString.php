@@ -2,6 +2,8 @@
 
 namespace GeoJson\Geometry;
 
+use InvalidArgumentException;
+
 /**
  * LineString geometry object.
  *
@@ -23,7 +25,7 @@ class LineString extends MultiPoint
     public function __construct(array $positions)
     {
         if (count($positions) < 2) {
-            throw new \InvalidArgumentException('LineString requires at least two positions');
+            throw new InvalidArgumentException('LineString requires at least two positions');
         }
 
         call_user_func_array(array('parent', '__construct'), func_get_args());

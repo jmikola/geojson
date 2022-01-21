@@ -2,8 +2,11 @@
 
 namespace GeoJson;
 
+use ArrayObject;
 use GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem;
 use GeoJson\Exception\UnserializationException;
+use JsonSerializable;
+use ReflectionClass;
 
 /**
  * Base GeoJson object.
@@ -11,7 +14,7 @@ use GeoJson\Exception\UnserializationException;
  * @see http://www.geojson.org/geojson-spec.html#geojson-objects
  * @since 1.0
  */
-abstract class GeoJson implements \JsonSerializable, JsonUnserializable
+abstract class GeoJson implements JsonSerializable, JsonUnserializable
 {
     /**
      * @var BoundingBox
@@ -85,7 +88,7 @@ abstract class GeoJson implements \JsonSerializable, JsonUnserializable
             throw UnserializationException::invalidValue('GeoJson', $json, 'array or object');
         }
 
-        $json = new \ArrayObject($json);
+        $json = new ArrayObject($json);
 
         if ( ! $json->offsetExists('type')) {
             throw UnserializationException::missingProperty('GeoJson', 'type', 'string');
@@ -166,7 +169,7 @@ abstract class GeoJson implements \JsonSerializable, JsonUnserializable
         }
 
         $class = sprintf('GeoJson\%s\%s', (strncmp('Feature', $type, 7) === 0 ? 'Feature' : 'Geometry'), $type);
-        $class = new \ReflectionClass($class);
+        $class = new ReflectionClass($class);
 
         return $class->newInstanceArgs($args);
     }
