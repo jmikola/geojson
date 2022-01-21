@@ -2,6 +2,8 @@
 
 namespace GeoJson\Geometry;
 
+use GeoJson\BoundingBox;
+use GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem;
 use InvalidArgumentException;
 
 /**
@@ -18,9 +20,9 @@ class Point extends Geometry
 
     /**
      * @param array<float|int> $position
-     * @param CoordinateResolutionSystem|BoundingBox $arg,...
+     * @param CoordinateReferenceSystem|BoundingBox $args
      */
-    public function __construct(array $position)
+    public function __construct(array $position, ... $args)
     {
         if (count($position) < 2) {
             throw new InvalidArgumentException('Position requires at least two elements');
@@ -34,8 +36,6 @@ class Point extends Geometry
 
         $this->coordinates = $position;
 
-        if (func_num_args() > 1) {
-            $this->setOptionalConstructorArgs(array_slice(func_get_args(), 1));
-        }
+        $this->setOptionalConstructorArgs($args);
     }
 }

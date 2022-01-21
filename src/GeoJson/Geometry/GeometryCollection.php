@@ -4,6 +4,8 @@ namespace GeoJson\Geometry;
 
 use ArrayIterator;
 use Countable;
+use GeoJson\BoundingBox;
+use GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem;
 use InvalidArgumentException;
 use IteratorAggregate;
 use Traversable;
@@ -25,9 +27,9 @@ class GeometryCollection extends Geometry implements Countable, IteratorAggregat
 
     /**
      * @param array<Geometry> $geometries
-     * @param CoordinateResolutionSystem|BoundingBox $arg,...
+     * @param CoordinateReferenceSystem|BoundingBox $args
      */
-    public function __construct(array $geometries)
+    public function __construct(array $geometries, ... $args)
     {
         foreach ($geometries as $geometry) {
             if ( ! $geometry instanceof Geometry) {
@@ -37,9 +39,7 @@ class GeometryCollection extends Geometry implements Countable, IteratorAggregat
 
         $this->geometries = array_values($geometries);
 
-        if (func_num_args() > 1) {
-            $this->setOptionalConstructorArgs(array_slice(func_get_args(), 1));
-        }
+        $this->setOptionalConstructorArgs($args);
     }
 
     public function count(): int

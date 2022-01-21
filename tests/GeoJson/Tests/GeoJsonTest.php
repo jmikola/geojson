@@ -2,13 +2,14 @@
 
 namespace GeoJson\Tests;
 
+use GeoJson\BoundingBox;
+use GeoJson\CoordinateReferenceSystem\Named;
+use GeoJson\Exception\UnserializationException;
 use GeoJson\GeoJson;
+use GeoJson\Geometry\Point;
 use GeoJson\JsonUnserializable;
 use JsonSerializable;
 use PHPUnit\Framework\TestCase;
-use GeoJson\Geometry\Point;
-use GeoJson\BoundingBox;
-use GeoJson\CoordinateReferenceSystem\Named;
 
 class GeoJsonTest extends TestCase
 {

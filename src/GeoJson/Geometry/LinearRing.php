@@ -2,6 +2,8 @@
 
 namespace GeoJson\Geometry;
 
+use GeoJson\BoundingBox;
+use GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem;
 use InvalidArgumentException;
 
 /**
@@ -17,9 +19,9 @@ class LinearRing extends LineString
 {
     /**
      * @param array<Point|array<int|float>> $positions
-     * @param CoordinateResolutionSystem|BoundingBox $arg,...
+     * @param CoordinateReferenceSystem|BoundingBox $args
      */
-    public function __construct(array $positions)
+    public function __construct(array $positions, ... $args)
     {
         if (count($positions) < 4) {
             throw new InvalidArgumentException('LinearRing requires at least four positions');
@@ -35,6 +37,6 @@ class LinearRing extends LineString
             throw new InvalidArgumentException('LinearRing requires the first and last positions to be equivalent');
         }
 
-        call_user_func_array(array('parent', '__construct'), func_get_args());
+        parent::__construct($positions, ... $args);
     }
 }

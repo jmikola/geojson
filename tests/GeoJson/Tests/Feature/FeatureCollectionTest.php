@@ -3,22 +3,19 @@
 namespace GeoJson\Tests\Feature;
 
 use GeoJson\Exception\UnserializationException;
+use GeoJson\Feature\Feature;
 use GeoJson\Feature\FeatureCollection;
 use GeoJson\GeoJson;
+use GeoJson\Geometry\Point;
 use GeoJson\Tests\BaseGeoJsonTest;
 use InvalidArgumentException;
-use GeoJson\Feature\Feature;
-use GeoJson\Geometry\Point;
-use ReflectionClass;
 use stdClass;
 
 class FeatureCollectionTest extends BaseGeoJsonTest
 {
-    public function createSubjectWithExtraArguments(array $extraArgs)
+    public function createSubjectWithExtraArguments(... $extraArgs)
     {
-        $class = new ReflectionClass(FeatureCollection::class);
-
-        return $class->newInstanceArgs(array_merge(array(array()), $extraArgs));
+        return new FeatureCollection([], ... $extraArgs);
     }
 
     public function testIsSubclassOfGeoJson()

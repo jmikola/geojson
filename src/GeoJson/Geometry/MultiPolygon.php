@@ -2,6 +2,9 @@
 
 namespace GeoJson\Geometry;
 
+use GeoJson\BoundingBox;
+use GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem;
+
 /**
  * MultiPolygon geometry object.
  *
@@ -16,9 +19,9 @@ class MultiPolygon extends Geometry
 
     /**
      * @param array<Polygon|array<LinearRing|array<Point|array<int|float>>>> $polygons
-     * @param CoordinateResolutionSystem|BoundingBox $arg,...
+     * @param CoordinateReferenceSystem|BoundingBox $args
      */
-    public function __construct(array $polygons)
+    public function __construct(array $polygons, ... $args)
     {
         $this->coordinates = array_map(
             function($polygon) {
@@ -31,8 +34,6 @@ class MultiPolygon extends Geometry
             $polygons
         );
 
-        if (func_num_args() > 1) {
-            $this->setOptionalConstructorArgs(array_slice(func_get_args(), 1));
-        }
+        $this->setOptionalConstructorArgs($args);
     }
 }

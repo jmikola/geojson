@@ -2,43 +2,43 @@
 
 namespace GeoJson\Tests;
 
-use PHPUnit\Framework\TestCase;
 use GeoJson\BoundingBox;
 use GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem;
 use GeoJson\Feature\Feature;
 use GeoJson\Geometry\Geometry;
+use PHPUnit\Framework\TestCase;
 
 abstract class BaseGeoJsonTest extends TestCase
 {
-    abstract public function createSubjectWithExtraArguments(array $extraArgs);
+    abstract public function createSubjectWithExtraArguments(... $extraArgs);
 
     public function testConstructorShouldScanExtraArgumentsForCrsAndBoundingBox()
     {
         $box = $this->getMockBoundingBox();
         $crs = $this->getMockCoordinateReferenceSystem();
 
-        $sut = $this->createSubjectWithExtraArguments(array());
+        $sut = $this->createSubjectWithExtraArguments();
         $this->assertNull($sut->getBoundingBox());
         $this->assertNull($sut->getCrs());
 
-        $sut = $this->createSubjectWithExtraArguments(array($box));
+        $sut = $this->createSubjectWithExtraArguments($box);
         $this->assertSame($box, $sut->getBoundingBox());
         $this->assertNull($sut->getCrs());
 
-        $sut = $this->createSubjectWithExtraArguments(array($crs));
+        $sut = $this->createSubjectWithExtraArguments($crs);
         $this->assertNull($sut->getBoundingBox());
         $this->assertSame($crs, $sut->getCrs());
 
-        $sut = $this->createSubjectWithExtraArguments(array($box, $crs));
+        $sut = $this->createSubjectWithExtraArguments($box, $crs);
         $this->assertSame($box, $sut->getBoundingBox());
         $this->assertSame($crs, $sut->getCrs());
 
-        $sut = $this->createSubjectWithExtraArguments(array($crs, $box));
+        $sut = $this->createSubjectWithExtraArguments($crs, $box);
         $this->assertSame($box, $sut->getBoundingBox());
         $this->assertSame($crs, $sut->getCrs());
 
         // Not that you would, but you could…
-        $sut = $this->createSubjectWithExtraArguments(array(null, null, $box, $crs));
+        $sut = $this->createSubjectWithExtraArguments(null, null, $box, $crs);
         $this->assertSame($box, $sut->getBoundingBox());
         $this->assertSame($crs, $sut->getCrs());
     }
@@ -51,7 +51,7 @@ abstract class BaseGeoJsonTest extends TestCase
         $crs = $this->getMockCoordinateReferenceSystem();
         $crs->method('jsonSerialize')->willReturn(['coordinateReferenceSystem']);
 
-        $sut = $this->createSubjectWithExtraArguments(array($box, $crs));
+        $sut = $this->createSubjectWithExtraArguments($box, $crs);
 
         $json = $sut->jsonSerialize();
 
@@ -63,29 +63,21 @@ abstract class BaseGeoJsonTest extends TestCase
 
     protected function getMockBoundingBox()
     {
-        return $this->getMockBuilder(BoundingBox::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(BoundingBox::class);
     }
 
     protected function getMockCoordinateReferenceSystem()
     {
-        return $this->getMockBuilder(CoordinateReferenceSystem::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(CoordinateReferenceSystem::class);
     }
 
     protected function getMockFeature()
     {
-        return $this->getMockBuilder(Feature::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(Feature::class);
     }
 
     protected function getMockGeometry()
     {
-        return $this->getMockBuilder(Geometry::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createMock(Geometry::class);
     }
 }

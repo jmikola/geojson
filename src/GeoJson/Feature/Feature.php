@@ -2,6 +2,8 @@
 
 namespace GeoJson\Feature;
 
+use GeoJson\BoundingBox;
+use GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem;
 use GeoJson\GeoJson;
 use GeoJson\Geometry\Geometry;
 use stdClass;
@@ -36,17 +38,15 @@ class Feature extends GeoJson
 
     /**
      * @param int|string|null $id
-     * @param CoordinateResolutionSystem|BoundingBox $arg,...
+     * @param CoordinateReferenceSystem|BoundingBox $args
      */
-    public function __construct(?Geometry $geometry = null, ?array $properties = null, $id = null)
+    public function __construct(?Geometry $geometry = null, ?array $properties = null, $id = null, ... $args)
     {
         $this->geometry = $geometry;
         $this->properties = $properties;
         $this->id = $id;
 
-        if (func_num_args() > 3) {
-            $this->setOptionalConstructorArgs(array_slice(func_get_args(), 3));
-        }
+        $this->setOptionalConstructorArgs($args);
     }
 
     /**
