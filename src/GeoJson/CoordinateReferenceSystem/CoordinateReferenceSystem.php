@@ -46,9 +46,6 @@ abstract class CoordinateReferenceSystem implements JsonSerializable, JsonUnseri
         return $this->type;
     }
 
-    /**
-     * @see http://php.net/manual/en/jsonserializable.jsonserialize.php
-     */
     public function jsonSerialize(): array
     {
         return array(
@@ -57,9 +54,6 @@ abstract class CoordinateReferenceSystem implements JsonSerializable, JsonUnseri
         );
     }
 
-    /**
-     * @see JsonUnserializable::jsonUnserialize()
-     */
     final public static function jsonUnserialize($json)
     {
         if ( ! is_array($json) && ! is_object($json)) {
@@ -95,7 +89,6 @@ abstract class CoordinateReferenceSystem implements JsonSerializable, JsonUnseri
      *
      * This method must be overridden in a child class.
      *
-     * @see CoordinateReferenceSystem::jsonUnserialize()
      * @param array|object $properties
      * @return CoordinateReferenceSystem
      * @throws BadMethodCallException

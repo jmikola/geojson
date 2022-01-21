@@ -33,7 +33,6 @@ class Linked extends CoordinateReferenceSystem
     /**
      * Factory method for creating a Linked CRS object from properties.
      *
-     * @see CoordinateReferenceSystem::jsonUnserialize()
      * @param array|object $properties
      * @return Linked
      * @throws UnserializationException
