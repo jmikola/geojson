@@ -3,6 +3,8 @@
 namespace GeoJson;
 
 use GeoJson\Exception\UnserializationException;
+use InvalidArgumentException;
+use JsonSerializable;
 
 /**
  * BoundingBox object.
@@ -10,7 +12,7 @@ use GeoJson\Exception\UnserializationException;
  * @see http://www.geojson.org/geojson-spec.html#bounding-boxes
  * @since 1.0
  */
-class BoundingBox implements \JsonSerializable, JsonUnserializable
+class BoundingBox implements JsonSerializable, JsonUnserializable
 {
     /**
      * @var array
@@ -27,22 +29,22 @@ class BoundingBox implements \JsonSerializable, JsonUnserializable
         $count = count($bounds);
 
         if ($count < 4) {
-            throw new \InvalidArgumentException('BoundingBox requires at least four values');
+            throw new InvalidArgumentException('BoundingBox requires at least four values');
         }
 
         if ($count % 2) {
-            throw new \InvalidArgumentException('BoundingBox requires an even number of values');
+            throw new InvalidArgumentException('BoundingBox requires an even number of values');
         }
 
         foreach ($bounds as $value) {
             if ( ! is_int($value) && ! is_float($value)) {
-                throw new \InvalidArgumentException('BoundingBox values must be integers or floats');
+                throw new InvalidArgumentException('BoundingBox values must be integers or floats');
             }
         }
 
         for ($i = 0; $i < ($count / 2); $i++) {
             if ($bounds[$i] > $bounds[$i + ($count / 2)]) {
-                throw new \InvalidArgumentException('BoundingBox min values must precede max values');
+                throw new InvalidArgumentException('BoundingBox min values must precede max values');
             }
         }
 

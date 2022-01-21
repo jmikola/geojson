@@ -2,13 +2,19 @@
 
 namespace GeoJson\Geometry;
 
+use ArrayIterator;
+use Countable;
+use InvalidArgumentException;
+use IteratorAggregate;
+use Traversable;
+
 /**
  * Collection of Geometry objects.
  *
  * @see http://www.geojson.org/geojson-spec.html#geometry-collection
  * @since 1.0
  */
-class GeometryCollection extends Geometry implements \Countable, \IteratorAggregate
+class GeometryCollection extends Geometry implements Countable, IteratorAggregate
 {
     protected $type = 'GeometryCollection';
 
@@ -27,7 +33,7 @@ class GeometryCollection extends Geometry implements \Countable, \IteratorAggreg
     {
         foreach ($geometries as $geometry) {
             if ( ! $geometry instanceof Geometry) {
-                throw new \InvalidArgumentException('GeometryCollection may only contain Geometry objects');
+                throw new InvalidArgumentException('GeometryCollection may only contain Geometry objects');
             }
         }
 
@@ -59,9 +65,9 @@ class GeometryCollection extends Geometry implements \Countable, \IteratorAggreg
     /**
      * @see http://php.net/manual/en/iteratoraggregate.getiterator.php
      */
-    public function getIterator(): \Traversable
+    public function getIterator(): Traversable
     {
-        return new \ArrayIterator($this->geometries);
+        return new ArrayIterator($this->geometries);
     }
 
     /**

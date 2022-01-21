@@ -7,12 +7,13 @@ use GeoJson\Geometry\LinearRing;
 use GeoJson\Geometry\Polygon;
 use GeoJson\Tests\BaseGeoJsonTest;
 use GeoJson\Geometry\Geometry;
+use ReflectionClass;
 
 class PolygonTest extends BaseGeoJsonTest
 {
     public function createSubjectWithExtraArguments(array $extraArgs)
     {
-        $class = new \ReflectionClass(Polygon::class);
+        $class = new ReflectionClass(Polygon::class);
 
         return $class->newInstanceArgs(array_merge(
             array(array(

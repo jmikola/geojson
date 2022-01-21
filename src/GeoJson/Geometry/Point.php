@@ -2,6 +2,8 @@
 
 namespace GeoJson\Geometry;
 
+use InvalidArgumentException;
+
 /**
  * Point geometry object.
  *
@@ -23,12 +25,12 @@ class Point extends Geometry
     public function __construct(array $position)
     {
         if (count($position) < 2) {
-            throw new \InvalidArgumentException('Position requires at least two elements');
+            throw new InvalidArgumentException('Position requires at least two elements');
         }
 
         foreach ($position as $value) {
             if ( ! is_int($value) && ! is_float($value)) {
-                throw new \InvalidArgumentException('Position elements must be integers or floats');
+                throw new InvalidArgumentException('Position elements must be integers or floats');
             }
         }
 

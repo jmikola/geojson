@@ -2,8 +2,11 @@
 
 namespace GeoJson\CoordinateReferenceSystem;
 
+use ArrayObject;
+use BadMethodCallException;
 use GeoJson\Exception\UnserializationException;
 use GeoJson\JsonUnserializable;
+use JsonSerializable;
 
 /**
  * Coordinate reference system object.
@@ -11,7 +14,7 @@ use GeoJson\JsonUnserializable;
  * @see http://www.geojson.org/geojson-spec.html#coordinate-reference-system-objects
  * @since 1.0
  */
-abstract class CoordinateReferenceSystem implements \JsonSerializable, JsonUnserializable
+abstract class CoordinateReferenceSystem implements JsonSerializable, JsonUnserializable
 {
     /**
      * @var array
@@ -63,7 +66,7 @@ abstract class CoordinateReferenceSystem implements \JsonSerializable, JsonUnser
             throw UnserializationException::invalidValue('CRS', $json, 'array or object');
         }
 
-        $json = new \ArrayObject($json);
+        $json = new ArrayObject($json);
 
         if ( ! $json->offsetExists('type')) {
             throw UnserializationException::missingProperty('CRS', 'type', 'string');
@@ -95,10 +98,10 @@ abstract class CoordinateReferenceSystem implements \JsonSerializable, JsonUnser
      * @see CoordinateReferenceSystem::jsonUnserialize()
      * @param array|object $properties
      * @return CoordinateReferenceSystem
-     * @throws \BadMethodCallException
+     * @throws BadMethodCallException
      */
     protected static function jsonUnserializeFromProperties($properties)
     {
-        throw new \BadMethodCallException(sprintf('%s must be overridden in a child class', __METHOD__));
+        throw new BadMethodCallException(sprintf('%s must be overridden in a child class', __METHOD__));
     }
 }

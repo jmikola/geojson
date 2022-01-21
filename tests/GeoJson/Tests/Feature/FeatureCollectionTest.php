@@ -9,12 +9,14 @@ use GeoJson\Tests\BaseGeoJsonTest;
 use InvalidArgumentException;
 use GeoJson\Feature\Feature;
 use GeoJson\Geometry\Point;
+use ReflectionClass;
+use stdClass;
 
 class FeatureCollectionTest extends BaseGeoJsonTest
 {
     public function createSubjectWithExtraArguments(array $extraArgs)
     {
-        $class = new \ReflectionClass(FeatureCollection::class);
+        $class = new ReflectionClass(FeatureCollection::class);
 
         return $class->newInstanceArgs(array_merge(array(array()), $extraArgs));
     }
@@ -30,7 +32,7 @@ class FeatureCollectionTest extends BaseGeoJsonTest
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('FeatureCollection may only contain Feature objects');
 
-        new FeatureCollection(array(new \stdClass()));
+        new FeatureCollection(array(new stdClass()));
     }
 
     public function testConstructorShouldReindexFeaturesArrayNumerically()

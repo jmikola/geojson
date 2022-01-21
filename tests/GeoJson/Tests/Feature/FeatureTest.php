@@ -6,12 +6,14 @@ use GeoJson\Feature\Feature;
 use GeoJson\GeoJson;
 use GeoJson\Tests\BaseGeoJsonTest;
 use GeoJson\Geometry\Point;
+use ReflectionClass;
+use stdClass;
 
 class FeatureTest extends BaseGeoJsonTest
 {
     public function createSubjectWithExtraArguments(array $extraArgs)
     {
-        $class = new \ReflectionClass(Feature::class);
+        $class = new ReflectionClass(Feature::class);
 
         return $class->newInstanceArgs(array_merge(array(null, null, null), $extraArgs));
     }
@@ -68,7 +70,7 @@ class FeatureTest extends BaseGeoJsonTest
         $expected = array(
             'type' => 'Feature',
             'geometry' => null,
-            'properties' => new \stdClass(),
+            'properties' => new stdClass(),
         );
 
         $this->assertEquals($expected, $feature->jsonSerialize());

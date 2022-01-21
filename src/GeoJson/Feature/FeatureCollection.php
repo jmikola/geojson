@@ -2,7 +2,12 @@
 
 namespace GeoJson\Feature;
 
+use ArrayIterator;
+use Countable;
 use GeoJson\GeoJson;
+use InvalidArgumentException;
+use IteratorAggregate;
+use Traversable;
 
 /**
  * Collection of Feature objects.
@@ -10,7 +15,7 @@ use GeoJson\GeoJson;
  * @see http://www.geojson.org/geojson-spec.html#feature-collection-objects
  * @since 1.0
  */
-class FeatureCollection extends GeoJson implements \Countable, \IteratorAggregate
+class FeatureCollection extends GeoJson implements Countable, IteratorAggregate
 {
     protected $type = 'FeatureCollection';
 
@@ -29,7 +34,7 @@ class FeatureCollection extends GeoJson implements \Countable, \IteratorAggregat
     {
         foreach ($features as $feature) {
             if ( ! $feature instanceof Feature) {
-                throw new \InvalidArgumentException('FeatureCollection may only contain Feature objects');
+                throw new InvalidArgumentException('FeatureCollection may only contain Feature objects');
             }
         }
 
@@ -61,9 +66,9 @@ class FeatureCollection extends GeoJson implements \Countable, \IteratorAggregat
     /**
      * @see http://php.net/manual/en/iteratoraggregate.getiterator.php
      */
-    public function getIterator(): \Traversable
+    public function getIterator(): Traversable
     {
-        return new \ArrayIterator($this->features);
+        return new ArrayIterator($this->features);
     }
 
     /**

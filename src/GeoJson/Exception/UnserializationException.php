@@ -2,7 +2,9 @@
 
 namespace GeoJson\Exception;
 
-class UnserializationException extends \RuntimeException implements Exception
+use RuntimeException;
+
+class UnserializationException extends RuntimeException implements Exception
 {
     /**
      * Creates an UnserializationException for a value with an invalid type.

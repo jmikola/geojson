@@ -2,6 +2,8 @@
 
 namespace GeoJson\Geometry;
 
+use InvalidArgumentException;
+
 /**
  * LinearRing is a special kind of LineString geometry object.
  *
@@ -22,7 +24,7 @@ class LinearRing extends LineString
     public function __construct(array $positions)
     {
         if (count($positions) < 4) {
-            throw new \InvalidArgumentException('LinearRing requires at least four positions');
+            throw new InvalidArgumentException('LinearRing requires at least four positions');
         }
 
         $lastPosition = end($positions);
@@ -32,7 +34,7 @@ class LinearRing extends LineString
         $firstPosition = $firstPosition instanceof Point ? $firstPosition->getCoordinates() : $firstPosition;
 
         if ($lastPosition !== $firstPosition) {
-            throw new \InvalidArgumentException('LinearRing requires the first and last positions to be equivalent');
+            throw new InvalidArgumentException('LinearRing requires the first and last positions to be equivalent');
         }
 
         call_user_func_array(array('parent', '__construct'), func_get_args());

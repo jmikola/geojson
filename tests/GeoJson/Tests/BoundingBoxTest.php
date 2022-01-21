@@ -7,6 +7,7 @@ use GeoJson\Exception\UnserializationException;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use GeoJson\JsonUnserializable;
+use stdClass;
 
 class BoundingBoxTest extends TestCase
 {
@@ -50,7 +51,7 @@ class BoundingBoxTest extends TestCase
     {
         return array(
             'strings' => array('0', '0.0', '1', '1.0'),
-            'objects' => array(new \stdClass(), new \stdClass(), new \stdClass(), new \stdClass()),
+            'objects' => array(new stdClass(), new stdClass(), new stdClass(), new stdClass()),
             'arrays' => array(array(), array(), array(), array()),
         );
     }
@@ -112,7 +113,7 @@ class BoundingBoxTest extends TestCase
             array(null),
             array(1),
             array('foo'),
-            array(new \stdClass()),
+            array(new stdClass()),
         );
     }
 }
