@@ -62,7 +62,7 @@ $feature = new \GeoJson\Feature\Feature(null, null, null, $box);
 
 ### JSON Serialization
 
-Each class in the library implements PHP 5.4's
+Each class in the library implements the
 [JsonSerializable](http://php.net/manual/en/class.jsonserializable.php)
 interface, which allows objects to be passed directly to `json_encode()`.
 
@@ -79,10 +79,6 @@ Printing the `$json` variable would yield (sans whitespace):
     "coordinates": [1, 1]
 }
 ```
-
-A stub interface is included for compatibility with PHP 5.3, although lack of
-core support for the interface means that `jsonSerialize()` will need to be
-manually called and its return value passed to `json_encode()`.
 
 ### JSON Unserialization
 
