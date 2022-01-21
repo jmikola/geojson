@@ -9,18 +9,18 @@
         { "name": "Jeremy Mikola", "email": "jmikola@gmail.com" }
     ],
     "require": {
-        "php": ">=7.4",
+        "php": "^7.4 || ^8.0",
         "ext-json": "*"
     },
     "require-dev": {
-        "phpunit/phpunit": "~9.5"
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-0": { "GeoJson\\": "src/" }
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "dev-master": "1.1-dev"
         }
     }
 }
