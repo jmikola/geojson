@@ -42,6 +42,4 @@ jobs:
 
         - name: Upload Coverage
           if: github.repository_owner == 'jmikola'
-          run: |
-            wget https://scrutinizer-ci.com/ocular.phar
-            php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+          run: "vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover"
