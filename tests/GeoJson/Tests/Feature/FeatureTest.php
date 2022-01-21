@@ -4,18 +4,15 @@ namespace GeoJson\Tests\Feature;
 
 use GeoJson\Feature\Feature;
 use GeoJson\GeoJson;
-use GeoJson\Tests\BaseGeoJsonTest;
 use GeoJson\Geometry\Point;
-use ReflectionClass;
+use GeoJson\Tests\BaseGeoJsonTest;
 use stdClass;
 
 class FeatureTest extends BaseGeoJsonTest
 {
-    public function createSubjectWithExtraArguments(array $extraArgs)
+    public function createSubjectWithExtraArguments(... $extraArgs)
     {
-        $class = new ReflectionClass(Feature::class);
-
-        return $class->newInstanceArgs(array_merge(array(null, null, null), $extraArgs));
+        return new Feature(null, null, null, ... $extraArgs);
     }
 
     public function testIsSubclassOfGeoJson()

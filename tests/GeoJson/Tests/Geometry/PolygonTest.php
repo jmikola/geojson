@@ -3,25 +3,22 @@
 namespace GeoJson\Tests\Geometry;
 
 use GeoJson\GeoJson;
+use GeoJson\Geometry\Geometry;
 use GeoJson\Geometry\LinearRing;
 use GeoJson\Geometry\Polygon;
 use GeoJson\Tests\BaseGeoJsonTest;
-use GeoJson\Geometry\Geometry;
-use ReflectionClass;
 
 class PolygonTest extends BaseGeoJsonTest
 {
-    public function createSubjectWithExtraArguments(array $extraArgs)
+    public function createSubjectWithExtraArguments(... $extraArgs)
     {
-        $class = new ReflectionClass(Polygon::class);
-
-        return $class->newInstanceArgs(array_merge(
-            array(array(
+        return new Polygon(
+            array(
                 array(array(0, 0), array(0, 4), array(4, 4), array(4, 0), array(0, 0)),
                 array(array(1, 1), array(1, 3), array(3, 3), array(3, 1), array(1, 1)),
-            )),
-            $extraArgs
-        ));
+            ),
+            ... $extraArgs
+        );
     }
 
     public function testIsSubclassOfGeometry()

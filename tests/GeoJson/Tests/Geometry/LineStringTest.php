@@ -4,21 +4,18 @@ namespace GeoJson\Tests\Geometry;
 
 use GeoJson\GeoJson;
 use GeoJson\Geometry\LineString;
+use GeoJson\Geometry\MultiPoint;
 use GeoJson\Tests\BaseGeoJsonTest;
 use InvalidArgumentException;
-use GeoJson\Geometry\MultiPoint;
-use ReflectionClass;
 
 class LineStringTest extends BaseGeoJsonTest
 {
-    public function createSubjectWithExtraArguments(array $extraArgs)
+    public function createSubjectWithExtraArguments(... $extraArgs)
     {
-        $class = new ReflectionClass(LineString::class);
-
-        return $class->newInstanceArgs(array_merge(
-            array(array(array(1, 1), array(2, 2))),
-            $extraArgs
-        ));
+        return new LineString(
+            array(array(1, 1), array(2, 2)),
+            ... $extraArgs
+        );
     }
 
     public function testIsSubclassOfMultiPoint()

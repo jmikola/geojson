@@ -2,6 +2,8 @@
 
 namespace GeoJson\Geometry;
 
+use GeoJson\BoundingBox;
+use GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem;
 use InvalidArgumentException;
 
 /**
@@ -18,14 +20,14 @@ class LineString extends MultiPoint
 
     /**
      * @param array<Point|array<float|int>> $positions
-     * @param CoordinateResolutionSystem|BoundingBox $arg,...
+     * @param CoordinateReferenceSystem|BoundingBox $args
      */
-    public function __construct(array $positions)
+    public function __construct(array $positions, ... $args)
     {
         if (count($positions) < 2) {
             throw new InvalidArgumentException('LineString requires at least two positions');
         }
 
-        call_user_func_array(array('parent', '__construct'), func_get_args());
+        parent::__construct($positions, ... $args);
     }
 }

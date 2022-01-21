@@ -2,6 +2,9 @@
 
 namespace GeoJson\Geometry;
 
+use GeoJson\BoundingBox;
+use GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem;
+
 /**
  * Polygon geometry object.
  *
@@ -16,9 +19,9 @@ class Polygon extends Geometry
 
     /**
      * @param array<LinearRing|array<Point|array<int|float>>> $linearRings
-     * @param CoordinateResolutionSystem|BoundingBox $arg,...
+     * @param CoordinateReferenceSystem|BoundingBox $args
      */
-    public function __construct(array $linearRings)
+    public function __construct(array $linearRings, ... $args)
     {
         foreach ($linearRings as $linearRing) {
             if ( ! $linearRing instanceof LinearRing) {
@@ -27,8 +30,6 @@ class Polygon extends Geometry
             $this->coordinates[] = $linearRing->getCoordinates();
         }
 
-        if (func_num_args() > 1) {
-            $this->setOptionalConstructorArgs(array_slice(func_get_args(), 1));
-        }
+        $this->setOptionalConstructorArgs($args);
     }
 }

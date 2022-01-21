@@ -2,9 +2,9 @@
 
 namespace GeoJson\Tests\Geometry;
 
-use PHPUnit\Framework\TestCase;
-use GeoJson\Geometry\Geometry;
 use GeoJson\GeoJson;
+use GeoJson\Geometry\Geometry;
+use PHPUnit\Framework\TestCase;
 
 class GeometryTest extends TestCase
 {

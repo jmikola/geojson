@@ -3,25 +3,16 @@
 namespace GeoJson\Tests\Geometry;
 
 use GeoJson\GeoJson;
+use GeoJson\Geometry\Geometry;
 use GeoJson\Geometry\MultiPoint;
 use GeoJson\Geometry\Point;
 use GeoJson\Tests\BaseGeoJsonTest;
-use GeoJson\Geometry\Geometry;
-use ReflectionClass;
 
 class MultiPointTest extends BaseGeoJsonTest
 {
-    public function createSubjectWithExtraArguments(array $extraArgs)
+    public function createSubjectWithExtraArguments(... $extraArgs)
     {
-        $class = new ReflectionClass(MultiPoint::class);
-
-        return $class->newInstanceArgs(array_merge(
-            array(array(
-                array(1, 1),
-                array(2, 2),
-            )),
-            $extraArgs
-        ));
+        return new MultiPoint([], ... $extraArgs);
     }
 
     public function testIsSubclassOfGeometry()

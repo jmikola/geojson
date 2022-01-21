@@ -4,9 +4,9 @@ namespace GeoJson\Tests;
 
 use GeoJson\BoundingBox;
 use GeoJson\Exception\UnserializationException;
+use GeoJson\JsonUnserializable;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use GeoJson\JsonUnserializable;
 use stdClass;
 
 class BoundingBoxTest extends TestCase

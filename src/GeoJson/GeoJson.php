@@ -6,7 +6,6 @@ use ArrayObject;
 use GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem;
 use GeoJson\Exception\UnserializationException;
 use JsonSerializable;
-use ReflectionClass;
 
 /**
  * Base GeoJson object.
@@ -148,9 +147,8 @@ abstract class GeoJson implements JsonSerializable, JsonUnserializable
         }
 
         $class = sprintf('GeoJson\%s\%s', (strncmp('Feature', $type, 7) === 0 ? 'Feature' : 'Geometry'), $type);
-        $class = new ReflectionClass($class);
 
-        return $class->newInstanceArgs($args);
+        return new $class(... $args);
     }
 
     /**
