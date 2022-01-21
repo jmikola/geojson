@@ -83,13 +83,8 @@ class FeatureCollectionTest extends BaseGeoJsonTest
             $this->getMockFeature(),
         );
 
-        $features[0]->expects($this->any())
-            ->method('jsonSerialize')
-            ->will($this->returnValue(['feature1']));
-
-        $features[1]->expects($this->any())
-            ->method('jsonSerialize')
-            ->will($this->returnValue(['feature2']));
+        $features[0]->method('jsonSerialize')->willReturn(['feature1']);
+        $features[1]->method('jsonSerialize')->willReturn(['feature2']);
 
         $collection = new FeatureCollection($features);
 

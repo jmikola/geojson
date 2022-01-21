@@ -46,15 +46,10 @@ abstract class BaseGeoJsonTest extends TestCase
     public function testSerializationWithCrsAndBoundingBox()
     {
         $box = $this->getMockBoundingBox();
+        $box->method('jsonSerialize')->willReturn(['boundingBox']);
+
         $crs = $this->getMockCoordinateReferenceSystem();
-
-        $box->expects($this->any())
-            ->method('jsonSerialize')
-            ->will($this->returnValue(['boundingBox']));
-
-        $crs->expects($this->any())
-            ->method('jsonSerialize')
-            ->will($this->returnValue(['coordinateReferenceSystem']));
+        $crs->method('jsonSerialize')->willReturn(['coordinateReferenceSystem']);
 
         $sut = $this->createSubjectWithExtraArguments(array($box, $crs));
 

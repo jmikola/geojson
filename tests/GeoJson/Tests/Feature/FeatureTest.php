@@ -27,9 +27,7 @@ class FeatureTest extends BaseGeoJsonTest
     {
         $geometry = $this->getMockGeometry();
 
-        $geometry->expects($this->any())
-            ->method('jsonSerialize')
-            ->will($this->returnValue(['geometry']));
+        $geometry->method('jsonSerialize')->willReturn(['geometry']);
 
         $properties = array('key' => 'value');
         $id = 'identifier';
