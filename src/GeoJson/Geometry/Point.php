@@ -1,10 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeoJson\Geometry;
 
 use GeoJson\BoundingBox;
 use GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem;
 use InvalidArgumentException;
+
+use function count;
+use function is_int;
+use function is_float;
 
 /**
  * Point geometry object.
@@ -22,14 +28,14 @@ class Point extends Geometry
      * @param array<float|int> $position
      * @param CoordinateReferenceSystem|BoundingBox $args
      */
-    public function __construct(array $position, ... $args)
+    public function __construct(array $position, ...$args)
     {
         if (count($position) < 2) {
             throw new InvalidArgumentException('Position requires at least two elements');
         }
 
         foreach ($position as $value) {
-            if ( ! is_int($value) && ! is_float($value)) {
+            if (! is_int($value) && ! is_float($value)) {
                 throw new InvalidArgumentException('Position elements must be integers or floats');
             }
         }

@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<ruleset>
+    <arg name="basepath" value="." />
+    <arg name="extensions" value="php" />
+    <arg name="cache" value=".phpcs-cache" />
+    <arg name="colors" />
+
+    <!-- Ignore warnings (n), show progress of the run (p), and show sniff names (s) -->
+    <arg value="nps"/>
+
+    <file>src</file>
+    <file>tests</file>
+
+    <rule ref="PSR12">
+
+        <!-- ********************************************** -->
+        <!-- Exclude sniffs that require newer PHP versions -->
+        <!-- ********************************************** -->
+
+        <!-- Requires PHP 8.0 -->
+        <exclude name="SlevomatCodingStandard.Classes.ModernClassNameReference.ClassNameReferencedViaFunctionCall" />
+
+
+        <!-- *********************************** -->
+        <!-- Exclude sniffs that cause BC breaks -->
+        <!-- *********************************** -->
+        <exclude name="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming" />
+        <exclude name="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming" />
+        <exclude name="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming" />
+        <exclude name="SlevomatCodingStandard.Classes.SuperfluousTraitNaming" />
+
+
+        <!-- **************************************** -->
+        <!-- Exclude sniffs that force unwanted style -->
+        <!-- **************************************** -->
+        <exclude name="Generic.Formatting.MultipleStatementAlignment" />
+        <exclude name="Squiz.Commenting.FunctionComment.ThrowsNoFullStop" />
+
+        <!-- Keep long typehints (for now) -->
+        <exclude name="SlevomatCodingStandard.PHP.TypeCast.InvalidCastUsed" />
+        <exclude name="SlevomatCodingStandard.TypeHints.LongTypeHints" />
+
+
+        <!-- ************************************************ -->
+        <!-- Exclude sniffs that may cause functional changes -->
+        <!-- ************************************************ -->
+        <exclude name="Generic.PHP.ForbiddenFunctions.FoundWithAlternative" />
+        <exclude name="SlevomatCodingStandard.ControlStructures.DisallowYodaComparison" />
+        <exclude name="SlevomatCodingStandard.ControlStructures.EarlyExit" />
+        <exclude name="SlevomatCodingStandard.ControlStructures.UselessIfConditionWithReturn" />
+        <exclude name="SlevomatCodingStandard.Functions.StaticClosure" />
+        <exclude name="SlevomatCodingStandard.Functions.UnusedInheritedVariablePassedToClosure" />
+        <exclude name="SlevomatCodingStandard.Operators.DisallowEqualOperators" />
+
+
+        <!-- ********************************************************* -->
+        <!-- Exclude sniffs that cause a huge diff - enable separately -->
+        <!-- ********************************************************* -->
+        <exclude name="SlevomatCodingStandard.Commenting.DocCommentSpacing.IncorrectAnnotationsGroup" />
+        <exclude name="Squiz.Strings.DoubleQuoteUsage" />
+
+
+        <!-- ********************* -->
+        <!-- Exclude broken sniffs -->
+        <!-- ********************* -->
+
+        <!-- Sniff currently broken when casting arrays, see https://github.com/squizlabs/PHP_CodeSniffer/issues/2937#issuecomment-615498860 -->
+        <exclude name="Squiz.Arrays.ArrayDeclaration.ValueNoNewline" />
+
+        <!-- Disable forbidden annotation sniff as excluding @api from the list doesn't work -->
+        <exclude name="SlevomatCodingStandard.Commenting.ForbiddenAnnotations.AnnotationForbidden" />
+    </rule>
+
+
+    <!-- ***************************************************** -->
+    <!-- Forbid fully qualified names even for colliding names -->
+    <!-- ***************************************************** -->
+    <rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly">
+        <properties>
+            <property name="allowFallbackGlobalConstants" value="false"/>
+            <property name="allowFallbackGlobalFunctions" value="false"/>
+            <property name="allowFullyQualifiedGlobalClasses" value="false"/>
+            <property name="allowFullyQualifiedGlobalConstants" value="false"/>
+            <property name="allowFullyQualifiedGlobalFunctions" value="false"/>
+            <property phpcs-only="true" name="allowFullyQualifiedNameForCollidingClasses" value="false"/>
+            <property phpcs-only="true" name="allowFullyQualifiedNameForCollidingConstants" value="false"/>
+            <property phpcs-only="true" name="allowFullyQualifiedNameForCollidingFunctions" value="false"/>
+            <property name="searchAnnotations" value="true"/>
+        </properties>
+    </rule>
+
+    <!-- **************************************************************************** -->
+    <!-- Exclude BC breaking type hints for parameters, properties, and return values -->
+    <!-- **************************************************************************** -->
+    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint">
+        <properties>
+            <!-- Requires PHP 8.0 -->
+            <property name="enableMixedTypeHint" value="false" />
+            <!-- Requires PHP 8.0 -->
+            <property name="enableUnionTypeHint" value="false" />
+        </properties>
+
+        <exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification" />
+        <exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.UselessAnnotation" />
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint">
+        <properties>
+            <!-- Requires PHP 8.0 -->
+            <property name="enableMixedTypeHint" value="false" />
+            <!-- Requires PHP 8.0 -->
+            <property name="enableUnionTypeHint" value="false" />
+        </properties>
+
+        <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification" />
+        <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.UselessAnnotation" />
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint">
+        <properties>
+            <!-- Requires PHP 8.0 -->
+            <property name="enableStaticTypeHint" value="false" />
+            <!-- Requires PHP 8.0 -->
+            <property name="enableMixedTypeHint" value="false" />
+            <!-- Requires PHP 8.0 -->
+            <property name="enableUnionTypeHint" value="false" />
+        </properties>
+
+        <exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification" />
+        <exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.UselessAnnotation" />
+    </rule>
+
+
+    <!-- ************************************************************************** -->
+    <!-- Require type hints for all parameters, properties, and return types in src -->
+    <!-- ************************************************************************** -->
+    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint">
+        <exclude-pattern>tests</exclude-pattern>
+    </rule>
+    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingAnyTypeHint">
+        <exclude-pattern>tests</exclude-pattern>
+    </rule>
+    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingAnyTypeHint">
+        <exclude-pattern>tests</exclude-pattern>
+    </rule>
+
+
+    <!-- *********************************************************************************** -->
+    <!-- Require native type hints for all parameters, properties, and return types in tests -->
+    <!-- *********************************************************************************** -->
+    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint">
+        <exclude-pattern>src</exclude-pattern>
+    </rule>
+    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint">
+        <exclude-pattern>src</exclude-pattern>
+    </rule>
+    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint">
+        <exclude-pattern>src</exclude-pattern>
+    </rule>
+    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
+        <properties>
+            <property name="newlinesCountBetweenOpenTagAndDeclare" type="int" value="2" />
+            <property name="spacesCountAroundEqualsSign" type="int" value="0" />
+        </properties>
+    </rule>
+
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax" />
+</ruleset>

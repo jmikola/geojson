@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeoJson\Feature;
 
 use ArrayIterator;
@@ -10,6 +12,11 @@ use GeoJson\GeoJson;
 use InvalidArgumentException;
 use IteratorAggregate;
 use Traversable;
+
+use function array_values;
+use function count;
+use function array_merge;
+use function array_map;
 
 /**
  * Collection of Feature objects.
@@ -30,10 +37,10 @@ class FeatureCollection extends GeoJson implements Countable, IteratorAggregate
      * @param array<Feature> $features
      * @param CoordinateReferenceSystem|BoundingBox $args
      */
-    public function __construct(array $features, ... $args)
+    public function __construct(array $features, ...$args)
     {
         foreach ($features as $feature) {
-            if ( ! $feature instanceof Feature) {
+            if (! $feature instanceof Feature) {
                 throw new InvalidArgumentException('FeatureCollection may only contain Feature objects');
             }
         }
@@ -67,10 +74,10 @@ class FeatureCollection extends GeoJson implements Countable, IteratorAggregate
     {
         return array_merge(
             parent::jsonSerialize(),
-            array('features' => array_map(
-                function(Feature $feature) { return $feature->jsonSerialize(); },
+            ['features' => array_map(
+                static fn(Feature $feature) => $feature->jsonSerialize(),
                 $this->features
-            ))
+            )]
         );
     }
 }

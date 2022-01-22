@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeoJson\Geometry;
 
 use ArrayIterator;
@@ -9,6 +11,11 @@ use GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem;
 use InvalidArgumentException;
 use IteratorAggregate;
 use Traversable;
+
+use function array_values;
+use function count;
+use function array_merge;
+use function array_map;
 
 /**
  * Collection of Geometry objects.
@@ -29,10 +36,10 @@ class GeometryCollection extends Geometry implements Countable, IteratorAggregat
      * @param array<Geometry> $geometries
      * @param CoordinateReferenceSystem|BoundingBox $args
      */
-    public function __construct(array $geometries, ... $args)
+    public function __construct(array $geometries, ...$args)
     {
         foreach ($geometries as $geometry) {
-            if ( ! $geometry instanceof Geometry) {
+            if (! $geometry instanceof Geometry) {
                 throw new InvalidArgumentException('GeometryCollection may only contain Geometry objects');
             }
         }
@@ -66,10 +73,10 @@ class GeometryCollection extends Geometry implements Countable, IteratorAggregat
     {
         return array_merge(
             parent::jsonSerialize(),
-            array('geometries' => array_map(
-                function(Geometry $geometry) { return $geometry->jsonSerialize(); },
+            ['geometries' => array_map(
+                static fn(Geometry $geometry) => $geometry->jsonSerialize(),
                 $this->geometries
-            ))
+            )]
         );
     }
 }

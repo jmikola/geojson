@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeoJson\Tests\Geometry;
 
 use GeoJson\GeoJson;
@@ -8,52 +10,55 @@ use GeoJson\Geometry\LinearRing;
 use GeoJson\Geometry\Polygon;
 use GeoJson\Tests\BaseGeoJsonTest;
 
+use function is_subclass_of;
+use function json_decode;
+
 class PolygonTest extends BaseGeoJsonTest
 {
-    public function createSubjectWithExtraArguments(... $extraArgs)
+    public function createSubjectWithExtraArguments(...$extraArgs)
     {
         return new Polygon(
-            array(
-                array(array(0, 0), array(0, 4), array(4, 4), array(4, 0), array(0, 0)),
-                array(array(1, 1), array(1, 3), array(3, 3), array(3, 1), array(1, 1)),
-            ),
+            [
+                [[0, 0], [0, 4], [4, 4], [4, 0], [0, 0]],
+                [[1, 1], [1, 3], [3, 3], [3, 1], [1, 1]],
+            ],
             ... $extraArgs
         );
     }
 
-    public function testIsSubclassOfGeometry()
+    public function testIsSubclassOfGeometry(): void
     {
         $this->assertTrue(is_subclass_of(Polygon::class, Geometry::class));
     }
 
-    public function testConstructionFromLinearRingObjects()
+    public function testConstructionFromLinearRingObjects(): void
     {
-        $polygon1 = new Polygon(array(
-            new LinearRing(array(array(0, 0), array(0, 4), array(4, 4), array(4, 0), array(0, 0))),
-            new LinearRing(array(array(1, 1), array(1, 3), array(3, 3), array(3, 1), array(1, 1))),
-        ));
+        $polygon1 = new Polygon([
+            new LinearRing([[0, 0], [0, 4], [4, 4], [4, 0], [0, 0]]),
+            new LinearRing([[1, 1], [1, 3], [3, 3], [3, 1], [1, 1]]),
+        ]);
 
-        $polygon2 = new Polygon(array(
-            array(array(0, 0), array(0, 4), array(4, 4), array(4, 0), array(0, 0)),
-            array(array(1, 1), array(1, 3), array(3, 3), array(3, 1), array(1, 1)),
-        ));
+        $polygon2 = new Polygon([
+            [[0, 0], [0, 4], [4, 4], [4, 0], [0, 0]],
+            [[1, 1], [1, 3], [3, 3], [3, 1], [1, 1]],
+        ]);
 
         $this->assertSame($polygon1->getCoordinates(), $polygon2->getCoordinates());
     }
 
-    public function testSerialization()
+    public function testSerialization(): void
     {
-        $coordinates = array(
-            array(array(0, 0), array(0, 4), array(4, 4), array(4, 0), array(0, 0)),
-            array(array(1, 1), array(1, 3), array(3, 3), array(3, 1), array(1, 1)),
-        );
+        $coordinates = [
+            [[0, 0], [0, 4], [4, 4], [4, 0], [0, 0]],
+            [[1, 1], [1, 3], [3, 3], [3, 1], [1, 1]],
+        ];
 
         $polygon = new Polygon($coordinates);
 
-        $expected = array(
+        $expected = [
             'type' => 'Polygon',
             'coordinates' => $coordinates,
-        );
+        ];
 
         $this->assertSame('Polygon', $polygon->getType());
         $this->assertSame($coordinates, $polygon->getCoordinates());
@@ -64,7 +69,7 @@ class PolygonTest extends BaseGeoJsonTest
      * @dataProvider provideJsonDecodeAssocOptions
      * @group functional
      */
-    public function testUnserialization($assoc)
+    public function testUnserialization($assoc): void
     {
         $json = <<<'JSON'
 {
@@ -79,10 +84,10 @@ JSON;
         $json = json_decode($json, $assoc);
         $polygon = GeoJson::jsonUnserialize($json);
 
-        $expectedCoordinates = array(
-            array(array(0, 0), array(0, 4), array(4, 4), array(4, 0), array(0, 0)),
-            array(array(1, 1), array(1, 3), array(3, 3), array(3, 1), array(1, 1)),
-        );
+        $expectedCoordinates = [
+            [[0, 0], [0, 4], [4, 4], [4, 0], [0, 0]],
+            [[1, 1], [1, 3], [3, 3], [3, 1], [1, 1]],
+        ];
 
         $this->assertInstanceOf(Polygon::class, $polygon);
         $this->assertSame('Polygon', $polygon->getType());
@@ -91,9 +96,9 @@ JSON;
 
     public function provideJsonDecodeAssocOptions()
     {
-        return array(
-            'assoc=true' => array(true),
-            'assoc=false' => array(false),
-        );
+        return [
+            'assoc=true' => [true],
+            'assoc=false' => [false],
+        ];
     }
 }
