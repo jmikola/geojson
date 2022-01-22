@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeoJson\Tests\Geometry;
 
 use GeoJson\GeoJson;
@@ -8,38 +10,41 @@ use GeoJson\Geometry\MultiPoint;
 use GeoJson\Tests\BaseGeoJsonTest;
 use InvalidArgumentException;
 
+use function is_subclass_of;
+use function json_decode;
+
 class LineStringTest extends BaseGeoJsonTest
 {
-    public function createSubjectWithExtraArguments(... $extraArgs)
+    public function createSubjectWithExtraArguments(...$extraArgs)
     {
         return new LineString(
-            array(array(1, 1), array(2, 2)),
+            [[1, 1], [2, 2]],
             ... $extraArgs
         );
     }
 
-    public function testIsSubclassOfMultiPoint()
+    public function testIsSubclassOfMultiPoint(): void
     {
         $this->assertTrue(is_subclass_of(LineString::class, MultiPoint::class));
     }
 
-    public function testConstructorShouldRequireAtLeastTwoPositions()
+    public function testConstructorShouldRequireAtLeastTwoPositions(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('LineString requires at least two positions');
 
-        new LineString(array(array(1, 1)));
+        new LineString([[1, 1]]);
     }
 
-    public function testSerialization()
+    public function testSerialization(): void
     {
-        $coordinates = array(array(1, 1), array(2, 2));
+        $coordinates = [[1, 1], [2, 2]];
         $lineString = new LineString($coordinates);
 
-        $expected = array(
+        $expected = [
             'type' => 'LineString',
             'coordinates' => $coordinates,
-        );
+        ];
 
         $this->assertSame('LineString', $lineString->getType());
         $this->assertSame($coordinates, $lineString->getCoordinates());
@@ -50,7 +55,7 @@ class LineStringTest extends BaseGeoJsonTest
      * @dataProvider provideJsonDecodeAssocOptions
      * @group functional
      */
-    public function testUnserialization($assoc)
+    public function testUnserialization($assoc): void
     {
         $json = <<<'JSON'
 {
@@ -65,7 +70,7 @@ JSON;
         $json = json_decode($json, $assoc);
         $lineString = GeoJson::jsonUnserialize($json);
 
-        $expectedCoordinates = array(array(1, 1), array(2, 2));
+        $expectedCoordinates = [[1, 1], [2, 2]];
 
         $this->assertInstanceOf(LineString::class, $lineString);
         $this->assertSame('LineString', $lineString->getType());
@@ -74,9 +79,9 @@ JSON;
 
     public function provideJsonDecodeAssocOptions()
     {
-        return array(
-            'assoc=true' => array(true),
-            'assoc=false' => array(false),
-        );
+        return [
+            'assoc=true' => [true],
+            'assoc=false' => [false],
+        ];
     }
 }

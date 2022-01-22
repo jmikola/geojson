@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeoJson\Feature;
 
 use GeoJson\BoundingBox;
@@ -40,7 +42,7 @@ class Feature extends GeoJson
      * @param int|string|null $id
      * @param CoordinateReferenceSystem|BoundingBox $args
      */
-    public function __construct(?Geometry $geometry = null, ?array $properties = null, $id = null, ... $args)
+    public function __construct(?Geometry $geometry = null, ?array $properties = null, $id = null, ...$args)
     {
         $this->geometry = $geometry;
         $this->properties = $properties;
@@ -83,7 +85,7 @@ class Feature extends GeoJson
         $json['properties'] = $this->properties ?? null;
 
         // Ensure empty associative arrays are encoded as JSON objects
-        if ($json['properties'] === array()) {
+        if ($json['properties'] === []) {
             $json['properties'] = new stdClass();
         }
 

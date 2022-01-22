@@ -1,9 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeoJson\CoordinateReferenceSystem;
 
 use ArrayObject;
 use GeoJson\Exception\UnserializationException;
+
+use function is_array;
+use function is_object;
 
 /**
  * Linked coordinate reference system object.
@@ -17,7 +22,7 @@ class Linked extends CoordinateReferenceSystem
 
     public function __construct(string $href, ?string $type = null)
     {
-        $this->properties = array('href' => $href);
+        $this->properties = ['href' => $href];
 
         if ($type !== null) {
             $this->properties['type'] = $type;
@@ -31,15 +36,15 @@ class Linked extends CoordinateReferenceSystem
      *
      * @throws UnserializationException
      */
-    protected static function jsonUnserializeFromProperties($properties): Linked
+    protected static function jsonUnserializeFromProperties($properties): self
     {
-        if ( ! is_array($properties) && ! is_object($properties)) {
+        if (! is_array($properties) && ! is_object($properties)) {
             throw UnserializationException::invalidProperty('Linked CRS', 'properties', $properties, 'array or object');
         }
 
         $properties = new ArrayObject($properties);
 
-        if ( ! $properties->offsetExists('href')) {
+        if (! $properties->offsetExists('href')) {
             throw UnserializationException::missingProperty('Linked CRS', 'properties.href', 'string');
         }
 

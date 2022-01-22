@@ -1,8 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeoJson\Exception;
 
 use RuntimeException;
+
+use function sprintf;
+use function is_object;
+use function get_class;
+use function gettype;
 
 class UnserializationException extends RuntimeException implements Exception
 {

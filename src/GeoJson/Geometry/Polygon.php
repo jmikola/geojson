@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeoJson\Geometry;
 
 use GeoJson\BoundingBox;
@@ -21,10 +23,10 @@ class Polygon extends Geometry
      * @param array<LinearRing|array<Point|array<int|float>>> $linearRings
      * @param CoordinateReferenceSystem|BoundingBox $args
      */
-    public function __construct(array $linearRings, ... $args)
+    public function __construct(array $linearRings, ...$args)
     {
         foreach ($linearRings as $linearRing) {
-            if ( ! $linearRing instanceof LinearRing) {
+            if (! $linearRing instanceof LinearRing) {
                 $linearRing = new LinearRing($linearRing);
             }
             $this->coordinates[] = $linearRing->getCoordinates();

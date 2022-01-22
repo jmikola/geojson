@@ -1,10 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeoJson\Geometry;
 
 use GeoJson\BoundingBox;
 use GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem;
 use InvalidArgumentException;
+
+use function count;
+use function end;
+use function reset;
 
 /**
  * LinearRing is a special kind of LineString geometry object.
@@ -21,7 +27,7 @@ class LinearRing extends LineString
      * @param array<Point|array<int|float>> $positions
      * @param CoordinateReferenceSystem|BoundingBox $args
      */
-    public function __construct(array $positions, ... $args)
+    public function __construct(array $positions, ...$args)
     {
         if (count($positions) < 4) {
             throw new InvalidArgumentException('LinearRing requires at least four positions');

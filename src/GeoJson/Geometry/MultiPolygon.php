@@ -1,9 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeoJson\Geometry;
 
 use GeoJson\BoundingBox;
 use GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem;
+
+use function array_map;
 
 /**
  * MultiPolygon geometry object.
@@ -21,11 +25,11 @@ class MultiPolygon extends Geometry
      * @param array<Polygon|array<LinearRing|array<Point|array<int|float>>>> $polygons
      * @param CoordinateReferenceSystem|BoundingBox $args
      */
-    public function __construct(array $polygons, ... $args)
+    public function __construct(array $polygons, ...$args)
     {
         $this->coordinates = array_map(
-            function($polygon) {
-                if ( ! $polygon instanceof Polygon) {
+            static function ($polygon) {
+                if (! $polygon instanceof Polygon) {
                     $polygon = new Polygon($polygon);
                 }
 

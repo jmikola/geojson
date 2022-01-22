@@ -1,9 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeoJson\Geometry;
 
 use GeoJson\BoundingBox;
 use GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem;
+
+use function array_map;
 
 /**
  * MultiPoint geometry object.
@@ -21,11 +25,11 @@ class MultiPoint extends Geometry
      * @param array<Point|array<float|int>> $positions
      * @param CoordinateReferenceSystem|BoundingBox $args
      */
-    public function __construct(array $positions, ... $args)
+    public function __construct(array $positions, ...$args)
     {
         $this->coordinates = array_map(
-            function($point) {
-                if ( ! $point instanceof Point) {
+            static function ($point) {
+                if (! $point instanceof Point) {
                     $point = new Point($point);
                 }
 

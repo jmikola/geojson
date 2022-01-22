@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeoJson\Tests\Geometry;
 
 use GeoJson\GeoJson;
@@ -8,46 +10,49 @@ use GeoJson\Geometry\MultiPolygon;
 use GeoJson\Geometry\Polygon;
 use GeoJson\Tests\BaseGeoJsonTest;
 
+use function is_subclass_of;
+use function json_decode;
+
 class MultiPolygonTest extends BaseGeoJsonTest
 {
-    public function createSubjectWithExtraArguments(... $extraArgs)
+    public function createSubjectWithExtraArguments(...$extraArgs)
     {
         return new MultiPolygon([], ... $extraArgs);
     }
 
-    public function testIsSubclassOfGeometry()
+    public function testIsSubclassOfGeometry(): void
     {
         $this->assertTrue(is_subclass_of(MultiPolygon::class, Geometry::class));
     }
 
-    public function testConstructionFromPolygonObjects()
+    public function testConstructionFromPolygonObjects(): void
     {
-        $multiPolygon1 = new MultiPolygon(array(
-            new Polygon(array(array(array(0, 0), array(0, 4), array(4, 4), array(4, 0), array(0, 0)))),
-            new Polygon(array(array(array(1, 1), array(1, 3), array(3, 3), array(3, 1), array(1, 1)))),
-        ));
+        $multiPolygon1 = new MultiPolygon([
+            new Polygon([[[0, 0], [0, 4], [4, 4], [4, 0], [0, 0]]]),
+            new Polygon([[[1, 1], [1, 3], [3, 3], [3, 1], [1, 1]]]),
+        ]);
 
-        $multiPolygon2 = new MultiPolygon(array(
-            array(array(array(0, 0), array(0, 4), array(4, 4), array(4, 0), array(0, 0))),
-            array(array(array(1, 1), array(1, 3), array(3, 3), array(3, 1), array(1, 1))),
-        ));
+        $multiPolygon2 = new MultiPolygon([
+            [[[0, 0], [0, 4], [4, 4], [4, 0], [0, 0]]],
+            [[[1, 1], [1, 3], [3, 3], [3, 1], [1, 1]]],
+        ]);
 
         $this->assertSame($multiPolygon1->getCoordinates(), $multiPolygon2->getCoordinates());
     }
 
-    public function testSerialization()
+    public function testSerialization(): void
     {
-        $coordinates = array(
-            array(array(array(0, 0), array(0, 4), array(4, 4), array(4, 0), array(0, 0))),
-            array(array(array(1, 1), array(1, 3), array(3, 3), array(3, 1), array(1, 1))),
-        );
+        $coordinates = [
+            [[[0, 0], [0, 4], [4, 4], [4, 0], [0, 0]]],
+            [[[1, 1], [1, 3], [3, 3], [3, 1], [1, 1]]],
+        ];
 
         $multiPolygon = new MultiPolygon($coordinates);
 
-        $expected = array(
+        $expected = [
             'type' => 'MultiPolygon',
             'coordinates' => $coordinates,
-        );
+        ];
 
         $this->assertSame('MultiPolygon', $multiPolygon->getType());
         $this->assertSame($coordinates, $multiPolygon->getCoordinates());
@@ -58,7 +63,7 @@ class MultiPolygonTest extends BaseGeoJsonTest
      * @dataProvider provideJsonDecodeAssocOptions
      * @group functional
      */
-    public function testUnserialization($assoc)
+    public function testUnserialization($assoc): void
     {
         $json = <<<'JSON'
 {
@@ -73,10 +78,10 @@ JSON;
         $json = json_decode($json, $assoc);
         $multiPolygon = GeoJson::jsonUnserialize($json);
 
-        $expectedCoordinates = array(
-            array(array(array(0, 0), array(0, 4), array(4, 4), array(4, 0), array(0, 0))),
-            array(array(array(1, 1), array(1, 3), array(3, 3), array(3, 1), array(1, 1))),
-        );
+        $expectedCoordinates = [
+            [[[0, 0], [0, 4], [4, 4], [4, 0], [0, 0]]],
+            [[[1, 1], [1, 3], [3, 3], [3, 1], [1, 1]]],
+        ];
 
         $this->assertInstanceOf(MultiPolygon::class, $multiPolygon);
         $this->assertSame('MultiPolygon', $multiPolygon->getType());
@@ -85,9 +90,9 @@ JSON;
 
     public function provideJsonDecodeAssocOptions()
     {
-        return array(
-            'assoc=true' => array(true),
-            'assoc=false' => array(false),
-        );
+        return [
+            'assoc=true' => [true],
+            'assoc=false' => [false],
+        ];
     }
 }

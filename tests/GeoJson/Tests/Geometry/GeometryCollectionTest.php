@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeoJson\Tests\Geometry;
 
 use GeoJson\Exception\UnserializationException;
@@ -11,46 +13,50 @@ use GeoJson\Tests\BaseGeoJsonTest;
 use InvalidArgumentException;
 use stdClass;
 
+use function is_subclass_of;
+use function iterator_to_array;
+use function json_decode;
+
 class GeometryCollectionTest extends BaseGeoJsonTest
 {
-    public function createSubjectWithExtraArguments(... $extraArgs)
+    public function createSubjectWithExtraArguments(...$extraArgs)
     {
         return new GeometryCollection([], ... $extraArgs);
     }
 
-    public function testIsSubclassOfGeometry()
+    public function testIsSubclassOfGeometry(): void
     {
         $this->assertTrue(is_subclass_of(GeometryCollection::class, Geometry::class));
     }
 
-    public function testConstructorShouldRequireArrayOfGeometryObjects()
+    public function testConstructorShouldRequireArrayOfGeometryObjects(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('GeometryCollection may only contain Geometry objects');
 
-        new GeometryCollection(array(new stdClass()));
+        new GeometryCollection([new stdClass()]);
     }
 
-    public function testConstructorShouldReindexGeometriesArrayNumerically()
+    public function testConstructorShouldReindexGeometriesArrayNumerically(): void
     {
         $geometry1 = $this->getMockGeometry();
         $geometry2 = $this->getMockGeometry();
 
-        $geometries = array(
+        $geometries = [
             'one' => $geometry1,
             'two' => $geometry2,
-        );
+        ];
 
         $collection = new GeometryCollection($geometries);
-        $this->assertSame(array($geometry1, $geometry2), iterator_to_array($collection));
+        $this->assertSame([$geometry1, $geometry2], iterator_to_array($collection));
     }
 
-    public function testIsTraversable()
+    public function testIsTraversable(): void
     {
-        $geometries = array(
+        $geometries = [
             $this->getMockGeometry(),
             $this->getMockGeometry(),
-        );
+        ];
 
         $collection = new GeometryCollection($geometries);
 
@@ -58,12 +64,12 @@ class GeometryCollectionTest extends BaseGeoJsonTest
         $this->assertSame($geometries, iterator_to_array($collection));
     }
 
-    public function testIsCountable()
+    public function testIsCountable(): void
     {
-        $geometries = array(
+        $geometries = [
             $this->getMockGeometry(),
             $this->getMockGeometry(),
-        );
+        ];
 
         $collection = new GeometryCollection($geometries);
 
@@ -71,22 +77,22 @@ class GeometryCollectionTest extends BaseGeoJsonTest
         $this->assertCount(2, $collection);
     }
 
-    public function testSerialization()
+    public function testSerialization(): void
     {
-        $geometries = array(
+        $geometries = [
             $this->getMockGeometry(),
             $this->getMockGeometry(),
-        );
+        ];
 
         $geometries[0]->method('jsonSerialize')->willReturn(['geometry1']);
         $geometries[1]->method('jsonSerialize')->willReturn(['geometry2']);
 
         $collection = new GeometryCollection($geometries);
 
-        $expected = array(
+        $expected = [
             'type' => 'GeometryCollection',
-            'geometries' => array(['geometry1'], ['geometry2']),
-        );
+            'geometries' => [['geometry1'], ['geometry2']],
+        ];
 
         $this->assertSame('GeometryCollection', $collection->getType());
         $this->assertSame($geometries, $collection->getGeometries());
@@ -97,7 +103,7 @@ class GeometryCollectionTest extends BaseGeoJsonTest
      * @dataProvider provideJsonDecodeAssocOptions
      * @group functional
      */
-    public function testUnserialization($assoc)
+    public function testUnserialization($assoc): void
     {
         $json = <<<'JSON'
 {
@@ -123,30 +129,30 @@ JSON;
 
         $this->assertInstanceOf(Point::class, $geometry);
         $this->assertSame('Point', $geometry->getType());
-        $this->assertSame(array(1, 1), $geometry->getCoordinates());
+        $this->assertSame([1, 1], $geometry->getCoordinates());
     }
 
     public function provideJsonDecodeAssocOptions()
     {
-        return array(
-            'assoc=true' => array(true),
-            'assoc=false' => array(false),
-        );
+        return [
+            'assoc=true' => [true],
+            'assoc=false' => [false],
+        ];
     }
 
-    public function testUnserializationShouldRequireGeometriesProperty()
+    public function testUnserializationShouldRequireGeometriesProperty(): void
     {
         $this->expectException(UnserializationException::class);
         $this->expectExceptionMessage('GeometryCollection expected "geometries" property of type array, none given');
 
-        GeoJson::jsonUnserialize(array('type' => 'GeometryCollection'));
+        GeoJson::jsonUnserialize(['type' => 'GeometryCollection']);
     }
 
-    public function testUnserializationShouldRequireGeometriesArray()
+    public function testUnserializationShouldRequireGeometriesArray(): void
     {
         $this->expectException(UnserializationException::class);
         $this->expectExceptionMessage('GeometryCollection expected "geometries" property of type array');
 
-        GeoJson::jsonUnserialize(array('type' => 'GeometryCollection', 'geometries' => null));
+        GeoJson::jsonUnserialize(['type' => 'GeometryCollection', 'geometries' => null]);
     }
 }

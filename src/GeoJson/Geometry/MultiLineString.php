@@ -1,9 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeoJson\Geometry;
 
 use GeoJson\BoundingBox;
 use GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem;
+
+use function array_map;
 
 /**
  * MultiLineString geometry object.
@@ -21,11 +25,11 @@ class MultiLineString extends Geometry
      * @param array<LineString|array<Point|array<int|float>>> $lineStrings
      * @param CoordinateReferenceSystem|BoundingBox $args
      */
-    public function __construct(array $lineStrings, ... $args)
+    public function __construct(array $lineStrings, ...$args)
     {
         $this->coordinates = array_map(
-            function($lineString) {
-                if ( ! $lineString instanceof LineString) {
+            static function ($lineString) {
+                if (! $lineString instanceof LineString) {
                     $lineString = new LineString($lineString);
                 }
 

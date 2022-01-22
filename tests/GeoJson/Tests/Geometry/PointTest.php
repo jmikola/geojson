@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeoJson\Tests\Geometry;
 
 use GeoJson\GeoJson;
@@ -9,30 +11,34 @@ use GeoJson\Tests\BaseGeoJsonTest;
 use InvalidArgumentException;
 use stdClass;
 
+use function is_subclass_of;
+use function func_get_args;
+use function json_decode;
+
 class PointTest extends BaseGeoJsonTest
 {
-    public function createSubjectWithExtraArguments(... $extraArgs)
+    public function createSubjectWithExtraArguments(...$extraArgs)
     {
         return new Point([1, 1], ... $extraArgs);
     }
 
-    public function testIsSubclassOfGeometry()
+    public function testIsSubclassOfGeometry(): void
     {
         $this->assertTrue(is_subclass_of(Point::class, Geometry::class));
     }
 
-    public function testConstructorShouldRequireAtLeastTwoElementsInPosition()
+    public function testConstructorShouldRequireAtLeastTwoElementsInPosition(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Position requires at least two elements');
 
-        new Point(array(1));
+        new Point([1]);
     }
 
     /**
      * @dataProvider providePositionsWithInvalidTypes
      */
-    public function testConstructorShouldRequireIntegerOrFloatElementsInPosition()
+    public function testConstructorShouldRequireIntegerOrFloatElementsInPosition(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Position elements must be integers or floats');
@@ -42,29 +48,29 @@ class PointTest extends BaseGeoJsonTest
 
     public function providePositionsWithInvalidTypes()
     {
-        return array(
-            'strings' => array('1.0', '2'),
-            'objects' => array(new stdClass(), new stdClass()),
-            'arrays' => array(array(), array()),
-        );
+        return [
+            'strings' => ['1.0', '2'],
+            'objects' => [new stdClass(), new stdClass()],
+            'arrays' => [[], []],
+        ];
     }
 
-    public function testConstructorShouldAllowMoreThanTwoElementsInAPosition()
+    public function testConstructorShouldAllowMoreThanTwoElementsInAPosition(): void
     {
-        $point = new Point(array(1, 2, 3, 4));
+        $point = new Point([1, 2, 3, 4]);
 
-        $this->assertEquals(array(1, 2, 3, 4), $point->getCoordinates());
+        $this->assertEquals([1, 2, 3, 4], $point->getCoordinates());
     }
 
-    public function testSerialization()
+    public function testSerialization(): void
     {
-        $coordinates = array(1, 1);
+        $coordinates = [1, 1];
         $point = new Point($coordinates);
 
-        $expected = array(
+        $expected = [
             'type' => 'Point',
             'coordinates' => $coordinates,
-        );
+        ];
 
         $this->assertSame('Point', $point->getType());
         $this->assertSame($coordinates, $point->getCoordinates());
@@ -75,7 +81,7 @@ class PointTest extends BaseGeoJsonTest
      * @dataProvider provideJsonDecodeAssocOptions
      * @group functional
      */
-    public function testUnserialization($assoc)
+    public function testUnserialization($assoc): void
     {
         $json = <<<'JSON'
 {
@@ -89,14 +95,14 @@ JSON;
 
         $this->assertInstanceOf(Point::class, $point);
         $this->assertSame('Point', $point->getType());
-        $this->assertSame(array(1, 1), $point->getCoordinates());
+        $this->assertSame([1, 1], $point->getCoordinates());
     }
 
     public function provideJsonDecodeAssocOptions()
     {
-        return array(
-            'assoc=true' => array(true),
-            'assoc=false' => array(false),
-        );
+        return [
+            'assoc=true' => [true],
+            'assoc=false' => [false],
+        ];
     }
 }

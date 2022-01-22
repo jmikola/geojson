@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeoJson\Tests\CoordinateReferenceSystem;
 
 use GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem;
@@ -7,40 +9,43 @@ use GeoJson\CoordinateReferenceSystem\Linked;
 use GeoJson\Exception\UnserializationException;
 use PHPUnit\Framework\TestCase;
 
+use function is_subclass_of;
+use function json_decode;
+
 class LinkedTest extends TestCase
 {
-    public function testIsSubclassOfCoordinateReferenceSystem()
+    public function testIsSubclassOfCoordinateReferenceSystem(): void
     {
         $this->assertTrue(is_subclass_of(Linked::class, CoordinateReferenceSystem::class));
     }
 
-    public function testSerialization()
+    public function testSerialization(): void
     {
         $crs = new Linked('https://example.com/crs/42', 'proj4');
 
-        $expected = array(
+        $expected = [
             'type' => 'link',
-            'properties' => array(
+            'properties' => [
                 'href' => 'https://example.com/crs/42',
                 'type' => 'proj4',
-            ),
-        );
+            ],
+        ];
 
         $this->assertSame('link', $crs->getType());
         $this->assertSame($expected['properties'], $crs->getProperties());
         $this->assertSame($expected, $crs->jsonSerialize());
     }
 
-    public function testSerializationWithoutHrefType()
+    public function testSerializationWithoutHrefType(): void
     {
         $crs = new Linked('https://example.com/crs/42');
 
-        $expected = array(
+        $expected = [
             'type' => 'link',
-            'properties' => array(
+            'properties' => [
                 'href' => 'https://example.com/crs/42',
-            ),
-        );
+            ],
+        ];
 
         $this->assertSame($expected, $crs->jsonSerialize());
     }
@@ -49,7 +54,7 @@ class LinkedTest extends TestCase
      * @dataProvider provideJsonDecodeAssocOptions
      * @group functional
      */
-    public function testUnserialization($assoc)
+    public function testUnserialization($assoc): void
     {
         $json = <<<'JSON'
 {
@@ -64,10 +69,10 @@ JSON;
         $json = json_decode($json, $assoc);
         $crs = CoordinateReferenceSystem::jsonUnserialize($json);
 
-        $expectedProperties = array(
+        $expectedProperties = [
             'href' => 'https://example.com/crs/42',
             'type' => 'proj4',
-        );
+        ];
 
         $this->assertInstanceOf(Linked::class, $crs);
         $this->assertSame('link', $crs->getType());
@@ -78,7 +83,7 @@ JSON;
      * @dataProvider provideJsonDecodeAssocOptions
      * @group functional
      */
-    public function testUnserializationWithoutHrefType($assoc)
+    public function testUnserializationWithoutHrefType($assoc): void
     {
         $json = <<<'JSON'
 {
@@ -92,7 +97,7 @@ JSON;
         $json = json_decode($json, $assoc);
         $crs = CoordinateReferenceSystem::jsonUnserialize($json);
 
-        $expectedProperties = array('href' => 'https://example.com/crs/42');
+        $expectedProperties = ['href' => 'https://example.com/crs/42'];
 
         $this->assertInstanceOf(Linked::class, $crs);
         $this->assertSame('link', $crs->getType());
@@ -101,25 +106,25 @@ JSON;
 
     public function provideJsonDecodeAssocOptions()
     {
-        return array(
-            'assoc=true' => array(true),
-            'assoc=false' => array(false),
-        );
+        return [
+            'assoc=true' => [true],
+            'assoc=false' => [false],
+        ];
     }
 
-    public function testUnserializationShouldRequirePropertiesArrayOrObject()
+    public function testUnserializationShouldRequirePropertiesArrayOrObject(): void
     {
         $this->expectException(UnserializationException::class);
         $this->expectExceptionMessage('Linked CRS expected "properties" property of type array or object');
 
-        CoordinateReferenceSystem::jsonUnserialize(array('type' => 'link', 'properties' => null));
+        CoordinateReferenceSystem::jsonUnserialize(['type' => 'link', 'properties' => null]);
     }
 
-    public function testUnserializationShouldRequireHrefProperty()
+    public function testUnserializationShouldRequireHrefProperty(): void
     {
         $this->expectException(UnserializationException::class);
         $this->expectExceptionMessage('Linked CRS expected "properties.href" property of type string');
 
-        CoordinateReferenceSystem::jsonUnserialize(array('type' => 'link', 'properties' => array()));
+        CoordinateReferenceSystem::jsonUnserialize(['type' => 'link', 'properties' => []]);
     }
 }

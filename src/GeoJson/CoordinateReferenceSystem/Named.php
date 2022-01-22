@@ -1,9 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeoJson\CoordinateReferenceSystem;
 
 use ArrayObject;
 use GeoJson\Exception\UnserializationException;
+
+use function is_array;
+use function is_object;
 
 /**
  * Named coordinate reference system object.
@@ -17,7 +22,7 @@ class Named extends CoordinateReferenceSystem
 
     public function __construct(string $name)
     {
-        $this->properties = array('name' => $name);
+        $this->properties = ['name' => $name];
     }
 
     /**
@@ -27,15 +32,15 @@ class Named extends CoordinateReferenceSystem
      *
      * @throws UnserializationException
      */
-    protected static function jsonUnserializeFromProperties($properties): Named
+    protected static function jsonUnserializeFromProperties($properties): self
     {
-        if ( ! is_array($properties) && ! is_object($properties)) {
+        if (! is_array($properties) && ! is_object($properties)) {
             throw UnserializationException::invalidProperty('Named CRS', 'properties', $properties, 'array or object');
         }
 
         $properties = new ArrayObject($properties);
 
-        if ( ! $properties->offsetExists('name')) {
+        if (! $properties->offsetExists('name')) {
             throw UnserializationException::missingProperty('Named CRS', 'properties.name', 'string');
         }
 

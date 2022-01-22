@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeoJson\Tests;
 
 use GeoJson\BoundingBox;
@@ -11,14 +13,19 @@ use GeoJson\JsonUnserializable;
 use JsonSerializable;
 use PHPUnit\Framework\TestCase;
 
+use function json_decode;
+use function is_object;
+use function get_class;
+use function gettype;
+
 class GeoJsonTest extends TestCase
 {
-    public function testIsJsonSerializable()
+    public function testIsJsonSerializable(): void
     {
         $this->assertInstanceOf(JsonSerializable::class, $this->createMock(GeoJson::class));
     }
 
-    public function testIsJsonUnserializable()
+    public function testIsJsonUnserializable(): void
     {
         $this->assertInstanceOf(JsonUnserializable::class, $this->createMock(GeoJson::class));
     }
@@ -27,7 +34,7 @@ class GeoJsonTest extends TestCase
      * @dataProvider provideJsonDecodeAssocOptions
      * @group functional
      */
-    public function testUnserializationWithBoundingBox($assoc)
+    public function testUnserializationWithBoundingBox($assoc): void
     {
         $json = <<<'JSON'
 {
@@ -42,19 +49,19 @@ JSON;
 
         $this->assertInstanceOf(Point::class, $point);
         $this->assertSame('Point', $point->getType());
-        $this->assertSame(array(1, 1), $point->getCoordinates());
+        $this->assertSame([1, 1], $point->getCoordinates());
 
         $boundingBox = $point->getBoundingBox();
 
         $this->assertInstanceOf(BoundingBox::class, $boundingBox);
-        $this->assertSame(array(-180.0, -90.0, 180.0, 90.0), $boundingBox->getBounds());
+        $this->assertSame([-180.0, -90.0, 180.0, 90.0], $boundingBox->getBounds());
     }
 
     /**
      * @dataProvider provideJsonDecodeAssocOptions
      * @group functional
      */
-    public function testUnserializationWithCrs($assoc)
+    public function testUnserializationWithCrs($assoc): void
     {
         $json = <<<'JSON'
 {
@@ -74,18 +81,18 @@ JSON;
 
         $this->assertInstanceOf(Point::class, $point);
         $this->assertSame('Point', $point->getType());
-        $this->assertSame(array(1, 1), $point->getCoordinates());
+        $this->assertSame([1, 1], $point->getCoordinates());
 
         $crs = $point->getCrs();
 
-        $expectedProperties = array('name' => 'urn:ogc:def:crs:OGC:1.3:CRS84');
+        $expectedProperties = ['name' => 'urn:ogc:def:crs:OGC:1.3:CRS84'];
 
         $this->assertInstanceOf(Named::class, $crs);
         $this->assertSame('name', $crs->getType());
         $this->assertSame($expectedProperties, $crs->getProperties());
     }
 
-    public function testUnserializationWithInvalidArgument()
+    public function testUnserializationWithInvalidArgument(): void
     {
         $this->expectException(UnserializationException::class);
         $this->expectExceptionMessage('GeoJson expected value of type array or object, string given');
@@ -93,7 +100,7 @@ JSON;
         GeoJson::jsonUnserialize('must be array or object, but this is a string');
     }
 
-    public function testUnserializationWithUnknownType()
+    public function testUnserializationWithUnknownType(): void
     {
         $this->expectException(UnserializationException::class);
         $this->expectExceptionMessage('Invalid GeoJson type "Unknown"');
@@ -101,7 +108,7 @@ JSON;
         GeoJson::jsonUnserialize(['type' => 'Unknown']);
     }
 
-    public function testUnserializationWithMissingType()
+    public function testUnserializationWithMissingType(): void
     {
         $this->expectException(UnserializationException::class);
         $this->expectExceptionMessage('GeoJson expected "type" property of type string, none given');
@@ -112,7 +119,7 @@ JSON;
     /**
      * @dataProvider provideGeoJsonTypesWithCoordinates
      */
-    public function testUnserializationWithMissingCoordinates(string $type)
+    public function testUnserializationWithMissingCoordinates(string $type): void
     {
         $this->expectException(UnserializationException::class);
         $this->expectExceptionMessage($type . ' expected "coordinates" property of type array, none given');
@@ -127,12 +134,12 @@ JSON;
      *
      * @param mixed $value
      */
-    public function testUnserializationWithInvalidCoordinates($value)
+    public function testUnserializationWithInvalidCoordinates($value): void
     {
         $valueType = is_object($value) ? get_class($value) : gettype($value);
 
         $this->expectException(UnserializationException::class);
-        $this->expectExceptionMessage('Point expected "coordinates" property of type array, '.$valueType.' given');
+        $this->expectExceptionMessage('Point expected "coordinates" property of type array, ' . $valueType . ' given');
 
         GeoJson::jsonUnserialize([
             'type' => 'Point',
@@ -140,7 +147,7 @@ JSON;
         ]);
     }
 
-    public function testFeatureUnserializationWithInvalidGeometry()
+    public function testFeatureUnserializationWithInvalidGeometry(): void
     {
         $this->expectException(UnserializationException::class);
         $this->expectExceptionMessage('Feature expected "geometry" property of type array or object, string given');
@@ -151,7 +158,7 @@ JSON;
         ]);
     }
 
-    public function testFeatureUnserializationWithInvalidProperties()
+    public function testFeatureUnserializationWithInvalidProperties(): void
     {
         $this->expectException(UnserializationException::class);
         $this->expectExceptionMessage('Feature expected "properties" property of type array or object, string given');
@@ -164,19 +171,19 @@ JSON;
 
     public function provideJsonDecodeAssocOptions()
     {
-        return array(
-            'assoc=true' => array(true),
-            'assoc=false' => array(false),
-        );
+        return [
+            'assoc=true' => [true],
+            'assoc=false' => [false],
+        ];
     }
 
     public function provideGeoJsonTypesWithCoordinates()
     {
         return [
-            'LineString' =>['LineString'],
+            'LineString' => ['LineString'],
             'MultiLineString' => ['MultiLineString'],
             'MultiPoint' => ['MultiPoint'],
-            'MultiPolygon' =>['MultiPolygon'],
+            'MultiPolygon' => ['MultiPolygon'],
             'Point' => ['Point'],
             'Polygon' => ['Polygon'],
         ];
