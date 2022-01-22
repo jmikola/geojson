@@ -12,17 +12,12 @@ use GeoJson\GeoJson;
  */
 abstract class Geometry extends GeoJson
 {
-    /**
-     * @var array
-     */
-    protected $coordinates;
+    protected array $coordinates;
 
     /**
      * Return the coordinates for this Geometry object.
-     *
-     * @return array
      */
-    public function getCoordinates()
+    public function getCoordinates(): array
     {
         return $this->coordinates;
     }

@@ -14,36 +14,31 @@ use stdClass;
  */
 class Feature extends GeoJson
 {
-    protected $type = 'Feature';
+    protected string $type = 'Feature';
 
-    /**
-     * @var Geometry
-     */
-    protected $geometry;
+    protected ?Geometry $geometry;
 
     /**
      * Properties are a JSON object, which corresponds to an associative array, or null.
      *
      * @see https://www.rfc-editor.org/rfc/rfc7946#section-3.2
-     *
-     * @var array|null
      */
-    protected $properties;
+    protected ?array $properties;
 
     /**
-     * @var mixed
+     * The identifier is either a JSON string or a number.
+     *
+     * @see https://www.rfc-editor.org/rfc/rfc7946#section-3.2
+     *
+     * @var int|string|null
      */
     protected $id;
 
     /**
-     * Constructor.
-     *
-     * @param Geometry $geometry
-     * @param array $properties
-     * @param mixed $id
+     * @param int|string|null $id
      * @param CoordinateResolutionSystem|BoundingBox $arg,...
      */
-    public function __construct(Geometry $geometry = null, array $properties = null, $id = null)
+    public function __construct(?Geometry $geometry = null, ?array $properties = null, $id = null)
     {
         $this->geometry = $geometry;
         $this->properties = $properties;
@@ -56,10 +51,8 @@ class Feature extends GeoJson
 
     /**
      * Return the Geometry object for this Feature object.
-     *
-     * @return Geometry
      */
-    public function getGeometry()
+    public function getGeometry(): ?Geometry
     {
         return $this->geometry;
     }
@@ -67,7 +60,7 @@ class Feature extends GeoJson
     /**
      * Return the identifier for this Feature object.
      *
-     * @return mixed
+     * @return int|string|null
      */
     public function getId()
     {
@@ -76,10 +69,8 @@ class Feature extends GeoJson
 
     /**
      * Return the properties for this Feature object.
-     *
-     * @return array|null
      */
-    public function getProperties()
+    public function getProperties(): ?array
     {
         return $this->properties;
     }
@@ -89,7 +80,7 @@ class Feature extends GeoJson
         $json = parent::jsonSerialize();
 
         $json['geometry'] = isset($this->geometry) ? $this->geometry->jsonSerialize() : null;
-        $json['properties'] = isset($this->properties) ? $this->properties : null;
+        $json['properties'] = $this->properties ?? null;
 
         // Ensure empty associative arrays are encoded as JSON objects
         if ($json['properties'] === array()) {

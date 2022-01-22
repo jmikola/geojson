@@ -13,20 +13,14 @@ use GeoJson\Exception\UnserializationException;
  */
 class Linked extends CoordinateReferenceSystem
 {
-    protected $type = 'link';
+    protected string $type = 'link';
 
-    /**
-     * Constructor.
-     *
-     * @param string $href
-     * @param string $type
-     */
-    public function __construct($href, $type = null)
+    public function __construct(string $href, ?string $type = null)
     {
-        $this->properties = array('href' => (string) $href);
+        $this->properties = array('href' => $href);
 
-        if (isset($type)) {
-            $this->properties['type'] = (string) $type;
+        if ($type !== null) {
+            $this->properties['type'] = $type;
         }
     }
 
@@ -34,10 +28,10 @@ class Linked extends CoordinateReferenceSystem
      * Factory method for creating a Linked CRS object from properties.
      *
      * @param array|object $properties
-     * @return Linked
+     *
      * @throws UnserializationException
      */
-    protected static function jsonUnserializeFromProperties($properties)
+    protected static function jsonUnserializeFromProperties($properties): Linked
     {
         if ( ! is_array($properties) && ! is_object($properties)) {
             throw UnserializationException::invalidProperty('Linked CRS', 'properties', $properties, 'array or object');

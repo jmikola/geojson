@@ -16,17 +16,15 @@ use Traversable;
  */
 class GeometryCollection extends Geometry implements Countable, IteratorAggregate
 {
-    protected $type = 'GeometryCollection';
+    protected string $type = 'GeometryCollection';
 
     /**
-     * @var array
+     * @var array<Geometry>
      */
-    protected $geometries;
+    protected array $geometries;
 
     /**
-     * Constructor.
-     *
-     * @param Geometry[] $geometries
+     * @param array<Geometry> $geometries
      * @param CoordinateResolutionSystem|BoundingBox $arg,...
      */
     public function __construct(array $geometries)
@@ -52,9 +50,9 @@ class GeometryCollection extends Geometry implements Countable, IteratorAggregat
     /**
      * Return the Geometry objects in this collection.
      *
-     * @return Geometry[]
+     * @return array<Geometry>
      */
-    public function getGeometries()
+    public function getGeometries(): array
     {
         return $this->geometries;
     }

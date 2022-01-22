@@ -14,12 +14,10 @@ use InvalidArgumentException;
  */
 class Point extends Geometry
 {
-    protected $type = 'Point';
+    protected string $type = 'Point';
 
     /**
-     * Constructor.
-     *
-     * @param float[] $position
+     * @param array<float|int> $position
      * @param CoordinateResolutionSystem|BoundingBox $arg,...
      */
     public function __construct(array $position)

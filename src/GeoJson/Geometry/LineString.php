@@ -14,12 +14,10 @@ use InvalidArgumentException;
  */
 class LineString extends MultiPoint
 {
-    protected $type = 'LineString';
+    protected string $type = 'LineString';
 
     /**
-     * Constructor.
-     *
-     * @param float[][]|Point[] $positions
+     * @param array<Point|array<float|int>> $positions
      * @param CoordinateResolutionSystem|BoundingBox $arg,...
      */
     public function __construct(array $positions)

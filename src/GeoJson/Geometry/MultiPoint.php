@@ -12,12 +12,10 @@ namespace GeoJson\Geometry;
  */
 class MultiPoint extends Geometry
 {
-    protected $type = 'MultiPoint';
+    protected string $type = 'MultiPoint';
 
     /**
-     * Constructor.
-     *
-     * @param float[][]|Point[] $positions
+     * @param array<Point|array<float|int>> $positions
      * @param CoordinateResolutionSystem|BoundingBox $arg,...
      */
     public function __construct(array $positions)

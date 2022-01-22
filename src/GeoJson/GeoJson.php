@@ -16,47 +16,32 @@ use ReflectionClass;
  */
 abstract class GeoJson implements JsonSerializable, JsonUnserializable
 {
-    /**
-     * @var BoundingBox
-     */
-    protected $boundingBox;
+    protected ?BoundingBox $boundingBox = null;
 
-    /**
-     * @var CoordinateReferenceSystem
-     */
-    protected $crs;
+    protected ?CoordinateReferenceSystem $crs = null;
 
-    /**
-     * @var string
-     */
-    protected $type;
+    protected string $type;
 
     /**
      * Return the BoundingBox for this GeoJson object.
-     *
-     * @return BoundingBox
      */
-    public function getBoundingBox()
+    public function getBoundingBox(): ?BoundingBox
     {
         return $this->boundingBox;
     }
 
     /**
      * Return the CoordinateReferenceSystem for this GeoJson object.
-     *
-     * @return CoordinateReferenceSystem
      */
-    public function getCrs()
+    public function getCrs(): ?CoordinateReferenceSystem
     {
         return $this->crs;
     }
 
     /**
      * Return the type for this GeoJson object.
-     *
-     * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -76,7 +61,7 @@ abstract class GeoJson implements JsonSerializable, JsonUnserializable
         return $json;
     }
 
-    final public static function jsonUnserialize($json)
+    final public static function jsonUnserialize($json): self
     {
         if ( ! is_array($json) && ! is_object($json)) {
             throw UnserializationException::invalidValue('GeoJson', $json, 'array or object');
@@ -174,7 +159,7 @@ abstract class GeoJson implements JsonSerializable, JsonUnserializable
      * @todo Decide if multiple CRS or BoundingBox instances should override a
      *       previous value or be ignored
      */
-    protected function setOptionalConstructorArgs(array $args)
+    protected function setOptionalConstructorArgs(array $args): void
     {
         foreach ($args as $arg) {
             if ($arg instanceof CoordinateReferenceSystem) {
