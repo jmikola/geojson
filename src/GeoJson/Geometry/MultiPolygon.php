@@ -12,12 +12,10 @@ namespace GeoJson\Geometry;
  */
 class MultiPolygon extends Geometry
 {
-    protected $type = 'MultiPolygon';
+    protected string $type = 'MultiPolygon';
 
     /**
-     * Constructor.
-     *
-     * @param float[][][][]|Polygon[] $polygons
+     * @param array<Polygon|array<LinearRing|array<Point|array<int|float>>>> $polygons
      * @param CoordinateResolutionSystem|BoundingBox $arg,...
      */
     public function __construct(array $polygons)

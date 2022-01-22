@@ -17,17 +17,15 @@ use Traversable;
  */
 class FeatureCollection extends GeoJson implements Countable, IteratorAggregate
 {
-    protected $type = 'FeatureCollection';
+    protected string $type = 'FeatureCollection';
 
     /**
-     * @var array
+     * @var array<Feature>
      */
-    protected $features;
+    protected array $features;
 
     /**
-     * Constructor.
-     *
-     * @param Feature[] $features
+     * @param array<Feature> $features
      * @param CoordinateResolutionSystem|BoundingBox $arg,...
      */
     public function __construct(array $features)
@@ -53,9 +51,9 @@ class FeatureCollection extends GeoJson implements Countable, IteratorAggregate
     /**
      * Return the Feature objects in this collection.
      *
-     * @return Feature[]
+     * @return array<Feature>
      */
-    public function getFeatures()
+    public function getFeatures(): array
     {
         return $this->features;
     }

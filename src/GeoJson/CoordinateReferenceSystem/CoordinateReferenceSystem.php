@@ -16,32 +16,22 @@ use JsonSerializable;
  */
 abstract class CoordinateReferenceSystem implements JsonSerializable, JsonUnserializable
 {
-    /**
-     * @var array
-     */
-    protected $properties;
+    protected array $properties;
 
-    /**
-     * @var string
-     */
-    protected $type;
+    protected string $type;
 
     /**
      * Return the properties for this CRS object.
-     *
-     * @return array
      */
-    public function getProperties()
+    public function getProperties(): array
     {
         return $this->properties;
     }
 
     /**
      * Return the type for this CRS object.
-     *
-     * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -90,10 +80,10 @@ abstract class CoordinateReferenceSystem implements JsonSerializable, JsonUnseri
      * This method must be overridden in a child class.
      *
      * @param array|object $properties
-     * @return CoordinateReferenceSystem
+     *
      * @throws BadMethodCallException
      */
-    protected static function jsonUnserializeFromProperties($properties)
+    protected static function jsonUnserializeFromProperties($properties): CoordinateReferenceSystem
     {
         throw new BadMethodCallException(sprintf('%s must be overridden in a child class', __METHOD__));
     }

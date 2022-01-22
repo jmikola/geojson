@@ -15,14 +15,12 @@ use JsonSerializable;
 class BoundingBox implements JsonSerializable, JsonUnserializable
 {
     /**
-     * @var array
+     * @var array<float|int>
      */
-    protected $bounds;
+    protected array $bounds;
 
     /**
-     * Constructor.
-     *
-     * @param float[] $bounds
+     * @param array<float|int> $bounds
      */
     public function __construct(array $bounds)
     {
@@ -54,9 +52,9 @@ class BoundingBox implements JsonSerializable, JsonUnserializable
     /**
      * Return the bounds for this BoundingBox object.
      *
-     * @return float[]
+     * @return array<float|int>
      */
-    public function getBounds()
+    public function getBounds(): array
     {
         return $this->bounds;
     }
@@ -66,7 +64,7 @@ class BoundingBox implements JsonSerializable, JsonUnserializable
         return $this->bounds;
     }
 
-    final public static function jsonUnserialize($json)
+    final public static function jsonUnserialize($json): self
     {
         if ( ! is_array($json)) {
             throw UnserializationException::invalidValue('BoundingBox', $json, 'array');

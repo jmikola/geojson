@@ -12,12 +12,10 @@ namespace GeoJson\Geometry;
  */
 class Polygon extends Geometry
 {
-    protected $type = 'Polygon';
+    protected string $type = 'Polygon';
 
     /**
-     * Constructor.
-     *
-     * @param float[][][]|LinearRing[] $linearRings
+     * @param array<LinearRing|array<Point|array<int|float>>> $linearRings
      * @param CoordinateResolutionSystem|BoundingBox $arg,...
      */
     public function __construct(array $linearRings)

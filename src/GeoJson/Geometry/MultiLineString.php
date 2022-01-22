@@ -12,12 +12,10 @@ namespace GeoJson\Geometry;
  */
 class MultiLineString extends Geometry
 {
-    protected $type = 'MultiLineString';
+    protected string $type = 'MultiLineString';
 
     /**
-     * Constructor.
-     *
-     * @param float[][][]|LineString[] $lineStrings
+     * @param array<LineString|array<Point|array<int|float>>> $lineStrings
      * @param CoordinateResolutionSystem|BoundingBox $arg,...
      */
     public function __construct(array $lineStrings)
