@@ -10,6 +10,7 @@ use function sprintf;
 use function is_object;
 use function get_class;
 use function gettype;
+use function get_debug_type;
 
 class UnserializationException extends RuntimeException implements Exception
 {
@@ -24,7 +25,7 @@ class UnserializationException extends RuntimeException implements Exception
             '%s expected value of type %s, %s given',
             $context,
             $expectedType,
-            is_object($value) ? get_class($value) : gettype($value)
+            get_debug_type($value)
         ));
     }
 
