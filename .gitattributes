@@ -1,0 +1,10 @@
+*.php diff=php
+
+/tests export-ignore
+
+/.gitattributes export-ignore
+/.github export-ignore
+/.gitignore export-ignore
+/.scrutinizer.yml export-ignore
+/phpcs.xml.dist export-ignore
+/phpunit.xml.dist export-ignore
