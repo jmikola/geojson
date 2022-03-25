@@ -10,9 +10,14 @@ use PHPUnit\Framework\TestCase;
 
 abstract class BaseGeoJsonTest extends TestCase
 {
-    abstract public function createSubjectWithExtraArguments(... $extraArgs);
+    /**
+     * @param ...$extraArgs
+     *
+     * @return mixed
+     */
+    abstract public function createSubjectWithExtraArguments(...$extraArgs);
 
-    public function testConstructorShouldScanExtraArgumentsForCrsAndBoundingBox()
+    public function testConstructorShouldScanExtraArgumentsForCrsAndBoundingBox(): void
     {
         $box = $this->getMockBoundingBox();
         $crs = $this->getMockCoordinateReferenceSystem();
@@ -43,7 +48,7 @@ abstract class BaseGeoJsonTest extends TestCase
         $this->assertSame($crs, $sut->getCrs());
     }
 
-    public function testSerializationWithCrsAndBoundingBox()
+    public function testSerializationWithCrsAndBoundingBox(): void
     {
         $box = $this->getMockBoundingBox();
         $box->method('jsonSerialize')->willReturn(['boundingBox']);
