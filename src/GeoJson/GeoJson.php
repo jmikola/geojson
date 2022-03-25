@@ -94,20 +94,23 @@ abstract class GeoJson implements JsonSerializable, JsonUnserializable
                 break;
 
             case 'Feature':
-                $geometry = isset($json['geometry']) ? $json['geometry'] : null;
-                $properties = isset($json['properties']) ? $json['properties'] : null;
+                $geometry = $json['geometry'] ?? null;
+                $properties = $json['properties'] ?? null;
+                $id = $json['id'] ?? null;
 
-                if (isset($geometry) && ! is_array($geometry) && ! is_object($geometry)) {
+                if ($geometry !== null && ! is_array($geometry) && ! is_object($geometry)) {
                     throw UnserializationException::invalidProperty($type, 'geometry', $geometry, 'array or object');
                 }
 
-                if (isset($properties) && ! is_array($properties) && ! is_object($properties)) {
+                if ($properties !== null && ! is_array($properties) && ! is_object($properties)) {
                     throw UnserializationException::invalidProperty($type, 'properties', $properties, 'array or object');
                 }
 
-                $args[] = isset($geometry) ? self::jsonUnserialize($geometry) : null;
-                $args[] = isset($properties) ? (array) $properties : null;
-                $args[] = isset($json['id']) ? $json['id'] : null;
+                // TODO: Validate non-null $id as int or string in 2.0
+
+                $args[] = $geometry !== null ? self::jsonUnserialize($geometry) : null;
+                $args[] = $properties !== null ? (array) $properties : null;
+                $args[] = $id;
                 break;
 
             case 'FeatureCollection':
