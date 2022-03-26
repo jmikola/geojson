@@ -13,6 +13,9 @@ use function is_object;
 /**
  * Named coordinate reference system object.
  *
+ * @deprecated 1.1 Specification of coordinate reference systems has been removed, i.e.,
+ *                 the 'crs' member of [GJ2008] is no longer used.
+ *
  * @see http://www.geojson.org/geojson-spec.html#named-crs
  * @since 1.0
  */

@@ -17,6 +17,10 @@ use function sprintf;
 /**
  * Coordinate reference system object.
  *
+ * @deprecated 1.1 Specification of coordinate reference systems has been removed, i.e.,
+ *                 the 'crs' member of [GJ2008] is no longer used.
+ *
+ * @see https://www.rfc-editor.org/rfc/rfc7946#appendix-B.1
  * @see http://www.geojson.org/geojson-spec.html#coordinate-reference-system-objects
  * @since 1.0
  */
