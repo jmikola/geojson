@@ -5,7 +5,7 @@
 [![Code Coverage](https://scrutinizer-ci.com/g/jmikola/geojson/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/jmikola/geojson/?branch=master)
 
 This library implements the
-[GeoJSON format specification](http://www.geojson.org/geojson-spec.html).
+[GeoJSON format specification](https://geojson.org/).
 
 ## Installation
 
