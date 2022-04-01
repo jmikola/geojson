@@ -11,7 +11,7 @@ This library implements the
 
 The library is published as a
 [package](https://packagist.org/packages/jmikola/geojson) and is installable via
-[Composer](http://getcomposer.org/):
+[Composer](https://getcomposer.org/):
 
 ```
 $ composer require "jmikola/geojson=^1.0"

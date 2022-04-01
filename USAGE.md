@@ -1,7 +1,7 @@
 # GeoJson PHP Library
 
 This library implements the
-[GeoJSON format specification](http://www.geojson.org/geojson-spec.html).
+[GeoJSON format specification](https://geojson.org/).
 
 The `GeoJson` namespace includes classes for each data structure defined in the
 GeoJSON specification. Core GeoJSON objects include geometries, features, and
@@ -12,7 +12,7 @@ Classes also exist for bounding boxes and coordinate reference systems.
 
 The library is published as a
 [package](https://packagist.org/packages/jmikola/geojson) and is installable via
-[Composer](http://getcomposer.org/):
+[Composer](https://getcomposer.org/):
 
 ```
 $ composer require "jmikola/geojson=^1.0"
@@ -63,7 +63,7 @@ $feature = new \GeoJson\Feature\Feature(null, null, null, $box);
 ### JSON Serialization
 
 Each class in the library implements the
-[JsonSerializable](http://php.net/manual/en/class.jsonserializable.php)
+[JsonSerializable](https://php.net/manual/en/class.jsonserializable.php)
 interface, which allows objects to be passed directly to `json_encode()`.
 
 ```php
