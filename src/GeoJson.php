@@ -9,9 +9,9 @@ use GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem;
 use GeoJson\Exception\UnserializationException;
 use JsonSerializable;
 
+use function array_map;
 use function is_array;
 use function is_object;
-use function array_map;
 use function sprintf;
 use function strncmp;
 

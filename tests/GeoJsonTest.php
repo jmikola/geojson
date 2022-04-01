@@ -13,10 +13,10 @@ use GeoJson\JsonUnserializable;
 use JsonSerializable;
 use PHPUnit\Framework\TestCase;
 
-use function json_decode;
-use function is_object;
 use function get_class;
 use function gettype;
+use function is_object;
+use function json_decode;
 
 class GeoJsonTest extends TestCase
 {

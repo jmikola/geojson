@@ -88,6 +88,7 @@
             <property name="searchAnnotations" value="true"/>
         </properties>
     </rule>
+    <rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses"/>
 
     <!-- **************************************************************************** -->
     <!-- Exclude BC breaking type hints for parameters, properties, and return values -->

@@ -9,8 +9,8 @@ use GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem;
 use InvalidArgumentException;
 
 use function count;
-use function is_int;
 use function is_float;
+use function is_int;
 
 /**
  * Point geometry object.
