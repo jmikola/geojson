@@ -20,7 +20,14 @@
         "slevomat/coding-standard": "^7.0"
     },
     "autoload": {
-        "psr-0": { "GeoJson\\": "src/" }
+        "psr-4": {
+            "GeoJson\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "GeoJson\\Tests\\": "tests"
+        }
     },
     "extra": {
         "branch-alias": {

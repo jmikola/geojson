@@ -11,8 +11,8 @@ use GeoJson\Tests\BaseGeoJsonTest;
 use InvalidArgumentException;
 use stdClass;
 
-use function is_subclass_of;
 use function func_get_args;
+use function is_subclass_of;
 use function json_decode;
 
 class PointTest extends BaseGeoJsonTest

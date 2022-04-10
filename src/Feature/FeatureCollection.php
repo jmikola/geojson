@@ -13,10 +13,10 @@ use InvalidArgumentException;
 use IteratorAggregate;
 use Traversable;
 
+use function array_map;
+use function array_merge;
 use function array_values;
 use function count;
-use function array_merge;
-use function array_map;
 
 /**
  * Collection of Feature objects.
