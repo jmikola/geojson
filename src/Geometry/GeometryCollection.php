@@ -69,6 +69,7 @@ class GeometryCollection extends Geometry implements Countable, IteratorAggregat
         return new ArrayIterator($this->geometries);
     }
 
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(): array
     {
         return array_merge(

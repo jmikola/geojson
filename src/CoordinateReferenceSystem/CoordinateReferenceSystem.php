@@ -46,16 +46,17 @@ abstract class CoordinateReferenceSystem implements JsonSerializable, JsonUnseri
         return $this->type;
     }
 
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(): array
     {
         return [
-            'type' => $this->type,
+            'type'       => $this->type,
             'properties' => $this->properties,
         ];
     }
 
     /**
-     * @param array|object $json
+     * @param  array|object  $json
      */
     final public static function jsonUnserialize($json): self
     {
@@ -92,7 +93,7 @@ abstract class CoordinateReferenceSystem implements JsonSerializable, JsonUnseri
      *
      * This method must be overridden in a child class.
      *
-     * @param array|object $properties
+     * @param  array|object  $properties
      *
      * @throws BadMethodCallException
      */

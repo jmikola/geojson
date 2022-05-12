@@ -39,8 +39,8 @@ class Feature extends GeoJson
     protected $id;
 
     /**
-     * @param int|string|null $id
-     * @param CoordinateReferenceSystem|BoundingBox $args
+     * @param  int|string|null  $id
+     * @param  CoordinateReferenceSystem|BoundingBox  $args
      */
     public function __construct(?Geometry $geometry = null, ?array $properties = null, $id = null, ...$args)
     {
@@ -77,6 +77,7 @@ class Feature extends GeoJson
         return $this->properties;
     }
 
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(): array
     {
         $json = parent::jsonSerialize();

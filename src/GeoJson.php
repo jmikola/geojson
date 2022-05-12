@@ -53,6 +53,7 @@ abstract class GeoJson implements JsonSerializable, JsonUnserializable
         return $this->type;
     }
 
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(): array
     {
         $json = ['type' => $this->type];
@@ -69,7 +70,7 @@ abstract class GeoJson implements JsonSerializable, JsonUnserializable
     }
 
     /**
-     * @param array|object $json
+     * @param  array|object  $json
      */
     final public static function jsonUnserialize($json): self
     {

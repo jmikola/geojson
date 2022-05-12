@@ -24,6 +24,7 @@ abstract class Geometry extends GeoJson
         return $this->coordinates;
     }
 
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(): array
     {
         $json = parent::jsonSerialize();

@@ -70,6 +70,7 @@ class FeatureCollection extends GeoJson implements Countable, IteratorAggregate
         return new ArrayIterator($this->features);
     }
 
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(): array
     {
         return array_merge(

@@ -66,6 +66,7 @@ class BoundingBox implements JsonSerializable, JsonUnserializable
         return $this->bounds;
     }
 
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(): array
     {
         return $this->bounds;
