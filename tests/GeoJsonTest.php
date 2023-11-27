@@ -48,7 +48,7 @@ JSON;
         $point = GeoJson::jsonUnserialize($json);
 
         $this->assertInstanceOf(Point::class, $point);
-        $this->assertSame('Point', $point->getType());
+        $this->assertSame(GeoJson::TYPE_POINT, $point->getType());
         $this->assertSame([1, 1], $point->getCoordinates());
 
         $boundingBox = $point->getBoundingBox();
@@ -80,7 +80,7 @@ JSON;
         $point = GeoJson::jsonUnserialize($json);
 
         $this->assertInstanceOf(Point::class, $point);
-        $this->assertSame('Point', $point->getType());
+        $this->assertSame(GeoJson::TYPE_POINT, $point->getType());
         $this->assertSame([1, 1], $point->getCoordinates());
 
         $crs = $point->getCrs();
@@ -142,7 +142,7 @@ JSON;
         $this->expectExceptionMessage('Point expected "coordinates" property of type array, ' . $valueType . ' given');
 
         GeoJson::jsonUnserialize([
-            'type' => 'Point',
+            'type' => GeoJson::TYPE_POINT,
             'coordinates' => $value,
         ]);
     }
@@ -153,7 +153,7 @@ JSON;
         $this->expectExceptionMessage('Feature expected "geometry" property of type array or object, string given');
 
         GeoJson::jsonUnserialize([
-            'type' => 'Feature',
+            'type' => GeoJson::TYPE_FEATURE,
             'geometry' => 'must be array or object, but this is a string',
         ]);
     }
@@ -164,7 +164,7 @@ JSON;
         $this->expectExceptionMessage('Feature expected "properties" property of type array or object, string given');
 
         GeoJson::jsonUnserialize([
-            'type' => 'Feature',
+            'type' => GeoJson::TYPE_FEATURE,
             'properties' => 'must be array or object, but this is a string',
         ]);
     }
@@ -180,12 +180,12 @@ JSON;
     public function provideGeoJsonTypesWithCoordinates()
     {
         return [
-            'LineString' => ['LineString'],
-            'MultiLineString' => ['MultiLineString'],
-            'MultiPoint' => ['MultiPoint'],
-            'MultiPolygon' => ['MultiPolygon'],
-            'Point' => ['Point'],
-            'Polygon' => ['Polygon'],
+            GeoJson::TYPE_LINESTRING => [GeoJson::TYPE_LINESTRING],
+            GeoJson::TYPE_MULTI_LINE_STRING => [GeoJson::TYPE_MULTI_LINE_STRING],
+            GeoJson::TYPE_MULTI_POINT => [GeoJson::TYPE_MULTI_POINT],
+            GeoJson::TYPE_MULTI_POLYGON => [GeoJson::TYPE_MULTI_POLYGON],
+            GeoJson::TYPE_POINT => [GeoJson::TYPE_POINT],
+            GeoJson::TYPE_POLYGON => [GeoJson::TYPE_POLYGON],
         ];
     }
 

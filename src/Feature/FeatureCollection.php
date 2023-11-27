@@ -26,7 +26,7 @@ use function count;
  */
 class FeatureCollection extends GeoJson implements Countable, IteratorAggregate
 {
-    protected string $type = 'FeatureCollection';
+    protected string $type = self::TYPE_FEATURE_COLLECTION;
 
     /**
      * @var array<Feature>

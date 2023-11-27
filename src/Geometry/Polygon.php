@@ -17,7 +17,7 @@ use GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem;
  */
 class Polygon extends Geometry
 {
-    protected string $type = 'Polygon';
+    protected string $type = self::TYPE_POLYGON;
 
     /**
      * @param array<LinearRing|array<Point|array<int|float>>> $linearRings

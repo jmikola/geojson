@@ -92,11 +92,11 @@ class FeatureCollectionTest extends BaseGeoJsonTest
         $collection = new FeatureCollection($features);
 
         $expected = [
-            'type' => 'FeatureCollection',
+            'type' => GeoJson::TYPE_FEATURE_COLLECTION,
             'features' => [['feature1'], ['feature2']],
         ];
 
-        $this->assertSame('FeatureCollection', $collection->getType());
+        $this->assertSame(GeoJson::TYPE_FEATURE_COLLECTION, $collection->getType());
         $this->assertSame($features, $collection->getFeatures());
         $this->assertSame($expected, $collection->jsonSerialize());
     }
@@ -127,21 +127,21 @@ JSON;
         $collection = GeoJson::jsonUnserialize($json);
 
         $this->assertInstanceOf(FeatureCollection::class, $collection);
-        $this->assertSame('FeatureCollection', $collection->getType());
+        $this->assertSame(GeoJson::TYPE_FEATURE_COLLECTION, $collection->getType());
         $this->assertCount(1, $collection);
 
         $features = iterator_to_array($collection);
         $feature = $features[0];
 
         $this->assertInstanceOf(Feature::class, $feature);
-        $this->assertSame('Feature', $feature->getType());
+        $this->assertSame(GeoJson::TYPE_FEATURE, $feature->getType());
         $this->assertSame('test.feature.1', $feature->getId());
         $this->assertNull($feature->getProperties());
 
         $geometry = $feature->getGeometry();
 
         $this->assertInstanceOf(Point::class, $geometry);
-        $this->assertSame('Point', $geometry->getType());
+        $this->assertSame(GeoJson::TYPE_POINT, $geometry->getType());
         $this->assertSame([1, 1], $geometry->getCoordinates());
     }
 
@@ -158,7 +158,7 @@ JSON;
         $this->expectException(UnserializationException::class);
         $this->expectExceptionMessage('FeatureCollection expected "features" property of type array, none given');
 
-        GeoJson::jsonUnserialize(['type' => 'FeatureCollection']);
+        GeoJson::jsonUnserialize(['type' => GeoJson::TYPE_FEATURE_COLLECTION]);
     }
 
     public function testUnserializationShouldRequireFeaturesArray(): void
@@ -166,6 +166,6 @@ JSON;
         $this->expectException(UnserializationException::class);
         $this->expectExceptionMessage('FeatureCollection expected "features" property of type array');
 
-        GeoJson::jsonUnserialize(['type' => 'FeatureCollection', 'features' => null]);
+        GeoJson::jsonUnserialize(['type' => GeoJson::TYPE_FEATURE_COLLECTION, 'features' => null]);
     }
 }

@@ -56,11 +56,11 @@ class PolygonTest extends BaseGeoJsonTest
         $polygon = new Polygon($coordinates);
 
         $expected = [
-            'type' => 'Polygon',
+            'type' => GeoJson::TYPE_POLYGON,
             'coordinates' => $coordinates,
         ];
 
-        $this->assertSame('Polygon', $polygon->getType());
+        $this->assertSame(GeoJson::TYPE_POLYGON, $polygon->getType());
         $this->assertSame($coordinates, $polygon->getCoordinates());
         $this->assertSame($expected, $polygon->jsonSerialize());
     }
@@ -90,7 +90,7 @@ JSON;
         ];
 
         $this->assertInstanceOf(Polygon::class, $polygon);
-        $this->assertSame('Polygon', $polygon->getType());
+        $this->assertSame(GeoJson::TYPE_POLYGON, $polygon->getType());
         $this->assertSame($expectedCoordinates, $polygon->getCoordinates());
     }
 

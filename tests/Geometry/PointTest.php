@@ -68,11 +68,11 @@ class PointTest extends BaseGeoJsonTest
         $point = new Point($coordinates);
 
         $expected = [
-            'type' => 'Point',
+            'type' => GeoJson::TYPE_POINT,
             'coordinates' => $coordinates,
         ];
 
-        $this->assertSame('Point', $point->getType());
+        $this->assertSame(GeoJson::TYPE_POINT, $point->getType());
         $this->assertSame($coordinates, $point->getCoordinates());
         $this->assertSame($expected, $point->jsonSerialize());
     }
@@ -94,7 +94,7 @@ JSON;
         $point = GeoJson::jsonUnserialize($json);
 
         $this->assertInstanceOf(Point::class, $point);
-        $this->assertSame('Point', $point->getType());
+        $this->assertSame(GeoJson::TYPE_POINT, $point->getType());
         $this->assertSame([1, 1], $point->getCoordinates());
     }
 

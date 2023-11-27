@@ -42,11 +42,11 @@ class LineStringTest extends BaseGeoJsonTest
         $lineString = new LineString($coordinates);
 
         $expected = [
-            'type' => 'LineString',
+            'type' => GeoJson::TYPE_LINESTRING,
             'coordinates' => $coordinates,
         ];
 
-        $this->assertSame('LineString', $lineString->getType());
+        $this->assertSame(GeoJson::TYPE_LINESTRING, $lineString->getType());
         $this->assertSame($coordinates, $lineString->getCoordinates());
         $this->assertSame($expected, $lineString->jsonSerialize());
     }
@@ -73,7 +73,7 @@ JSON;
         $expectedCoordinates = [[1, 1], [2, 2]];
 
         $this->assertInstanceOf(LineString::class, $lineString);
-        $this->assertSame('LineString', $lineString->getType());
+        $this->assertSame(GeoJson::TYPE_LINESTRING, $lineString->getType());
         $this->assertSame($expectedCoordinates, $lineString->getCoordinates());
     }
 

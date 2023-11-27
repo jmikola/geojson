@@ -37,13 +37,13 @@ class FeatureTest extends BaseGeoJsonTest
         $feature = new Feature($geometry, $properties, $id);
 
         $expected = [
-            'type' => 'Feature',
+            'type' => GeoJson::TYPE_FEATURE,
             'geometry' => ['geometry'],
             'properties' => $properties,
             'id' => 'identifier',
         ];
 
-        $this->assertSame('Feature', $feature->getType());
+        $this->assertSame(GeoJson::TYPE_FEATURE, $feature->getType());
         $this->assertSame($geometry, $feature->getGeometry());
         $this->assertSame($id, $feature->getId());
         $this->assertSame($properties, $feature->getProperties());
@@ -55,7 +55,7 @@ class FeatureTest extends BaseGeoJsonTest
         $feature = new Feature();
 
         $expected = [
-            'type' => 'Feature',
+            'type' => GeoJson::TYPE_FEATURE,
             'geometry' => null,
             'properties' => null,
         ];
@@ -68,7 +68,7 @@ class FeatureTest extends BaseGeoJsonTest
         $feature = new Feature(null, []);
 
         $expected = [
-            'type' => 'Feature',
+            'type' => GeoJson::TYPE_FEATURE,
             'geometry' => null,
             'properties' => new stdClass(),
         ];
@@ -100,14 +100,14 @@ JSON;
         $feature = GeoJson::jsonUnserialize($json);
 
         $this->assertInstanceOf(Feature::class, $feature);
-        $this->assertSame('Feature', $feature->getType());
+        $this->assertSame(GeoJson::TYPE_FEATURE, $feature->getType());
         $this->assertSame('test.feature.1', $feature->getId());
         $this->assertSame(['key' => 'value'], $feature->getProperties());
 
         $geometry = $feature->getGeometry();
 
         $this->assertInstanceOf(Point::class, $geometry);
-        $this->assertSame('Point', $geometry->getType());
+        $this->assertSame(GeoJson::TYPE_POINT, $geometry->getType());
         $this->assertSame([1, 1], $geometry->getCoordinates());
     }
 

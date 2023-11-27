@@ -46,11 +46,11 @@ class MultiPointTest extends BaseGeoJsonTest
         $multiPoint = new MultiPoint($coordinates);
 
         $expected = [
-            'type' => 'MultiPoint',
+            'type' => GeoJson::TYPE_MULTI_POINT,
             'coordinates' => $coordinates,
         ];
 
-        $this->assertSame('MultiPoint', $multiPoint->getType());
+        $this->assertSame(GeoJson::TYPE_MULTI_POINT, $multiPoint->getType());
         $this->assertSame($coordinates, $multiPoint->getCoordinates());
         $this->assertSame($expected, $multiPoint->jsonSerialize());
     }
@@ -77,7 +77,7 @@ JSON;
         $expectedCoordinates = [[1, 1], [2, 2]];
 
         $this->assertInstanceOf(MultiPoint::class, $multiPoint);
-        $this->assertSame('MultiPoint', $multiPoint->getType());
+        $this->assertSame(GeoJson::TYPE_MULTI_POINT, $multiPoint->getType());
         $this->assertSame($expectedCoordinates, $multiPoint->getCoordinates());
     }
 

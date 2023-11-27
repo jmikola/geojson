@@ -50,11 +50,11 @@ class MultiPolygonTest extends BaseGeoJsonTest
         $multiPolygon = new MultiPolygon($coordinates);
 
         $expected = [
-            'type' => 'MultiPolygon',
+            'type' => GeoJson::TYPE_MULTI_POLYGON,
             'coordinates' => $coordinates,
         ];
 
-        $this->assertSame('MultiPolygon', $multiPolygon->getType());
+        $this->assertSame(GeoJson::TYPE_MULTI_POLYGON, $multiPolygon->getType());
         $this->assertSame($coordinates, $multiPolygon->getCoordinates());
         $this->assertSame($expected, $multiPolygon->jsonSerialize());
     }
@@ -84,7 +84,7 @@ JSON;
         ];
 
         $this->assertInstanceOf(MultiPolygon::class, $multiPolygon);
-        $this->assertSame('MultiPolygon', $multiPolygon->getType());
+        $this->assertSame(GeoJson::TYPE_MULTI_POLYGON, $multiPolygon->getType());
         $this->assertSame($expectedCoordinates, $multiPolygon->getCoordinates());
     }
 

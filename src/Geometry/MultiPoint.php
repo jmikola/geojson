@@ -19,7 +19,7 @@ use function array_map;
  */
 class MultiPoint extends Geometry
 {
-    protected string $type = 'MultiPoint';
+    protected string $type = self::TYPE_MULTI_POINT;
 
     /**
      * @param array<Point|array<float|int>> $positions

@@ -90,11 +90,11 @@ class GeometryCollectionTest extends BaseGeoJsonTest
         $collection = new GeometryCollection($geometries);
 
         $expected = [
-            'type' => 'GeometryCollection',
+            'type' => GeoJson::TYPE_GEOMETRY_COLLECTION,
             'geometries' => [['geometry1'], ['geometry2']],
         ];
 
-        $this->assertSame('GeometryCollection', $collection->getType());
+        $this->assertSame(GeoJson::TYPE_GEOMETRY_COLLECTION, $collection->getType());
         $this->assertSame($geometries, $collection->getGeometries());
         $this->assertSame($expected, $collection->jsonSerialize());
     }
@@ -121,14 +121,14 @@ JSON;
         $collection = GeoJson::jsonUnserialize($json);
 
         $this->assertInstanceOf(GeometryCollection::class, $collection);
-        $this->assertSame('GeometryCollection', $collection->getType());
+        $this->assertSame(GeoJson::TYPE_GEOMETRY_COLLECTION, $collection->getType());
         $this->assertCount(1, $collection);
 
         $geometries = iterator_to_array($collection);
         $geometry = $geometries[0];
 
         $this->assertInstanceOf(Point::class, $geometry);
-        $this->assertSame('Point', $geometry->getType());
+        $this->assertSame(GeoJson::TYPE_POINT, $geometry->getType());
         $this->assertSame([1, 1], $geometry->getCoordinates());
     }
 
@@ -145,7 +145,7 @@ JSON;
         $this->expectException(UnserializationException::class);
         $this->expectExceptionMessage('GeometryCollection expected "geometries" property of type array, none given');
 
-        GeoJson::jsonUnserialize(['type' => 'GeometryCollection']);
+        GeoJson::jsonUnserialize(['type' => GeoJson::TYPE_GEOMETRY_COLLECTION]);
     }
 
     public function testUnserializationShouldRequireGeometriesArray(): void
@@ -153,6 +153,6 @@ JSON;
         $this->expectException(UnserializationException::class);
         $this->expectExceptionMessage('GeometryCollection expected "geometries" property of type array');
 
-        GeoJson::jsonUnserialize(['type' => 'GeometryCollection', 'geometries' => null]);
+        GeoJson::jsonUnserialize(['type' => GeoJson::TYPE_GEOMETRY_COLLECTION, 'geometries' => null]);
     }
 }

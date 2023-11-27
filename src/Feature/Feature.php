@@ -18,7 +18,7 @@ use stdClass;
  */
 class Feature extends GeoJson
 {
-    protected string $type = 'Feature';
+    protected string $type = self::TYPE_FEATURE;
 
     protected ?Geometry $geometry;
 

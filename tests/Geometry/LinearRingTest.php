@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace GeoJson\Tests\Geometry;
 
+use GeoJson\GeoJson;
 use GeoJson\Geometry\LinearRing;
 use GeoJson\Geometry\LineString;
 use GeoJson\Geometry\Point;
@@ -71,11 +72,11 @@ class LinearRingTest extends BaseGeoJsonTest
         $linearRing = new LinearRing($coordinates);
 
         $expected = [
-            'type' => 'LineString',
+            'type' => GeoJson::TYPE_LINESTRING,
             'coordinates' => $coordinates,
         ];
 
-        $this->assertSame('LineString', $linearRing->getType());
+        $this->assertSame(GeoJson::TYPE_LINESTRING, $linearRing->getType());
         $this->assertSame($coordinates, $linearRing->getCoordinates());
         $this->assertSame($expected, $linearRing->jsonSerialize());
     }

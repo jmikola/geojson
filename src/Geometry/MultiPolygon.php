@@ -19,7 +19,7 @@ use function array_map;
  */
 class MultiPolygon extends Geometry
 {
-    protected string $type = 'MultiPolygon';
+    protected string $type = self::TYPE_MULTI_POLYGON;
 
     /**
      * @param array<Polygon|array<LinearRing|array<Point|array<int|float>>>> $polygons
