@@ -72,11 +72,11 @@ class LinearRingTest extends BaseGeoJsonTest
         $linearRing = new LinearRing($coordinates);
 
         $expected = [
-            'type' => GeoJson::TYPE_LINESTRING,
+            'type' => GeoJson::TYPE_LINE_STRING,
             'coordinates' => $coordinates,
         ];
 
-        $this->assertSame(GeoJson::TYPE_LINESTRING, $linearRing->getType());
+        $this->assertSame(GeoJson::TYPE_LINE_STRING, $linearRing->getType());
         $this->assertSame($coordinates, $linearRing->getCoordinates());
         $this->assertSame($expected, $linearRing->jsonSerialize());
     }

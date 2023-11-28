@@ -20,7 +20,7 @@ use function count;
  */
 class LineString extends MultiPoint
 {
-    protected string $type = self::TYPE_LINESTRING;
+    protected string $type = self::TYPE_LINE_STRING;
 
     /**
      * @param array<Point|array<float|int>> $positions

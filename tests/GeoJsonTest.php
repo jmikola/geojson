@@ -180,7 +180,7 @@ JSON;
     public function provideGeoJsonTypesWithCoordinates()
     {
         return [
-            GeoJson::TYPE_LINESTRING => [GeoJson::TYPE_LINESTRING],
+            GeoJson::TYPE_LINE_STRING => [GeoJson::TYPE_LINE_STRING],
             GeoJson::TYPE_MULTI_LINE_STRING => [GeoJson::TYPE_MULTI_LINE_STRING],
             GeoJson::TYPE_MULTI_POINT => [GeoJson::TYPE_MULTI_POINT],
             GeoJson::TYPE_MULTI_POLYGON => [GeoJson::TYPE_MULTI_POLYGON],

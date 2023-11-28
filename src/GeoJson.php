@@ -23,7 +23,7 @@ use function strncmp;
  */
 abstract class GeoJson implements JsonSerializable, JsonUnserializable
 {
-    public const TYPE_LINESTRING = 'LineString';
+    public const TYPE_LINE_STRING = 'LineString';
     public const TYPE_MULTI_LINE_STRING = 'MultiLineString';
     public const TYPE_MULTI_POINT = 'MultiPoint';
     public const TYPE_MULTI_POLYGON = 'MultiPolygon';
@@ -97,7 +97,7 @@ abstract class GeoJson implements JsonSerializable, JsonUnserializable
         $args = [];
 
         switch ($type) {
-            case self::TYPE_LINESTRING:
+            case self::TYPE_LINE_STRING:
             case self::TYPE_MULTI_LINE_STRING:
             case self::TYPE_MULTI_POINT:
             case self::TYPE_MULTI_POLYGON:
@@ -170,7 +170,7 @@ abstract class GeoJson implements JsonSerializable, JsonUnserializable
             $args[] = CoordinateReferenceSystem::jsonUnserialize($json['crs']);
         }
 
-        $class = sprintf('GeoJson\%s\%s', (strncmp(self::TYPE_FEATURE, $type, 7) === 0 ? self::TYPE_FEATURE : 'Geometry'), $type);
+        $class = sprintf('GeoJson\%s\%s', (strncmp('Feature', $type, 7) === 0 ? 'Feature' : 'Geometry'), $type);
 
         return new $class(... $args);
     }
