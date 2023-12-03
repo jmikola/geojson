@@ -3,7 +3,8 @@ filter:
 
 tools:
     # https://scrutinizer-ci.com/docs/tools/external-code-coverage/
-    external_code_coverage: true
+    external_code_coverage:
+        timeout: 600
 
     # https://scrutinizer-ci.com/docs/tools/php/php-analyzer/
     php_analyzer: true
