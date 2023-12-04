@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace GeoJson\Tests\Feature;
 
+use GeoJson\Exception\InvalidArgumentException;
 use GeoJson\Exception\UnserializationException;
 use GeoJson\Feature\Feature;
 use GeoJson\Feature\FeatureCollection;
 use GeoJson\GeoJson;
 use GeoJson\Geometry\Point;
 use GeoJson\Tests\BaseGeoJsonTest;
-use InvalidArgumentException;
 use stdClass;
 
 use function is_subclass_of;

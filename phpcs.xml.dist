@@ -82,7 +82,7 @@
             <property name="allowFullyQualifiedGlobalClasses" value="false"/>
             <property name="allowFullyQualifiedGlobalConstants" value="false"/>
             <property name="allowFullyQualifiedGlobalFunctions" value="false"/>
-            <property phpcs-only="true" name="allowFullyQualifiedNameForCollidingClasses" value="false"/>
+            <property phpcs-only="true" name="allowFullyQualifiedNameForCollidingClasses" value="true"/>
             <property phpcs-only="true" name="allowFullyQualifiedNameForCollidingConstants" value="false"/>
             <property phpcs-only="true" name="allowFullyQualifiedNameForCollidingFunctions" value="false"/>
             <property name="searchAnnotations" value="true"/>

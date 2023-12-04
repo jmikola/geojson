@@ -6,7 +6,7 @@ namespace GeoJson\Geometry;
 
 use GeoJson\BoundingBox;
 use GeoJson\CoordinateReferenceSystem\CoordinateReferenceSystem;
-use InvalidArgumentException;
+use GeoJson\Exception\InvalidArgumentException;
 
 use function count;
 use function end;

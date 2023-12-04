@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace GeoJson;
 
+use GeoJson\Exception\InvalidArgumentException;
 use GeoJson\Exception\UnserializationException;
-use InvalidArgumentException;
 use JsonSerializable;
 
 use function count;
