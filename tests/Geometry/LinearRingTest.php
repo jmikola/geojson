@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace GeoJson\Tests\Geometry;
 
+use GeoJson\Exception\InvalidArgumentException;
 use GeoJson\GeoJson;
 use GeoJson\Geometry\LinearRing;
 use GeoJson\Geometry\LineString;
 use GeoJson\Geometry\Point;
 use GeoJson\Tests\BaseGeoJsonTest;
-use InvalidArgumentException;
 
 use function is_subclass_of;
 

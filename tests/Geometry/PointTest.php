@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace GeoJson\Tests\Geometry;
 
+use GeoJson\Exception\InvalidArgumentException;
 use GeoJson\GeoJson;
 use GeoJson\Geometry\Geometry;
 use GeoJson\Geometry\Point;
 use GeoJson\Tests\BaseGeoJsonTest;
-use InvalidArgumentException;
 use stdClass;
 
 use function func_get_args;

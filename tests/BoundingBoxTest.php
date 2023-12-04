@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace GeoJson\Tests;
 
 use GeoJson\BoundingBox;
+use GeoJson\Exception\InvalidArgumentException;
 use GeoJson\Exception\UnserializationException;
 use GeoJson\JsonUnserializable;
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
