@@ -25,7 +25,7 @@ use function count;
  */
 class GeometryCollection extends Geometry implements Countable, IteratorAggregate
 {
-    protected string $type = 'GeometryCollection';
+    protected string $type = self::TYPE_GEOMETRY_COLLECTION;
 
     /**
      * @var array<Geometry>

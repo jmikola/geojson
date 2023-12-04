@@ -19,7 +19,7 @@ use function array_map;
  */
 class MultiLineString extends Geometry
 {
-    protected string $type = 'MultiLineString';
+    protected string $type = self::TYPE_MULTI_LINE_STRING;
 
     /**
      * @param array<LineString|array<Point|array<int|float>>> $lineStrings

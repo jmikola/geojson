@@ -50,11 +50,11 @@ class MultiLineStringTest extends BaseGeoJsonTest
         $multiLineString = new MultiLineString($coordinates);
 
         $expected = [
-            'type' => 'MultiLineString',
+            'type' => GeoJson::TYPE_MULTI_LINE_STRING,
             'coordinates' => $coordinates,
         ];
 
-        $this->assertSame('MultiLineString', $multiLineString->getType());
+        $this->assertSame(GeoJson::TYPE_MULTI_LINE_STRING, $multiLineString->getType());
         $this->assertSame($coordinates, $multiLineString->getCoordinates());
         $this->assertSame($expected, $multiLineString->jsonSerialize());
     }
@@ -84,7 +84,7 @@ JSON;
         ];
 
         $this->assertInstanceOf(MultiLineString::class, $multiLineString);
-        $this->assertSame('MultiLineString', $multiLineString->getType());
+        $this->assertSame(GeoJson::TYPE_MULTI_LINE_STRING, $multiLineString->getType());
         $this->assertSame($expectedCoordinates, $multiLineString->getCoordinates());
     }
 

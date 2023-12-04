@@ -22,7 +22,7 @@ use function is_int;
  */
 class Point extends Geometry
 {
-    protected string $type = 'Point';
+    protected string $type = self::TYPE_POINT;
 
     /**
      * @param array<float|int> $position
